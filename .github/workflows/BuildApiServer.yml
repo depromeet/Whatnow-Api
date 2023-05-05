@@ -11,9 +11,9 @@ jobs:
       matrix:
         kotlin-version: [ 1.5.31 ]
         java-version: [ 11 ]
-      outputs:
-        #버전
-        VERSION: ${{ steps.get_version.outputs.VERSION }}
+    outputs:
+      #버전
+      VERSION: ${{ steps.get_version.outputs.VERSION }}
     steps:
       - name: Check Out The Repository
         uses: actions/checkout@v3
