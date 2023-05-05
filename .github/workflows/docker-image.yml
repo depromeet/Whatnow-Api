@@ -1,0 +1,56 @@
+name: Build Api Server
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      #모듈들 명
+      matrix:
+        kotlin-version: [ 1.5.31 ]
+        java-version: [ 11 ]
+      outputs:
+        #버전
+        VERSION: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+      - name: Check Out The Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Kotlin
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          kotlin-version: ${{ matrix.kotlin-version }}
+          distribution: 'adopt'
+
+      # branch tags -> version (without v)
+      - name: Get the version
+        id: get_version
+        run: |
+          RELEASE_VERSION_WITHOUT_V="$(cut -d'v' -f2 <<< ${GITHUB_REF#refs/*/})"
+          echo "RELEASE_VERSION_WITHOUT_V=$RELEASE_VERSION_WITHOUT_V" >> $GITHUB_ENV
+
+      - name: Gradle Build
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle build
+        run: ./gradlew :promise-api:build --no-daemon
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # docker build / push
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./src/server/promise-api
+          # image push 최적화
+          push: true
+          tags: whatnow2023/whatnow-api:${{ steps.get_version.outputs.VERSION }}
