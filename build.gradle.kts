@@ -10,7 +10,6 @@ plugins {
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-
 allprojects{
     group = "com.depromeet"
     version = "0.0.1-SNAPSHOT"
