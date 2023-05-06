@@ -50,7 +50,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./src/server/promise-api
+          context: ./Whatnow-Api
           # image push 최적화
           push: true
           tags: whatnow2023/whatnow-api:${{ steps.get_version.outputs.VERSION }}
