@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      image: deploy-test
+      tag: latest
     strategy:
       #모듈들 명
       matrix:
@@ -41,16 +44,20 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker Hub
+
+      - name: Login to NCP Container Registry
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # docker build / push
-      - name: Build and push
+          registry: ${{ secrets.NCP_CONTAINER_REGISTRY }}
+          username: ${{ secrets.NCP_ACCESS_KEY }}
+          password: ${{ secrets.NCP_SECRET_KEY }}
+
+      - name: build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./Whatnow-Api
-          # image push 최적화
+          context: .
+          file: ./Dockerfile
           push: true
-          tags: whatnow2023/whatnow-api:${{ steps.get_version.outputs.VERSION }}
+          tags: ${{ secrets.NCP_CONTAINER_REGISTRY }}/${{env.image}}:${{env.tag}}
+          cache-from: type=registry,ref=${{ secrets.NCP_CONTAINER_REGISTRY }}/${{env.image}}:${{env.tag}}
+          cache-to: type=inline
