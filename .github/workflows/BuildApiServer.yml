@@ -58,4 +58,4 @@ jobs:
           context: ./Whatnow-Api
           # image push 최적화
           push: true
-          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/Whatnow-Api:latest
+          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/deploy-test:latest
