@@ -2,7 +2,7 @@ name: Build Api Server
 on:
   pull_request:
     branches:
-      - dev
+      - develop
 jobs:
   build:
     runs-on: ubuntu-latest
