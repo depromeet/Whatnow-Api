@@ -25,7 +25,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Gradle build
-        run: ./gradlew :promise-api:build
+        run: ./gradlew build :Whatnow-Api:build
 
       - name: spotless check
         run: ./gradlew spotlessCheck
