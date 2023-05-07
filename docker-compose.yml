@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    environment:
+      - TZ=Asia/Seoul
+  rabbit-mq:
+    image: "whatnow2023/rabbitmq-ttl:3.11"
+    environment:
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - TZ=Asia/Seoul
+    ports:
+      - "5672:5672" # Default Port
+      - "15672:15672" # For UI
