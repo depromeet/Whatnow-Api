@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21" apply false
     kotlin("plugin.jpa") version "1.6.21" apply false
+    id("com.diffplug.spotless") version  "6.18.0"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
@@ -26,6 +27,15 @@ allprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+    }
+}
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+
+    kotlin {
+        // version, setUseExperimental, userData and editorConfigOverride are all optional
+        target ("**/*.kt")
+        ktlint("0.48.0")
     }
 }
 
