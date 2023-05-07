@@ -1,0 +1,31 @@
+name: Build Api Server
+on:
+  pull_request:
+    branches:
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        kotlin-version: [ 1.5.31 ]
+        java-version: [ 11 ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Kotlin
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          kotlin-version: ${{ matrix.kotlin-version }}
+          distribution: 'adopt'
+
+      - name: Gradle Build
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle build
+        run: ./gradlew :promise-api:build
+
+      - name: spotless check
+        run: ./gradlew spotlessCheck
