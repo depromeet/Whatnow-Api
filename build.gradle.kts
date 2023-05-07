@@ -10,8 +10,7 @@ plugins {
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-
-allprojects{
+allprojects {
     group = "com.depromeet"
     version = "0.0.1-SNAPSHOT"
 
@@ -28,7 +27,6 @@ allprojects{
     tasks.withType<Test> {
         useJUnitPlatform()
     }
-
 }
 
 subprojects{
@@ -43,5 +41,8 @@ subprojects{
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+    }
+    tasks.getByName<Jar>("jar") {
+        enabled = false
     }
 }
