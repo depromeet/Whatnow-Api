@@ -1,3 +1,3 @@
 rootProject.name = "server"
 
-include("promise-api")
+include("Whatnow-Api")
