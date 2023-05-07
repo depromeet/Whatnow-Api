@@ -8,9 +8,6 @@ plugins {
     kotlin("plugin.jpa") version "1.6.21" apply false
 
 }
-jar {
-    enabled = false
-}
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 
@@ -27,7 +24,9 @@ allprojects{
             jvmTarget = "11"
         }
     }
-
+    jar {
+        enabled = false
+    }
     tasks.withType<Test> {
         useJUnitPlatform()
     }
