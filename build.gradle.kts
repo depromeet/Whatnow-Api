@@ -6,12 +6,11 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21" apply false
     kotlin("plugin.jpa") version "1.6.21" apply false
-
 }
+
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-
-allprojects{
+allprojects {
     group = "com.depromeet"
     version = "0.0.1-SNAPSHOT"
 
@@ -24,13 +23,10 @@ allprojects{
             jvmTarget = "11"
         }
     }
-    jar {
-        enabled = false
-    }
+
     tasks.withType<Test> {
         useJUnitPlatform()
     }
-
 }
 
 subprojects{
@@ -45,5 +41,8 @@ subprojects{
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+    }
+    tasks.getByName<Jar>("jar") {
+        enabled = false
     }
 }
