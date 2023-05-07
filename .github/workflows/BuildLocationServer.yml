@@ -1,4 +1,4 @@
-name: Build Api Server
+name: Build Location Server
 on:
   push:
     branches:
@@ -57,7 +57,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./Whatnow-Api
+          context: ./Whatnow-Location
           # image push 최적화
           push: true
-          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/whatnow-api:latest
+          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/whatnow-location:latest

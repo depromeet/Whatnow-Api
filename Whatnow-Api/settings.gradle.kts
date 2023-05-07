@@ -1,1 +1,1 @@
-rootProject.name = "Whatnow-Api"
+rootProject.name = 'Whatnow-Api'
