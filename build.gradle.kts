@@ -82,7 +82,33 @@ subprojects{
     tasks.test {
         finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
     }
+
+
+
     tasks.jacocoTestReport {
         dependsOn(tasks.test) // tests are required to run before generating the report
+        reports {
+            html.required.set(true) // html 설정
+            csv.required.set(true) // csv 설정
+            xml.required.set(true)
+            xml.outputLocation.set(File("${buildDir}/reports/jacoco.xml"))
+        }
+
+        classDirectories.setFrom(
+                files(classDirectories.files.map {
+                    fileTree(it) { // jacoco file 테스트 커버리지 측정안할 목록
+                        exclude("**/*Application*",
+                                "**/*Config*",
+                                "**/*Dto*",
+                                "**/*Request*",
+                                "**/*Response*",
+                                "**/*Interceptor*",
+                                "**/*Exception*" ,
+                                "**/Q*") // Query Dsl 용이긴하나 Q로 시작하는 다른 클래스를 뺄 위험이 있음.
+                    }
+                })
+        )
     }
+
+
 }
