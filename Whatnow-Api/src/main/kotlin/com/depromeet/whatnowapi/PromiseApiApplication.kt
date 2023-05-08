@@ -1,11 +1,11 @@
-package com.depromeet.promiseapi
+package com.depromeet.whatnowapi
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class PromiseApiApplication
+class WhatnowApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<PromiseApiApplication>(*args)
+    runApplication<WhatnowApiApplication>(*args)
 }

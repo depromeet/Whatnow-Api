@@ -1,4 +1,4 @@
-package com.depromeet.promiseapi
+package com.depromeet.whatnowapi
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -9,5 +9,4 @@ class PromiseApiApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
