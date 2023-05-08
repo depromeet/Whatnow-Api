@@ -9,5 +9,4 @@ class WhatnowDomainApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

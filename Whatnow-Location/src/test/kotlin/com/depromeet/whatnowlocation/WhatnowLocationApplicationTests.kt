@@ -9,5 +9,4 @@ class WhatnowLocationApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

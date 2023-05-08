@@ -1,6 +1,7 @@
-name: CI_Check
+# 디밸롭 메인 브런치의 총 테스트 커버리지 측정을 위한 ci workflow
+name: develop-branch-test-coverage
 on:
-  pull_request:
+  push:
     branches:
       - develop
 jobs:
@@ -36,9 +37,6 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-
-      - name: spotless check
-        run: ./gradlew spotlessCheck --no-daemon
 
       - name: test and analyze
         env:
