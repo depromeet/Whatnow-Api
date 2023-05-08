@@ -9,5 +9,4 @@ class WhatnowInfrastructureApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
