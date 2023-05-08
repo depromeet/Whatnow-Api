@@ -110,5 +110,11 @@ subprojects{
         )
     }
 
+    sonarqube {
+        properties {
+            property ("sonar.java.binaries", "${buildDir}/classes")
+            property ("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco.xml")
+        }
+    }
 
 }
