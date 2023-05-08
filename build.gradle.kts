@@ -19,10 +19,10 @@ sonarqube {
         property ("sonar.organization", "depromeet-1")
         property ("sonar.host.url", "https://sonarcloud.io")
         property ("sonar.sources", "src")
-        property ("sonar.language", "java")
+        property ("sonar.language", "Kotlin")
         property ("sonar.sourceEncoding", "UTF-8")
         property ("sonar.test.inclusions", "**/*Test.java")
-        property ("sonar.exclusions", "**/test/**, **/Q*.java, **/*Doc*.java, **/resources/** ,**/*Application*.java , **/*Config*.java, **/*Dto*.java, **/*Request*.java, **/*Response*.java ,**/*Exception*.java ,**/*ErrorCode*.java")
+        property ("sonar.exclusions", "**/test/**, **/Q*.kt, **/*Doc*.kt, **/resources/** ,**/*Application*.kt , **/*Config*.kt, **/*Dto*.kt, **/*Request*.kt, **/*Response*.kt ,**/*Exception*.kt ,**/*ErrorCode*.kt")
         property ("sonar.java.coveragePlugin", "jacoco")
     }
 }
