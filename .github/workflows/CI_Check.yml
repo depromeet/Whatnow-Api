@@ -38,7 +38,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
 
       - name: spotless check
-        run: ./gradlew spotlessCheck
+        run: ./gradlew spotlessCheck --no-daemon
 
       - name: test and analyze
         env:
