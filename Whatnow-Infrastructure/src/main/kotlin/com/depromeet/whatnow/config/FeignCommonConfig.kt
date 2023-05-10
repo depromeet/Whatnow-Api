@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.config
 
-import com.depromeet.whatnow.WhatnowInfrastructureApplication
 import com.depromeet.whatnow.api.BaseFeignClientPackage
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@EnableFeignClients(basePackageClasses =[BaseFeignClientPackage::class])
+@EnableFeignClients(basePackageClasses = [BaseFeignClientPackage::class])
 class FeignCommonConfig {
 
     @Bean
