@@ -4,8 +4,8 @@ plugins {
     id("org.springframework.boot") version "2.7.11" apply false
     id("io.spring.dependency-management") version "1.0.15.RELEASE" apply false
     kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21" apply false
-    kotlin("plugin.jpa") version "1.6.21" apply false
+    kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.jpa") version "1.6.21"
     id("com.diffplug.spotless") version  "6.18.0" // spotless
     id("org.sonarqube") version "3.5.0.2730" // 소나 클라우드
     id("jacoco")
@@ -46,6 +46,9 @@ allprojects {
         useJUnitPlatform()
     }
 
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring" )
+    apply(plugin = "org.jetbrains.kotlin.plugin.jpa" )
+
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
@@ -65,6 +68,8 @@ subprojects{
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "jacoco" )
+
+
 
 
     dependencies {
