@@ -7,5 +7,4 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan(basePackageClasses = [WhatnowInfrastructureApplication::class, WhatnowDomainApplication::class])
-class DomainIntegrateTestConfig {
-}
+class DomainIntegrateTestConfig

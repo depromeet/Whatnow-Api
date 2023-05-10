@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy
 /** 도메인 모듈의 통합테스트의 편의성을 위해서 만든 어노테이션 -이찬진  */
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = [ApiIntegrateTestConfig::class])
-@ActiveProfiles(resolver = ApiIntegrateProfileResolver::class)
+@SpringBootTest(classes = [DomainIntegrateTestConfig::class])
+@ActiveProfiles(resolver = DomainIntegrateProfileResolver::class)
 @Documented
-annotation class ApiIntegrateSpringBootTest
+annotation class DomainIntegrateSpringBootTest
