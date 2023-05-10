@@ -1,5 +1,6 @@
 package com.depromeet.whatnowdomain.domains.example
 
+import com.depromeet.whatnow.domains.example.ExampleClass
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

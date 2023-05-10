@@ -1,4 +1,4 @@
-package com.depromeet.whatnowdomain.domains.user.domain
+package com.depromeet.whatnow.domains.user.domain
 
 enum class UserStatus {
     NORMAL, DELETED, FORBIDDEN

@@ -1,4 +1,4 @@
-package com.depromeet.whatnowlocation
+package com.depromeet.whatnow
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

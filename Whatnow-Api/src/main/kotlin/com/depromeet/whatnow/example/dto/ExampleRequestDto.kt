@@ -1,4 +1,4 @@
-package com.depromeet.whatnowapi.example.dto
+package com.depromeet.whatnow.example.dto
 
 data class ExampleRequestDto(
     val id: Long,

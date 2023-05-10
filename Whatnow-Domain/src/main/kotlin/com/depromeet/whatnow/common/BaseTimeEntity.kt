@@ -1,4 +1,4 @@
-package com.depromeet.whatnowdomain.common
+package com.depromeet.whatnow.common
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
