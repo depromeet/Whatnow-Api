@@ -1,4 +1,4 @@
-package com.depromeet.whatnowlocation
+package com.depromeet.whatnow
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
