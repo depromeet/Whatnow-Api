@@ -6,8 +6,8 @@ import javax.persistence.Enumerated
 
 @Embeddable
 class OauthProfile(
-        var oauthId: String,
+    var oauthId: String,
 
-        @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     var oauthProvider: OauthProvider,
 )
