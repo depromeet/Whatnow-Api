@@ -10,14 +10,13 @@ import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class BaseTimeEntity{
+abstract class BaseTimeEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    var createdAt : LocalDateTime = LocalDateTime.now()
+    var createdAt: LocalDateTime = LocalDateTime.now()
 
     @LastModifiedDate
     @Column(updatable = true)
-    var updatedAt : LocalDateTime = LocalDateTime.now()
-
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 }

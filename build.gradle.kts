@@ -57,6 +57,9 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         // version, setUseExperimental, userData and editorConfigOverride are all optional
         target ("**/*.kt")
         ktlint("0.48.0")
+        // kt lint 설정중에
+        // no wild card import 의경우를 그대로 따라갑니다. 대신 ide 에서 설정을 해주셔야합니다.
+        // https://blog.leocat.kr/notes/2020/12/14/intellij-avoid-wildcard-imports-in-kotlin-with-intellij
     }
 }
 
