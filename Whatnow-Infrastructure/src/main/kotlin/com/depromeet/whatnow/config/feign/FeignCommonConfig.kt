@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.config
+package com.depromeet.whatnow.config.feign
 
 import com.depromeet.whatnow.api.BaseFeignClientPackage
 import feign.Logger
