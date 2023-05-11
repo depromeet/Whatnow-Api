@@ -5,15 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class KakaoInformationResponse(
-    val properties: Properties,
+//    val properties: Properties,
     val id: String,
     val kakaoAccount: KakaoAccount,
 ) {
 
-    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
-    data class Properties(
-        val nickname: String,
-    )
+//    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+//    data class Properties(
+//        val nickname: String,
+//    )
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class KakaoAccount(
@@ -26,6 +26,7 @@ data class KakaoInformationResponse(
         @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
         data class Profile(
             val profileImageUrl: String,
+            val isDefaultImage: Boolean,
         )
     }
 }

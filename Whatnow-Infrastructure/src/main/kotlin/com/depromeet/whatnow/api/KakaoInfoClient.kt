@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
 
 // TODO : 에러 정책 확립되면 feign 에러 config 하기 , configuration = [KakaoInfoConfig::class]
-@FeignClient(name = "KakaoInfoClient", url = "https://kapi.kakao.com")
+@FeignClient(name = "KakaoInfoClient", url = "\${feign.kakao.info}")
 interface KakaoInfoClient {
     @GetMapping("/v2/user/me")
     fun kakaoUserInfo(@RequestHeader("Authorization") accessToken: String): KakaoInformationResponse
