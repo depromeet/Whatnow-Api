@@ -1,0 +1,9 @@
+{
+  "token_type": "bearer",
+  "access_token": "accessToken",
+  "id_token": "idToken",
+  "expires_in": 1000,
+  "refresh_token": "refreshToken",
+  "refresh_token_expires_in": 1000,
+  "scope": "profile_image openid profile_nickname"
+}

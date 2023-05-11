@@ -21,9 +21,10 @@ oauth:
     redirect-url: ${KAKAO_REDIRECT}
     app-id: ${KAKAO_APP_ID:default}
     admin-key: ${KAKAO_ADMIN_KEY}
-#feign:
-#  toss:
-#    url : https://api.tosspayments.com
+feign:
+  kakao:
+    info : https://kapi.kakao.com
+    oauth : https://kauth.kakao.com
 #ncp:
 #  service-id: ${NCP_SERVICE_ID:}
 #  access-key: ${NCP_ACCESS_KEY:}
