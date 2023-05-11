@@ -1,4 +1,6 @@
 package com.depromeet.whatnow.config.jwt
 
-class AccessTokenInfo {
-}
+data class AccessTokenInfo(
+    val userId: Long,
+    val role: String,
+)
