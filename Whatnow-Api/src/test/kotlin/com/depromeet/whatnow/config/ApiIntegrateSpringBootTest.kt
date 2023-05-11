@@ -10,6 +10,6 @@ import java.lang.annotation.RetentionPolicy
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(classes = [ApiIntegrateTestConfig::class])
-@ActiveProfiles(resolver = ApiIntegrateProfileResovler::class)
+@ActiveProfiles(resolver = ApiIntegrateProfileResolver::class)
 @Documented
 annotation class ApiIntegrateSpringBootTest

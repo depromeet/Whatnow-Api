@@ -26,7 +26,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: local
 logging:
   level:
     com.depromeet.whatnow.api.* : debug
@@ -35,7 +35,7 @@ logging:
 spring:
   config:
     activate:
-      on-profile: staging
+      on-profile: dev
 logging:
   level:
     com.depromeet.whatnow.api.*: debug
