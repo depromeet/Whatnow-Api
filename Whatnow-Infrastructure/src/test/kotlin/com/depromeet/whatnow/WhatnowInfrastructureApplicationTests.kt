@@ -1,9 +1,9 @@
 package com.depromeet.whatnow
 
+import com.depromeet.whatnow.config.InfraIntegrateSpringBootTest
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
+@InfraIntegrateSpringBootTest
 class WhatnowInfrastructureApplicationTests {
 
     @Test
