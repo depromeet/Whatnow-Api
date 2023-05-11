@@ -2,7 +2,6 @@ package com.depromeet.whatnow.config.jwt
 
 import com.depromeet.whatnow.config.static.KID
 import io.jsonwebtoken.Claims
-import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Header
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwt
@@ -22,16 +21,12 @@ class JwtOIDCHelper {
     }
 
     private fun getUnsignedTokenClaims(token: String, iss: String, aud: String): Jwt<Header<*>, Claims> {
-        return try {
+        return JwtParseExecuter {
             Jwts.parserBuilder()
                 .requireAudience(aud)
                 .requireIssuer(iss)
                 .build()
                 .parseClaimsJwt(getUnsignedToken(token))
-        } catch (e: ExpiredJwtException) {
-            throw Exception("에러정책이후 바꿀예정")
-        } catch (e: Exception) {
-            throw Exception("에러정책이후 바꿀예정")
         }
     }
 
@@ -42,15 +37,11 @@ class JwtOIDCHelper {
     }
 
     fun getOIDCTokenJws(token: String, modulus: String, exponent: String): Jws<Claims> {
-        return try {
+        return JwsParseExecuter {
             Jwts.parserBuilder()
                 .setSigningKey(getRSAPublicKey(modulus, exponent))
                 .build()
                 .parseClaimsJws(token)
-        } catch (e: ExpiredJwtException) {
-            throw Exception("에러정책이후 바꿀예정")
-        } catch (e: Exception) {
-            throw Exception("에러정책이후 바꿀예정")
         }
     }
 

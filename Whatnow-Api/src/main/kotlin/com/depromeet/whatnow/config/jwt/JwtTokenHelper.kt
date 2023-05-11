@@ -7,7 +7,6 @@ import com.depromeet.whatnow.config.static.TOKEN_ISSUER
 import com.depromeet.whatnow.config.static.TOKEN_ROLE
 import com.depromeet.whatnow.config.static.TOKEN_TYPE
 import io.jsonwebtoken.Claims
-import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -28,13 +27,9 @@ class JwtTokenHelper(
     @Value("\${auth.jwt.refresh-exp}")
     private val refreshExpireIn: Int,
 ) {
-    private fun getJws(token: String): Jws<Claims> {
-        return try {
+    fun getJws(token: String): Jws<Claims> {
+        return JwsParseExecuter {
             Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token)
-        } catch (e: ExpiredJwtException) {
-            throw Exception("에러정책이후 바꿀예정")
-        } catch (e: Exception) {
-            throw Exception("에러정책이후 바꿀예정")
         }
     }
 
