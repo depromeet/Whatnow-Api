@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    include:
+      - infrastructure
+      - domain
+#springdoc:
+#  default-produces-media-type: application/json
+#  default-consumes-media-type: application/json
+#  swagger-ui:
+#    tags-sorter: alpha
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+#logging:
+#  level:
+#    root: info
+#logging:
+#  level:
+#    org.springframework.data.*.*: debug
+#    org.springframework.cache.*: debug
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    ROOT: WARN

@@ -4,8 +4,8 @@ plugins {
     id("org.springframework.boot") version "2.7.11" apply false
     id("io.spring.dependency-management") version "1.0.15.RELEASE" apply false
     kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21" apply false
-    kotlin("plugin.jpa") version "1.6.21" apply false
+    kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.jpa") version "1.6.21"
     id("com.diffplug.spotless") version  "6.18.0" // spotless
     id("org.sonarqube") version "3.5.0.2730" // 소나 클라우드
     id("jacoco")
@@ -46,6 +46,9 @@ allprojects {
         useJUnitPlatform()
     }
 
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring" )
+    apply(plugin = "org.jetbrains.kotlin.plugin.jpa" )
+
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
@@ -54,6 +57,9 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         // version, setUseExperimental, userData and editorConfigOverride are all optional
         target ("**/*.kt")
         ktlint("0.48.0")
+        // kt lint 설정중에
+        // no wild card import 의경우를 그대로 따라갑니다. 대신 ide 에서 설정을 해주셔야합니다.
+        // https://blog.leocat.kr/notes/2020/12/14/intellij-avoid-wildcard-imports-in-kotlin-with-intellij
     }
 }
 
@@ -65,6 +71,8 @@ subprojects{
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "jacoco" )
+
+
 
 
     dependencies {
