@@ -2,6 +2,7 @@ package com.depromeet.whatnow.api
 
 import com.depromeet.whatnow.api.dto.KakaoTokenResponse
 import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,7 +19,7 @@ interface KakaoOauthClient {
         @PathVariable("CLIENT_SECRET") client_secret: String,
     ): KakaoTokenResponse
 
-    // TODO : NEED 캐싱
     @GetMapping("/.well-known/jwks.json")
+    @Cacheable(cacheNames = ["KakaoOICD"], cacheManager = "oidcCacheManager")
     fun kakaoOIDCOpenKeys(): OIDCPublicKeysResponse
 }
