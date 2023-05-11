@@ -20,7 +20,9 @@ class SuccessResponseAdvice : ResponseBodyAdvice<Any?> {
         val servletResponse = (response as ServletServerHttpResponse).servletResponse
         val httpStatus = HttpStatus.resolve(servletResponse.status)!!
         return if (httpStatus.is2xxSuccessful) {
-            SuccessResponse(httpStatus.value(), body)
-        } else body
+            SuccessResponse(servletResponse.status, body)
+        } else {
+            body
+        }
     }
 }
