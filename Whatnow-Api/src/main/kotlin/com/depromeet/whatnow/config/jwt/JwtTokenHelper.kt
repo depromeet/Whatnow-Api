@@ -1,5 +1,11 @@
 package com.depromeet.whatnow.config.jwt
 
+import com.depromeet.whatnow.config.static.ACCESS_TOKEN
+import com.depromeet.whatnow.config.static.MILLI_TO_SECOND
+import com.depromeet.whatnow.config.static.REFRESH_TOKEN
+import com.depromeet.whatnow.config.static.TOKEN_ISSUER
+import com.depromeet.whatnow.config.static.TOKEN_ROLE
+import com.depromeet.whatnow.config.static.TOKEN_TYPE
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jws

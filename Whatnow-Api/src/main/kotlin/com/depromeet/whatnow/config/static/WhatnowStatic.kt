@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.config.jwt
+package com.depromeet.whatnow.config.static
 
 const val TOKEN_ISSUER = "Whatnow"
 const val AUTH_HEADER = "Authorization"
@@ -8,7 +8,7 @@ const val TOKEN_ROLE = "role"
 const val TOKEN_TYPE = "type"
 const val ACCESS_TOKEN = "ACCESS_TOKEN"
 const val REFRESH_TOKEN = "REFRESH_TOKEN"
-
+const val KID = "kid"
 const val MILLI_TO_SECOND = 1000
 
 const val BAD_REQUEST = 400
