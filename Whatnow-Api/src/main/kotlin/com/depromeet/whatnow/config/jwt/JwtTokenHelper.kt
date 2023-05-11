@@ -79,11 +79,11 @@ class JwtTokenHelper(
     }
 
     fun isAccessToken(token: String): Boolean {
-        return getJws(token).body[TOKEN_TYPE]!! == ACCESS_TOKEN
+        return getJws(token).body[TOKEN_TYPE] == ACCESS_TOKEN
     }
 
     fun isRefreshToken(token: String): Boolean {
-        return getJws(token).body[TOKEN_TYPE]!! == REFRESH_TOKEN
+        return getJws(token).body[TOKEN_TYPE] == REFRESH_TOKEN
     }
 
     fun parseAccessToken(token: String): AccessTokenInfo {
