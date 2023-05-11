@@ -5,6 +5,9 @@ dependencies{
     api ("io.github.openfeign:feign-httpclient:12.1")
     api ("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
     api ("io.github.openfeign:feign-jackson:12.1")
+
+    testImplementation ("org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5")
+    testImplementation ("org.springframework.cloud:spring-cloud-contract-wiremock:3.1.5")
 }
 
 
