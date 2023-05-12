@@ -2,7 +2,7 @@ package com.depromeet.whatnow.domains.user.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
-import com.depromeet.whatnow.events.UserSignUpEvent
+import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -40,7 +40,7 @@ class User(
     val id: Long? = null,
 ) : BaseTimeEntity() {
 
-    @PostPersist
+//    @PostPersist
     fun registerEvent() {
         Events.raise(UserSignUpEvent(this.id!!))
     }
