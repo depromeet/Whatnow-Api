@@ -1,5 +1,8 @@
 package com.depromeet.whatnow.config.redis
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
@@ -16,6 +19,14 @@ import java.time.Duration
 @Configuration
 class RedisCacheConfig {
 
+    val objectMapper: ObjectMapper = jacksonObjectMapper()
+        .activateDefaultTyping(
+            BasicPolymorphicTypeValidator.builder()
+                .allowIfBaseType(Any::class.java)
+                .build(),
+            ObjectMapper.DefaultTyping.EVERYTHING,
+        )
+
     @Bean
     fun oidcCacheManager(cf: RedisConnectionFactory): CacheManager {
         val redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
@@ -27,7 +38,7 @@ class RedisCacheConfig {
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair
                     .fromSerializer(
-                        GenericJackson2JsonRedisSerializer(),
+                        GenericJackson2JsonRedisSerializer(objectMapper),
                     ),
             )
             .entryTtl(Duration.ofDays(7L))
