@@ -37,6 +37,9 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
+      - name: Start containers  # test 돌릴때 레디스 필요
+        run: docker-compose up -d
+
       - name: spotless check
         run: ./gradlew spotlessCheck --no-daemon
 
