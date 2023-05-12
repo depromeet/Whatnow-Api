@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      image: deploy-test
+      image: deploy-testgit
       tag: latest
     strategy:
       #모듈들 명
