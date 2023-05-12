@@ -14,7 +14,7 @@ class UserDomainService(
 
     @Transactional
     fun registerUser(): User {
-        var newUser = User(OauthProfile("테스트", OauthProvider.KAKAO), "테스트", "테스트", false)
+        val newUser = User(OauthProfile("테스트", OauthProvider.KAKAO), "테스트", "테스트", false)
         userRepository.save(newUser)
         newUser.registerEvent()
         return newUser

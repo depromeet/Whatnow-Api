@@ -7,7 +7,7 @@ class Events {
     companion object {
 
         @JvmStatic
-         val publisherLocal = ThreadLocal<ApplicationEventPublisher>()
+        val publisherLocal = ThreadLocal<ApplicationEventPublisher>()
         fun raise(event: DomainEvent) {
             publisherLocal.get().publishEvent(event)
         }
@@ -16,9 +16,8 @@ class Events {
             publisherLocal.set(publisher)
         }
 
-         fun reset() {
+        fun reset() {
             publisherLocal.remove()
         }
     }
-
 }
