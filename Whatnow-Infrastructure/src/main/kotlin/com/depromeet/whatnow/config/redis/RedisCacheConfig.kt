@@ -25,9 +25,10 @@ class RedisCacheConfig {
                 ),
             )
             .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(
-                    GenericJackson2JsonRedisSerializer(),
-                ),
+                RedisSerializationContext.SerializationPair
+                    .fromSerializer(
+                        GenericJackson2JsonRedisSerializer(),
+                    ),
             )
             .entryTtl(Duration.ofDays(7L))
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf)
