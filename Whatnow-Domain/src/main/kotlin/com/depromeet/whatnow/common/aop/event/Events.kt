@@ -2,7 +2,7 @@ package com.depromeet.whatnow.common.aop.event
 
 import org.springframework.context.ApplicationEventPublisher
 
-class Events {
+object Events {
     private val publisherLocal = ThreadLocal<ApplicationEventPublisher>()
     fun raise(event: DomainEvent) {
         publisherLocal.get().publishEvent(event)
