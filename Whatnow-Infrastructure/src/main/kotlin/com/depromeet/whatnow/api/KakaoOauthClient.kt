@@ -20,6 +20,6 @@ interface KakaoOauthClient {
     ): KakaoTokenResponse
 
     @GetMapping("/.well-known/jwks.json")
-    @Cacheable(cacheNames = ["KakaoOICD"], cacheManager = "oidcCacheManager")
+    @Cacheable(cacheNames = ["KakaoOIDC"], cacheManager = "oidcCacheManager")
     fun kakaoOIDCOpenKeys(): OIDCPublicKeysResponse
 }
