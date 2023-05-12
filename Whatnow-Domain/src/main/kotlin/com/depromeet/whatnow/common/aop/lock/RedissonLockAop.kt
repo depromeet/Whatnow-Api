@@ -18,7 +18,7 @@ class RedissonLockAop(
 ) {
 
     @Around("@annotation(com.depromeet.whatnow.common.aop.lock.RedissonLock)")
-    fun lock(joinPoint: ProceedingJoinPoint): Any {
+    fun lock(joinPoint: ProceedingJoinPoint): Any? {
         val signature = joinPoint.signature as MethodSignature
         val method = signature.method
         val redissonLock = method.getAnnotation(RedissonLock::class.java)

@@ -14,7 +14,7 @@ class RedissonCallNewTransaction {
     // leaseTime 보다 트랜잭션 타임아웃을 작게 설정
     // leastTimeOut 발생전에 rollback 시키기 위함
     @Transactional(propagation = Propagation.REQUIRES_NEW, timeout = 9)
-    fun proceed(joinPoint: ProceedingJoinPoint): Any {
+    fun proceed(joinPoint: ProceedingJoinPoint): Any? {
         return joinPoint.proceed()
     }
 }

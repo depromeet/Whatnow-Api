@@ -2,7 +2,7 @@ package com.depromeet.whatnow.common.aop.lock
 
 import java.util.concurrent.TimeUnit
 
-@Target
+@Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class RedissonLock(
     val identifier: String,
