@@ -6,7 +6,7 @@ class ErrorResponse(
     var status: Int? = null,
     var code: String? = null,
     var reason: String? = null,
-    var timeStamp: LocalDateTime? = null,
+    var timeStamp: LocalDateTime? = LocalDateTime.now(),
     var path: String? = null,
 ) {
     constructor(errorReason: ErrorReason?, path: String) : this() {
