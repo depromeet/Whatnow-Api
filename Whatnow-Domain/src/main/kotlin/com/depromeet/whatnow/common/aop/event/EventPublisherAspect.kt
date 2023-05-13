@@ -17,7 +17,7 @@ class EventPublisherAspect : ApplicationEventPublisherAware {
     private val appliedLocal: ThreadLocal<Boolean> = ThreadLocal.withInitial { false }
 
     @Around("@annotation(org.springframework.transaction.annotation.Transactional)")
-    fun handleEvent(joinPoint: ProceedingJoinPoint): Any {
+    fun handleEvent(joinPoint: ProceedingJoinPoint): Any? {
         val appliedValue = appliedLocal.get()
         // nested를 쓰는이유
         // 트랜잭션 안에 트랜잭션이 또있는 경우대비
