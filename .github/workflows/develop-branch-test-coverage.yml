@@ -41,8 +41,11 @@ jobs:
       - name: Start containers  # test 돌릴때 레디스 필요
         run: docker-compose up -d
 
-      - name: test and analyze
+      - name: test
+        run: ./gradlew test --info --stacktrace --no-daemon
+
+      - name: analyze
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew test sonar --info --stacktrace --no-daemon
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonar --info --stacktrace --no-daemon
