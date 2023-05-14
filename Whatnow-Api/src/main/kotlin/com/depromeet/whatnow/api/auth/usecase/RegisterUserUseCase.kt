@@ -16,16 +16,11 @@ class RegisterUserUseCase(
     val userDomainService: UserDomainService,
     val kakaoOauthHelper: KakaoOauthHelper,
 ) {
-    fun execute(): User {
-        return userDomainService.registerUser()
-    }
 
     fun upsertKakaoOauthUser(code: String): TokenAndUserResponse {
         val oauthAccessToken: String = kakaoOauthHelper.getOauthToken(code).accessToken
         val oauthUserInfo: OauthUserInfoDto = kakaoOauthHelper.getUserInfo(oauthAccessToken)
-
-//        val profile: Profile = oauthUserInfo.toProfile()
-        val user: User = userDomainService.upsertUser(oauthUserInfo.username, oauthUserInfo.profileImage, oauthUserInfo.isDefaultImage, oauthUserInfo.toOauthInfo())
+        val user: User = userDomainService.upsertUser(oauthUserInfo.username, oauthUserInfo.profileImage, oauthUserInfo.isDefaultImage, oauthUserInfo.toOauthInfo(), oauthUserInfo.oauthId)
         return TokenAndUserResponse("나중에 넣을 예정(우리 백엔드 토큰)", "나중에 넣을 예정(우리 백엔드 토큰)", user)
     }
 

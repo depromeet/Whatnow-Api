@@ -1,31 +1,26 @@
 package com.depromeet.whatnow.domains.user.service
 
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
-import com.depromeet.whatnow.domains.user.domain.OauthProvider
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserDomainService(
     val userRepository: UserRepository,
 ) {
 
-    @Transactional
-    fun registerUser(): User {
-        val newUser = User(OauthInfo("테스트", OauthProvider.KAKAO), "테스트", "테스트", false)
-        userRepository.save(newUser)
-        newUser.registerEvent()
-        return newUser
-    }
-
+    /**
+     * 백엔드 개발용 회원가입 메서드
+     * upsert로 동작합니다.
+     */
     fun upsertUser(
         username: String,
         profileImage: String,
         defaultImage: Boolean,
-        toOauthInfo: OauthInfo,
+        oauthInfo: OauthInfo,
+        oauthId: String,
     ): User {
-        TODO("Not yet implemented")
+        return userRepository.findByOauthInfo(oauthInfo) ?: userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
     }
 }

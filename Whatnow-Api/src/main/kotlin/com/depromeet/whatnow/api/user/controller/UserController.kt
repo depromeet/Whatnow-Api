@@ -4,7 +4,6 @@ import com.depromeet.whatnow.api.auth.usecase.RegisterUserUseCase
 import com.depromeet.whatnow.api.user.usecase.ReadUserUseCase
 import com.depromeet.whatnow.domains.user.domain.User
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -18,10 +17,5 @@ class UserController(
     @GetMapping
     fun getUser(): User {
         return readUserUseCase.findUser()
-    }
-
-    @PostMapping
-    fun registerUser(): User {
-        return registerUserUseCase.execute()
     }
 }
