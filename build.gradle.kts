@@ -79,6 +79,11 @@ subprojects{
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation ("org.mockito.kotlin:mockito-kotlin:4.1.0")
+        // mockito 사용시 이슈가 있음 하단 참고.
+        // https://github.com/mockito/mockito-kotlin
+        // https://stackoverflow.com/questions/59230041/argumentmatchers-any-must-not-be-null
+        // http://derekwilson.net/blog/2018/08/23/mokito-kotlin
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     }
     tasks.getByName<Jar>("jar") {

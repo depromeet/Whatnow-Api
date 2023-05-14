@@ -27,9 +27,6 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-!**/*.hprof
-*.hprof
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

@@ -1,6 +1,11 @@
 package com.depromeet.whatnow.domains.user.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
+<<<<<<< HEAD
+=======
+import com.depromeet.whatnow.common.aop.event.Events
+import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
+>>>>>>> develop
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -35,4 +40,15 @@ class User(
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     val id: Long? = null,
+<<<<<<< HEAD
 ) : BaseTimeEntity()
+=======
+) : BaseTimeEntity() {
+
+    //    @PostPersist
+    // 원래 되어야하는데.. postpersist가 콜백이라서 그런지 아예 다른 스레드에서 돌아버리네요..
+    fun registerEvent() {
+        Events.raise(UserSignUpEvent(this.id!!))
+    }
+}
+>>>>>>> develop

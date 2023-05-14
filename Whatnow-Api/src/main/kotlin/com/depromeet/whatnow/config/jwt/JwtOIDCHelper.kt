@@ -1,6 +1,10 @@
 package com.depromeet.whatnow.config.jwt
 
+<<<<<<< HEAD
 import com.depromeet.whatnow.config.consts.KID
+=======
+import com.depromeet.whatnow.config.static.KID
+>>>>>>> develop
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Header
 import io.jsonwebtoken.Jws
