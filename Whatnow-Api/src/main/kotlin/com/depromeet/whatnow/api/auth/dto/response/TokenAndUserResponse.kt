@@ -6,4 +6,6 @@ data class TokenAndUserResponse(
     val accessToken: String,
     val refreshToken: String,
     val user: User, // 나중에 dto로 바꿀게용~
+    val accessTokenExpireIn: Long,
+    val refreshTokenExpireIn: Long,
 )
