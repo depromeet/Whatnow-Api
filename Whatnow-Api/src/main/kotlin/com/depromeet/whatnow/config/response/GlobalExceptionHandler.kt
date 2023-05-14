@@ -80,12 +80,12 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
             val path = propertyPath.takeLast(1).firstOrNull()
             bindingErrors[path] = constraintViolation.message
         }
-        val errorReason = ErrorReason.builder()
-            .code(BAD_REQUEST.toString())
-            .status(BAD_REQUEST)
-            .reason(bindingErrors.toString())
-            .build()
-        val errorResponse = ErrorResponse(errorReason, request.requestURL.toString())
+        val errorReason = ErrorReason.of(
+            status = BAD_REQUEST,
+            code = bindingErrors.toString(),
+            reason = bindingErrors.toString(),
+        )
+        val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
         return ResponseEntity.status(errorReason.status!!)
             .body(errorResponse)
     }
@@ -111,7 +111,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     ): ResponseEntity<ErrorResponse?>? {
 //        val code: BaseErrorCode? = e.errorCode
         val errorReason: ErrorReason? = e.getErrorReason()
-        val errorResponse = ErrorResponse(errorReason, request.requestURL.toString())
+        val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
         return ResponseEntity.status(HttpStatus.valueOf(errorReason?.status!!))
             .body<ErrorResponse>(errorResponse)
     }

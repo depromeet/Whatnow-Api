@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.user.usecase
+package com.depromeet.whatnow.api.user.usecase
 
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.repository.UserRepository
