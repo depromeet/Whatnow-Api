@@ -44,7 +44,6 @@ class AuthController(
     }
 
     //    @Operation(summary = "id_token 으로 회원가입을 합니다.")
-//    @Tag(name = "1-2. [카카오]")
     @PostMapping("/oauth/kakao/register")
     fun kakaoAuthCheckRegisterValid(
         @RequestParam("id_token") token: String,
