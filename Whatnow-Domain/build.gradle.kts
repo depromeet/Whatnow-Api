@@ -3,14 +3,9 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 dependencies {
     api("org.springframework.boot:spring-boot-starter-data-jpa")
     api("org.springframework.boot:spring-boot-starter-data-redis")
-//    api("mysql:mysql-connector-java") 이후 정리되면 추가 예정
+    api("com.mysql:mysql-connector-j")
     implementation(project(":Whatnow-Infrastructure"))
-<<<<<<< HEAD
     implementation(project(":Whatnow-Common"))
-=======
->>>>>>> develop
-
-    // for test profile
     api("com.h2database:h2")
 }
 

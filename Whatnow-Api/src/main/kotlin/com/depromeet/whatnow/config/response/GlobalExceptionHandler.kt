@@ -18,10 +18,7 @@ import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import org.springframework.web.util.UriComponentsBuilder
-import java.util.List
-import java.util.function.Consumer
 import javax.servlet.http.HttpServletRequest
-import javax.validation.ConstraintViolation
 import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice()
@@ -73,11 +70,12 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     /** Request Param Validation 예외 처리*/
     @ExceptionHandler(ConstraintViolationException::class)
     fun constraintViolationExceptionHandler(
-        e: ConstraintViolationException, request: HttpServletRequest
+        e: ConstraintViolationException,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
         val bindingErrors: MutableMap<String?, Any> = HashMap()
-        e.constraintViolations.forEach{
-            constraintViolation ->
+        e.constraintViolations.forEach {
+                constraintViolation ->
             val propertyPath = constraintViolation.propertyPath.toString().split(".").dropLastWhile { it.isEmpty() }
             val path = propertyPath.takeLast(1).firstOrNull()
             bindingErrors[path] = constraintViolation.message
@@ -91,22 +89,25 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity.status(errorReason.status!!)
             .body(errorResponse)
     }
+
     @ExceptionHandler(WhatNowDynamicException::class)
     fun WhatnowDynamicExceptionHandler(
-        e: WhatNowDynamicException, request: HttpServletRequest
+        e: WhatNowDynamicException,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
         val errorResponse = ErrorResponse(
             e.status,
             e.code,
             e.reason,
-            path = request.requestURL.toString()
+            path = request.requestURL.toString(),
         )
         return ResponseEntity.status(HttpStatus.valueOf(e.status)).body<ErrorResponse>(errorResponse)
     }
 
     @ExceptionHandler(CodeException::class)
     fun codeExceptionHandler(
-        e: CodeException, request: HttpServletRequest
+        e: CodeException,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
 //        val code: BaseErrorCode? = e.errorCode
         val errorReason: ErrorReason? = e.getErrorReason()

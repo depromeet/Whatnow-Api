@@ -1,11 +1,7 @@
 package com.depromeet.whatnow.domains.user.domain
 
-import com.depromeet.whatnow.common.BaseTimeEntity
-<<<<<<< HEAD
-=======
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
->>>>>>> develop
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -22,7 +18,7 @@ import javax.persistence.Table
 class User(
 
     @Embedded
-    var OauthProfile: OauthProfile,
+    var oauthInfo: OauthInfo,
 
     var nickname: String,
 
@@ -40,9 +36,6 @@ class User(
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     val id: Long? = null,
-<<<<<<< HEAD
-) : BaseTimeEntity()
-=======
 ) : BaseTimeEntity() {
 
     //    @PostPersist
@@ -51,4 +44,3 @@ class User(
         Events.raise(UserSignUpEvent(this.id!!))
     }
 }
->>>>>>> develop

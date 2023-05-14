@@ -3,7 +3,7 @@ package com.depromeet.whatnow.exception
 import com.depromeet.whatnow.dto.ErrorReason
 
 class CodeException(
-    e:ErrorReason
+    e: ErrorReason,
 ) : RuntimeException() {
 
     var errorCode: BaseErrorCode? = null
