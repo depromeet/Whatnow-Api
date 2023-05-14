@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.auth.usecase.helper
 
+import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.OauthProvider
 
 data class OauthUserInfoDto(
@@ -8,4 +9,8 @@ data class OauthUserInfoDto(
     val isDefaultImage: Boolean,
     val username: String,
     val oauthProvider: OauthProvider,
-)
+) {
+    fun toOauthInfo(): OauthInfo {
+        return OauthInfo(oauthId, oauthProvider)
+    }
+}

@@ -19,7 +19,7 @@ import javax.persistence.Table
 class User(
 
     @Embedded
-    var OauthProfile: OauthProfile,
+    var oauthInfo: OauthInfo,
 
     var nickname: String,
 
