@@ -17,7 +17,7 @@ class KakaoOauthHelper(
     val oauthProperties: OauthProperties,
     val kakaoInfoClient: KakaoInfoClient,
     val kakaoOauthClient: KakaoOauthClient,
-//    val oauthOIDCHelper: OauthOIDCHelper,
+    val oauthOIDCHelper: OauthOIDCHelper,
 ) {
     var kakaoOauth: OauthProperties.OAuthSecret = oauthProperties.kakao
 
@@ -38,24 +38,24 @@ class KakaoOauthHelper(
     }
 
     fun getUserInfo(oauthAccessToken: String): OauthUserInfoDto {
-        val response: KakaoInformationResponse =
-            kakaoInfoClient.kakaoUserInfo(BEARER + oauthAccessToken)
-        return OauthUserInfoDto(response.id, response.kakaoAccount.profile.profileImageUrl, response.kakaoAccount.profile.isDefaultImage, response.kakaoAccount.profile.nickname, OauthProvider.KAKAO)
+        val response = kakaoInfoClient.kakaoUserInfo(BEARER + oauthAccessToken)
+        val kakaoAccount: KakaoInformationResponse.KakaoAccount = response.kakaoAccount
+        return OauthUserInfoDto(response.id, kakaoAccount.profile.profileImageUrl, kakaoAccount.profile.isDefaultImage, kakaoAccount.profile.nickname, kakaoAccount.email, OauthProvider.KAKAO)
     }
 
-    fun getOIDCDecodePayload(token: String?): OIDCDecodePayload {
+    fun getOIDCDecodePayload(token: String): OIDCDecodePayload {
         val oidcPublicKeysResponse: OIDCPublicKeysResponse = kakaoOauthClient.kakaoOIDCOpenKeys()
         return oauthOIDCHelper.getPayloadFromIdToken(
             token,
             kakaoOauth.baseUrl,
             kakaoOauth.appId,
-            oidcPublicKeysResponse
+            oidcPublicKeysResponse,
         )
     }
 
-    fun getOauthInfoByIdToken(idToken: String?): OauthInfo {
+    fun getOauthInfoByIdToken(idToken: String): OauthInfo {
         val oidcDecodePayload: OIDCDecodePayload = getOIDCDecodePayload(idToken)
-        return OauthInfo(oidcDecodePayload.sub,OauthProvider.KAKAO)
+        return OauthInfo(oidcDecodePayload.sub, OauthProvider.KAKAO)
     }
     // 회원탈퇴용 나중에 만들예정
 //    fun unlink(oid: String?) {

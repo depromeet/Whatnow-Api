@@ -8,6 +8,7 @@ data class OauthUserInfoDto(
     val profileImage: String,
     val isDefaultImage: Boolean,
     val username: String,
+    val email: String,
     val oauthProvider: OauthProvider,
 ) {
     fun toOauthInfo(): OauthInfo {

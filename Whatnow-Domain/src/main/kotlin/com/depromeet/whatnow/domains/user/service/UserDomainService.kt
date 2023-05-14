@@ -23,4 +23,14 @@ class UserDomainService(
     ): User {
         return userRepository.findByOauthInfo(oauthInfo) ?: userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
     }
+
+    fun checkUserCanRegister(oauthInfo: OauthInfo): Boolean {
+        userRepository.findByOauthInfo(oauthInfo)?. let { return false }
+        return true
+    }
+
+    fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String): User {
+        userRepository.findByOauthInfo(oauthInfo)?. let { throw Error("이미 회원가입했으면 안됨 ( 나중에 비즈니스 에러로 교체 예정") }
+        return userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
+    }
 }
