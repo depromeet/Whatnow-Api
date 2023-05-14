@@ -9,11 +9,9 @@ class ErrorResponse(
     var timeStamp: LocalDateTime? = LocalDateTime.now(),
     var path: String? = null,
 ) {
-    constructor(errorReason: ErrorReason?, path: String) : this() {
-        status = errorReason?.status
-        code = errorReason?.code
-        reason = errorReason?.reason
-        timeStamp = LocalDateTime.now()
-        this.path = path
+    companion object {
+        fun of(errorReason: ErrorReason?, path: String): ErrorResponse {
+            return ErrorResponse(errorReason?.status, errorReason?.code, errorReason?.reason, path = path)
+        }
     }
 }
