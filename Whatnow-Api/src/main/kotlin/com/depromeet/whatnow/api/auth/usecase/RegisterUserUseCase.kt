@@ -7,6 +7,7 @@ import com.depromeet.whatnow.api.auth.dto.response.OauthTokenResponse
 import com.depromeet.whatnow.api.auth.dto.response.TokenAndUserResponse
 import com.depromeet.whatnow.api.auth.usecase.helper.KakaoOauthHelper
 import com.depromeet.whatnow.api.auth.usecase.helper.OauthUserInfoDto
+import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.service.UserDomainService
 import org.springframework.stereotype.Service
@@ -38,6 +39,7 @@ class RegisterUserUseCase(
     }
 
     fun checkAvailableRegister(token: String): AbleRegisterResponse {
-        TODO("Not yet implemented")
+        val oauthInfo: OauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken)
+        return AvailableRegisterResponse(userDomainService.checkUserCanRegister(oauthInfo))
     }
 }

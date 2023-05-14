@@ -4,8 +4,11 @@ import com.depromeet.whatnow.api.KakaoInfoClient
 import com.depromeet.whatnow.api.KakaoOauthClient
 import com.depromeet.whatnow.api.dto.KakaoInformationResponse
 import com.depromeet.whatnow.api.dto.KakaoTokenResponse
+import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
 import com.depromeet.whatnow.config.OauthProperties
+import com.depromeet.whatnow.config.jwt.OIDCDecodePayload
 import com.depromeet.whatnow.config.static.BEARER
+import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.OauthProvider
 import org.springframework.stereotype.Service
 
@@ -40,23 +43,20 @@ class KakaoOauthHelper(
         return OauthUserInfoDto(response.id, response.kakaoAccount.profile.profileImageUrl, response.kakaoAccount.profile.isDefaultImage, response.kakaoAccount.profile.nickname, OauthProvider.KAKAO)
     }
 
-//    fun getOIDCDecodePayload(token: String?): OIDCDecodePayload {
-//        val oidcPublicKeysResponse: OIDCPublicKeysResponse = kakaoOauthClient.kakaoOIDCOpenKeys()
-//        return oauthOIDCHelper.getPayloadFromIdToken(
-//            token,
-//            kakaoOauth.baseUrl,
-//            kakaoOauth.appId,
-//            oidcPublicKeysResponse
-//        )
-//    }
-//
-//    fun getOauthInfoByIdToken(idToken: String?): OauthInfo {
-//        val oidcDecodePayload: OIDCDecodePayload = getOIDCDecodePayload(idToken)
-//        return OauthInfo.builder()
-//            .provider(OauthProvider.KAKAO)
-//            .oid(oidcDecodePayload.getSub())
-//            .build()
-//    }
+    fun getOIDCDecodePayload(token: String?): OIDCDecodePayload {
+        val oidcPublicKeysResponse: OIDCPublicKeysResponse = kakaoOauthClient.kakaoOIDCOpenKeys()
+        return oauthOIDCHelper.getPayloadFromIdToken(
+            token,
+            kakaoOauth.baseUrl,
+            kakaoOauth.appId,
+            oidcPublicKeysResponse
+        )
+    }
+
+    fun getOauthInfoByIdToken(idToken: String?): OauthInfo {
+        val oidcDecodePayload: OIDCDecodePayload = getOIDCDecodePayload(idToken)
+        return OauthInfo(oidcDecodePayload.sub,OauthProvider.KAKAO)
+    }
     // 회원탈퇴용 나중에 만들예정
 //    fun unlink(oid: String?) {
 //        val kakaoAdminKey: String = oauthProperties.getKakaoAdminKey()
