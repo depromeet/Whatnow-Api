@@ -8,7 +8,4 @@ import org.springframework.stereotype.Service
 class RegisterUserUseCase(
     val userDomainService: UserDomainService,
 ) {
-    fun execute(): User {
-        return userDomainService.registerUser()
-    }
 }

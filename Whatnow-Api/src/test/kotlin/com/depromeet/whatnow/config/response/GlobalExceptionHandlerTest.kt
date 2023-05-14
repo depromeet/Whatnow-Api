@@ -14,11 +14,12 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.http.HttpStatus
 import javax.servlet.http.HttpServletRequest
 @ComponentScan(basePackageClasses = [WhatnowApiApplication::class, WhatnowCommonApplication::class])
-class GlobalExceptionHandlerTest{
+class GlobalExceptionHandlerTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
     }
+
     @Mock
     lateinit var request: HttpServletRequest
 
@@ -38,5 +39,4 @@ class GlobalExceptionHandlerTest{
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity?.statusCode)
     }
-
 }

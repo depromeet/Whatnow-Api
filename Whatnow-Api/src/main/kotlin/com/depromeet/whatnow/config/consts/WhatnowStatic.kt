@@ -23,5 +23,4 @@ val INTERNAL_SERVER = 500
 val NO_START_NUMBER = 1000000L
 val MINIMUM_PAYMENT_WON = 1000L
 val ZERO = 0L
-class WhatnowStatic {
-}
+class WhatnowStatic
