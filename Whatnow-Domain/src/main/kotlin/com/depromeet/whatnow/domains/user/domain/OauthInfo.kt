@@ -5,7 +5,7 @@ import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
 @Embeddable
-class OauthProfile(
+class OauthInfo(
     var oauthId: String,
 
     @Enumerated(EnumType.STRING)

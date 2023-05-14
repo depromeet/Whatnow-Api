@@ -19,12 +19,11 @@ data class KakaoInformationResponse(
     data class KakaoAccount(
         val profile: Profile,
         val email: String,
-        val phoneNumber: String,
-        val name: String,
     ) {
 
         @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
         data class Profile(
+            val nickname: String,
             val profileImageUrl: String,
             val isDefaultImage: Boolean,
         )
