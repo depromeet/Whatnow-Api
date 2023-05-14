@@ -33,6 +33,9 @@ class User(
     @Enumerated(EnumType.STRING)
     var status: UserStatus = UserStatus.NORMAL,
 
+    @Enumerated(EnumType.STRING)
+    var accountRole : AccountRole = AccountRole.USER,
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
