@@ -34,7 +34,7 @@ class User(
     var status: UserStatus = UserStatus.NORMAL,
 
     @Enumerated(EnumType.STRING)
-    var accountRole : AccountRole = AccountRole.USER,
+    var accountRole: AccountRole = AccountRole.USER,
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -9,27 +9,22 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 class TokenGenerateHelper(
     val jwtTokenHelper: JwtTokenHelper,
-    val refreshTokenAdaptor: RefreshTokenAdaptor
+    val refreshTokenAdaptor: RefreshTokenAdaptor,
 ) {
 
     @Transactional
     fun execute(user: User): TokenAndUserResponse {
-        val newAccessToken: String = jwtTokenProvider.generateAccessToken(
-            user.getId(), user.getAccountRole().getValue()
+        val newAccessToken: String = jwtTokenHelper.generateAccessToken(
+            user.id!!,
+            user.accountRole.toString(),
         )
-        val newRefreshToken: String = jwtTokenProvider.generateRefreshToken(user.getId())
+        val newRefreshToken: String = jwtTokenHelper.generateRefreshToken(user.id!!)
         val newRefreshTokenEntity: RefreshTokenEntity = RefreshTokenEntity.builder()
             .refreshToken(newRefreshToken)
-            .id(user.getId())
-            .ttl(jwtTokenProvider.getRefreshTokenTTlSecond())
+            .id(user.get)
+            .ttl(jwtTokenHelper.refreshExpireIn)
             .build()
         refreshTokenAdaptor.save(newRefreshTokenEntity)
-        return TokenAndUserResponse.builder()
-            .userProfile(ProfileViewDto.from(user))
-            .accessToken(newAccessToken)
-            .accessTokenAge(jwtTokenProvider.getAccessTokenTTlSecond())
-            .refreshTokenAge(jwtTokenProvider.getRefreshTokenTTlSecond())
-            .refreshToken(newRefreshToken)
-            .build()
+        return TokenAndUserResponse
     }
 }
