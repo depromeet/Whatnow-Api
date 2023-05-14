@@ -41,8 +41,9 @@ class UserDomainService(
     }
 
     @Transactional
-    fun loginUser(oauthInfo: OauthInfo) {
-        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러")}
+    fun loginUser(oauthInfo: OauthInfo): User {
+        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러") }
         user.login()
+        return user
     }
 }

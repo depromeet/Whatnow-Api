@@ -26,7 +26,7 @@ class User(
     var profileImg: String, // 프로필 이미지도 vo 로 빼면 더 이쁠듯
     var isDefaultImg: Boolean,
 
-    var lastLoginAt : LocalDateTime = LocalDateTime.now(),
+    var lastLoginAt: LocalDateTime = LocalDateTime.now(),
 
     var fcmToken: String = "", // vo 로 빼서 알림 수신여부 까지 같이 관리하면 그림이 더 이쁠듯 합니다.
 

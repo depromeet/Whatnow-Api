@@ -5,7 +5,6 @@ import com.depromeet.whatnow.api.auth.usecase.helper.TokenGenerateHelper
 import com.depromeet.whatnow.config.jwt.JwtTokenHelper
 import com.depromeet.whatnow.domains.user.adapter.RefreshTokenAdapter
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
-import com.depromeet.whatnow.domains.user.domain.RefreshTokenRedisEntity
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.service.UserDomainService
 import org.springframework.stereotype.Service
@@ -16,7 +15,7 @@ class RefreshUseCase(
     val jwtTokenHelper: JwtTokenHelper,
     val userAdapter: UserAdapter,
     val userDomainService: UserDomainService,
-    val tokenGenerateHelper: TokenGenerateHelper
+    val tokenGenerateHelper: TokenGenerateHelper,
 ) {
 
     /**

@@ -6,9 +6,9 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
-class UserAdapter (
-    val userRepository: UserRepository
-        ){
+class UserAdapter(
+    val userRepository: UserRepository,
+) {
 
     fun queryUser(userId: Long): User {
         return userRepository.findByIdOrNull(userId) ?: run { throw Error("유저없음 안됨") }
