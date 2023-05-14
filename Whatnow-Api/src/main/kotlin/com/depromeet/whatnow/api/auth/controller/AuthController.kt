@@ -68,4 +68,28 @@ class AuthController(
     ): OauthUserInfoResponse {
         return oauthUserInfoUseCase.execute(accessToken)
     }
+
+//    @Operation(summary = "id_token 으로 로그인을 합니다.")
+//    @Tag(name = "1-2. [카카오]")
+    @PostMapping("/oauth/kakao/login")
+    fun kakaoOauthUserLogin(
+        @RequestParam("id_token") token: String?,
+    ): TokenAndUserResponse {
+        return loginUseCase.execute(token)
+    }
+
+//    @Operation(summary = "refreshToken 용입니다.")
+    @PostMapping("/token/refresh")
+    fun tokenRefresh(
+        @RequestParam(value = "token") refreshToken: String,
+    ): TokenAndUserResponse {
+        return refreshUseCase.execute(refreshTokenCookie)
+    }
+
+//    @Operation(summary = "로그아웃을 합니다.")
+//    @SecurityRequirement(name = "access-token")
+    @PostMapping("/logout")
+    fun logoutUser() {
+        logoutUseCase.execute()
+    }
 }
