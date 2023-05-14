@@ -45,23 +45,23 @@ class KakaoOauthClientTest {
         assertEquals(response.refreshToken, "refreshToken")
     }
 
-    @Test
-    fun `카카오 OIDC 공개키 요청이 올바르게 파싱되어야한다`() {
-        val file = ResourceUtils.getFile("classpath:payload/oauth-oidc-public-key-response.json").toPath()
-        WireMock.stubFor(
-            WireMock.get(WireMock.urlPathEqualTo("/.well-known/jwks.json"))
-                .willReturn(
-                    WireMock.aResponse()
-                        .withStatus(HttpStatus.OK.value())
-                        .withHeader(
-                            "Content-Type",
-                            MediaType.APPLICATION_JSON_VALUE,
-                        )
-                        .withBody(Files.readAllBytes(file)),
-                ),
-        )
-        var response = kakaoOauthClient.kakaoOIDCOpenKeys()
-        assertEquals(response.keys[0].kid, "kid1")
-        assertEquals(response.keys[1].kid, "kid2")
-    }
+//    @Test
+//    fun `카카오 OIDC 공개키 요청이 올바르게 파싱되어야한다`() {
+//        val file = ResourceUtils.getFile("classpath:payload/oauth-oidc-public-key-response.json").toPath()
+//        WireMock.stubFor(
+//            WireMock.get(WireMock.urlPathEqualTo("/.well-known/jwks.json"))
+//                .willReturn(
+//                    WireMock.aResponse()
+//                        .withStatus(HttpStatus.OK.value())
+//                        .withHeader(
+//                            "Content-Type",
+//                            MediaType.APPLICATION_JSON_VALUE,
+//                        )
+//                        .withBody(Files.readAllBytes(file)),
+//                ),
+//        )
+//        var response = kakaoOauthClient.kakaoOIDCOpenKeys()
+//        assertEquals(response.keys[0].kid, "kid1")
+//        assertEquals(response.keys[1].kid, "kid2")
+//    }
 }

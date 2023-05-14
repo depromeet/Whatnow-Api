@@ -1,10 +1,9 @@
-package com.depromeet.whatnow.user.controller
+package com.depromeet.whatnow.api.user.controller
 
+import com.depromeet.whatnow.api.auth.usecase.RegisterUserUseCase
+import com.depromeet.whatnow.api.user.usecase.ReadUserUseCase
 import com.depromeet.whatnow.domains.user.domain.User
-import com.depromeet.whatnow.user.usecase.ReadUserUseCase
-import com.depromeet.whatnow.user.usecase.RegisterUserUseCase
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 

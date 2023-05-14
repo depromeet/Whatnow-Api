@@ -75,7 +75,7 @@ enum class GlobalErrorCode(status: Int, code: String, reason: String) : BaseErro
     OTHER_SERVER_NOT_FOUND(NOT_FOUND, "OTHER_SERVER_404_1", "다른 서버에서 잘못된 Resource를 요청했습니다."),
 
     @ExplainError("다른 서버에서 발생한 알 수 없는 서버 예외입니다.")
-    OTHER_SERVER_INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "OTHER_SERVER_500_1", "다른 서버에서 알 수 없는 서버 오류가 발생했습니다.");
+    OTHER_SERVER_INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "OTHER_SERVER_500_1", "다른 서버에서 알 수 없는 서버 오류가 발생했습니다.")
 
     override val errorReason: ErrorReason
         get() = ErrorReason(status, code, reason)
@@ -85,5 +85,5 @@ enum class GlobalErrorCode(status: Int, code: String, reason: String) : BaseErro
 
     var status: Int? = null
     var code: String? = null
-    var reason: String? = null
+    var reason: String? = null,
 }
