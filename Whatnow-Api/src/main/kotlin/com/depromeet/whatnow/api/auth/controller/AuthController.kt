@@ -6,7 +6,10 @@ import com.depromeet.whatnow.api.auth.dto.response.OauthLoginLinkResponse
 import com.depromeet.whatnow.api.auth.dto.response.OauthTokenResponse
 import com.depromeet.whatnow.api.auth.dto.response.OauthUserInfoResponse
 import com.depromeet.whatnow.api.auth.dto.response.TokenAndUserResponse
+import com.depromeet.whatnow.api.auth.usecase.LoginUseCase
+import com.depromeet.whatnow.api.auth.usecase.LogoutUseCase
 import com.depromeet.whatnow.api.auth.usecase.OauthUserInfoUseCase
+import com.depromeet.whatnow.api.auth.usecase.RefreshUseCase
 import com.depromeet.whatnow.api.auth.usecase.RegisterUserUseCase
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,6 +24,9 @@ import javax.validation.Valid
 class AuthController(
     val registerUseCase: RegisterUserUseCase,
     val oauthUserInfoUseCase: OauthUserInfoUseCase,
+    val loginUseCase: LoginUseCase,
+    val refreshUseCase: RefreshUseCase,
+    val logoutUseCase: LogoutUseCase,
 ) {
 
     //    @Operation(summary = "개발용 회원가입입니다 ( 백엔드용 )", deprecated = true)
@@ -73,7 +79,7 @@ class AuthController(
 //    @Tag(name = "1-2. [카카오]")
     @PostMapping("/oauth/kakao/login")
     fun kakaoOauthUserLogin(
-        @RequestParam("id_token") token: String?,
+        @RequestParam("id_token") token: String,
     ): TokenAndUserResponse {
         return loginUseCase.execute(token)
     }
@@ -83,7 +89,7 @@ class AuthController(
     fun tokenRefresh(
         @RequestParam(value = "token") refreshToken: String,
     ): TokenAndUserResponse {
-        return refreshUseCase.execute(refreshTokenCookie)
+        return refreshUseCase.execute(refreshToken)
     }
 
 //    @Operation(summary = "로그아웃을 합니다.")
