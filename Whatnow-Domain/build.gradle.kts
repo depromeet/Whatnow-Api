@@ -7,7 +7,7 @@ dependencies {
     implementation(project(":Whatnow-Infrastructure"))
 
     // for test profile
-    testRuntimeOnly("com.h2database:h2")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks.getByName<BootJar>("bootJar") {
