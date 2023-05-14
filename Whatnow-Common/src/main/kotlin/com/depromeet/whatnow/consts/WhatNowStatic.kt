@@ -16,5 +16,5 @@ const val FORBIDDEN = 403
 const val NOT_FOUND = 404
 const val INTERNAL_SERVER = 500
 const val ZERO = 0L
-
+const val KID = "kid"
 class WhatNowStatic

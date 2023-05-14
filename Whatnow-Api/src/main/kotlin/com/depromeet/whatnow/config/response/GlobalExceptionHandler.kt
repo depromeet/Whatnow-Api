@@ -3,7 +3,6 @@ package com.depromeet.whatnow.config.response
 import com.depromeet.whatnow.consts.BAD_REQUEST
 import com.depromeet.whatnow.dto.ErrorReason
 import com.depromeet.whatnow.dto.ErrorResponse
-import com.depromeet.whatnow.exception.BaseErrorCode
 import com.depromeet.whatnow.exception.CodeException
 import com.depromeet.whatnow.exception.GlobalErrorCode
 import com.depromeet.whatnow.exception.WhatNowDynamicException
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.UriComponentsBuilder
 import java.util.List
 import java.util.function.Consumer
@@ -26,7 +24,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.validation.ConstraintViolation
 import javax.validation.ConstraintViolationException
 
-@RestControllerAdvice
+@RestControllerAdvice()
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     /**요청 url을 resource로 담아 상위 객체에 처리를 위임한다.*/
@@ -74,33 +72,24 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     /** Request Param Validation 예외 처리*/
     @ExceptionHandler(ConstraintViolationException::class)
-    fun ConstraintViolationExceptionHandler(
+    fun constraintViolationExceptionHandler(
         e: ConstraintViolationException, request: HttpServletRequest
     ): ResponseEntity<ErrorResponse?>? {
         val bindingErrors: MutableMap<String?, Any> = HashMap()
-        e.constraintViolations
-            .forEach(
-                Consumer { constraintViolation: ConstraintViolation<*> ->
-                    val propertyPath = List.of(
-                        *constraintViolation
-                            .propertyPath
-                            .toString()
-                            .split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    )
-                    val path = propertyPath.stream()
-                        .skip(propertyPath.size - 1L)
-                        .findFirst()
-                        .orElse(null)
-                    bindingErrors[path] = constraintViolation.message
-                })
+        e.constraintViolations.forEach{
+            constraintViolation ->
+            val propertyPath = constraintViolation.propertyPath.toString().split(".").dropLastWhile { it.isEmpty() }
+            val path = propertyPath.takeLast(1).firstOrNull()
+            bindingErrors[path] = constraintViolation.message
+        }
         val errorReason = ErrorReason.builder()
             .code(BAD_REQUEST.toString())
             .status(BAD_REQUEST)
             .reason(bindingErrors.toString())
             .build()
         val errorResponse = ErrorResponse(errorReason, request.requestURL.toString())
-        return ResponseEntity.status(HttpStatus.valueOf(errorReason.status!!))
-            .body<ErrorResponse>(errorResponse)
+        return ResponseEntity.status(errorReason.status!!)
+            .body(errorResponse)
     }
     @ExceptionHandler(WhatNowDynamicException::class)
     fun WhatnowDynamicExceptionHandler(
@@ -116,21 +105,21 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(CodeException::class)
-    fun CodeExceptionHandler(
+    fun codeExceptionHandler(
         e: CodeException, request: HttpServletRequest
     ): ResponseEntity<ErrorResponse?>? {
-        val code: BaseErrorCode? = e.errorCode
+//        val code: BaseErrorCode? = e.errorCode
         val errorReason: ErrorReason? = e.getErrorReason()
         val errorResponse = ErrorResponse(errorReason, request.requestURL.toString())
         return ResponseEntity.status(HttpStatus.valueOf(errorReason?.status!!))
             .body<ErrorResponse>(errorResponse)
     }
+
     @ExceptionHandler(Exception::class)
     private fun handleException(
-        e: Exception?,
         request: HttpServletRequest?,
     ): ResponseEntity<ErrorResponse?> {
-        val cachingRequest = request as ContentCachingRequestWrapper?
+//        val cachingRequest = request as ContentCachingRequestWrapper?
         val url = UriComponentsBuilder.fromHttpRequest(
             ServletServerHttpRequest(
                 request!!,

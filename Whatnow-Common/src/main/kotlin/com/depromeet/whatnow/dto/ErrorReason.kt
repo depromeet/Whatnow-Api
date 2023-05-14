@@ -1,9 +1,9 @@
 package com.depromeet.whatnow.dto
 
 data class ErrorReason(
-    val status: Int?,
-    val code: String?,
-    val reason: String?,
+    var status: Int?,
+    var code: String?,
+    var reason: String?,
 ) {
     data class Builder(
         var status: Int? = null,
