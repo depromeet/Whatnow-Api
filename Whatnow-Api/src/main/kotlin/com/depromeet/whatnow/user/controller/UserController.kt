@@ -19,9 +19,4 @@ class UserController(
     fun getUser(): User {
         return readUserUseCase.findUser()
     }
-
-    @PostMapping
-    fun registerUser(): User {
-        return registerUserUseCase.execute()
-    }
 }
