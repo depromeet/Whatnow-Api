@@ -3,16 +3,20 @@ spring:
     include:
       - infrastructure
       - domain
-#springdoc:
-#  default-produces-media-type: application/json
-#  default-consumes-media-type: application/json
-#  swagger-ui:
-#    tags-sorter: alpha
+springdoc:
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  swagger-ui:
+    tags-sorter: alpha
 auth:
   jwt:
     secret-key: ${JWT_SECRET_KEY:testkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkey}
     access-exp: ${JWT_ACCESS_EXP:3600}
     refresh-exp: ${JWT_REFRESH_EXP:3600}
+
+swagger:
+  user: ${SWAGGER_USER:user}
+  password: ${SWAGGER_PASSWORD:password}
 ---
 spring:
   config:

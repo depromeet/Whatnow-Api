@@ -1,9 +1,9 @@
 package com.depromeet.whatnow.dto
 
 data class ErrorReason(
-    var status: Int?,
-    var code: String?,
-    var reason: String?,
+    var status: Int,
+    var code: String,
+    var reason: String,
 ) {
 
     companion object {

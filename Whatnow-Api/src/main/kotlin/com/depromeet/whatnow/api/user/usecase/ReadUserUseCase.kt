@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.user.usecase
 
+import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -10,6 +11,7 @@ class ReadUserUseCase(
     val userRepository: UserRepository,
 ) {
     fun findUser(): User {
-        return userRepository.findByIdOrNull(1)!!
+        val currentUserId: Long = SecurityUtils.currentUserId
+        return userRepository.findByIdOrNull(currentUserId)!!
     }
 }

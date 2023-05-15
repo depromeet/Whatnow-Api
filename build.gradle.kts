@@ -49,6 +49,7 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.spring" )
     apply(plugin = "org.jetbrains.kotlin.plugin.jpa" )
 
+
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
@@ -78,6 +79,8 @@ subprojects{
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        runtimeOnly("io.github.microutils:kotlin-logging-jvm:3.0.5")//logger
+
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation ("org.mockito.kotlin:mockito-kotlin:4.1.0")
         // mockito 사용시 이슈가 있음 하단 참고.
