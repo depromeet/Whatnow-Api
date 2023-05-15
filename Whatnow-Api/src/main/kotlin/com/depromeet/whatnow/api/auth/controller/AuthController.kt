@@ -24,6 +24,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v1/auth")
+@Tag(name = "1-1. [인증]")
 class AuthController(
     val registerUseCase: RegisterUserUseCase,
     val oauthUserInfoUseCase: OauthUserInfoUseCase,
