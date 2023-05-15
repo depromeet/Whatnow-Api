@@ -57,11 +57,11 @@ class KakaoOauthHelper(
         val oidcDecodePayload: OIDCDecodePayload = getOIDCDecodePayload(idToken)
         return OauthInfo(oidcDecodePayload.sub, OauthProvider.KAKAO)
     }
-    // 회원탈퇴용 나중에 만들예정
-//    fun unlink(oid: String?) {
-//        val kakaoAdminKey: String = oauthProperties.getKakaoAdminKey()
-//        val unlinkKaKaoTarget: UnlinkKaKaoTarget = UnlinkKaKaoTarget.from(oid)
-//        val header: String = "KakaoAK $kakaoAdminKey"
-//        kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget)
-//    }
+
+    fun unlink(oid: String?) {
+        val kakaoAdminKey: String = oauthProperties.kakao.()
+        val unlinkKaKaoTarget: UnlinkKaKaoTarget = UnlinkKaKaoTarget.from(oid)
+        val header: String = "KakaoAK $kakaoAdminKey"
+        kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget)
+    }
 }

@@ -46,4 +46,8 @@ class UserDomainService(
         user.login()
         return user
     }
+
+    @Transactional
+    fun withDrawUser(currentUserId: Long) {
+    }
 }

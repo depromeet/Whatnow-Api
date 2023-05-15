@@ -11,9 +11,12 @@ import com.depromeet.whatnow.api.auth.usecase.LogoutUseCase
 import com.depromeet.whatnow.api.auth.usecase.OauthUserInfoUseCase
 import com.depromeet.whatnow.api.auth.usecase.RefreshUseCase
 import com.depromeet.whatnow.api.auth.usecase.RegisterUserUseCase
+import com.depromeet.whatnow.api.auth.usecase.WithDrawUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -31,6 +34,7 @@ class AuthController(
     val loginUseCase: LoginUseCase,
     val refreshUseCase: RefreshUseCase,
     val logoutUseCase: LogoutUseCase,
+    val withDrawUseCase: WithDrawUseCase,
 ) {
 
     @Operation(summary = "개발용 회원가입입니다 ( 백엔드용 )", deprecated = true)
@@ -101,5 +105,12 @@ class AuthController(
     @PostMapping("/logout")
     fun logoutUser() {
         logoutUseCase.execute()
+    }
+
+    @Operation(summary = "회원탈퇴를 합니다.")
+    @SecurityRequirement(name = "access-token")
+    @DeleteMapping("/me")
+    fun withDrawUser() {
+        withDrawUseCase.execute()
     }
 }
