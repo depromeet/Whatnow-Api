@@ -9,11 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-<<<<<<< HEAD
-      image: deploy-testgit
-=======
       image: deploy-test
->>>>>>> develop
       tag: latest
     strategy:
       #모듈들 명
@@ -41,12 +37,9 @@ jobs:
           RELEASE_VERSION_WITHOUT_V="$(cut -d'v' -f2 <<< ${GITHUB_REF#refs/*/})"
           echo "RELEASE_VERSION_WITHOUT_V=$RELEASE_VERSION_WITHOUT_V" >> $GITHUB_ENV
 
-<<<<<<< HEAD
-=======
       - name: Start containers  # test 돌릴때 레디스 필요
         run: docker-compose up -d
 
->>>>>>> develop
       - name: Gradle Build
         uses: gradle/gradle-build-action@v2
 

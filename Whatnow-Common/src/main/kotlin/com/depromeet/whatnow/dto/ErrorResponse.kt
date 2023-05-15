@@ -11,13 +11,7 @@ data class ErrorResponse(
 ) {
     companion object {
         fun of(errorReason: ErrorReason?, path: String): ErrorResponse {
-            return ErrorResponse(
-                status = errorReason?.status,
-                code = errorReason?.code,
-                reason = errorReason?.reason,
-                timeStamp = LocalDateTime.now(),
-                path = path,
-            )
+            return ErrorResponse(errorReason?.status, errorReason?.code, errorReason?.reason, path = path)
         }
     }
 }

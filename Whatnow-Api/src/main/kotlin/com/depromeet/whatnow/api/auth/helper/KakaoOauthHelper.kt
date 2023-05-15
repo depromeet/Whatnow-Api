@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.auth.usecase.helper
+package com.depromeet.whatnow.api.auth.helper
 
 import com.depromeet.whatnow.api.KakaoInfoClient
 import com.depromeet.whatnow.api.KakaoOauthClient
