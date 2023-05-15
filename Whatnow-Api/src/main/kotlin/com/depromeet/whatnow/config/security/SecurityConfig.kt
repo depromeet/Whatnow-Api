@@ -55,7 +55,7 @@ class SecurityConfig(
         // commence 로 401 넘겨줌. -> 응답 헤더에 www-authenticate 로 인증하라는 응답줌.
         // 브라우저가 basic auth 실행 시켜줌.
         // 개발 환경에서만 스웨거 비밀번호 미설정.
-        if (springEnvironmentHelper.isProdAndStagingProfile) {
+        if (springEnvironmentHelper.isProdAndDevProfile) {
             http.authorizeRequests().mvcMatchers(*SWAGGER_PATTERNS).authenticated().and().httpBasic()
         }
         http.authorizeRequests()

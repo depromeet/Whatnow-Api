@@ -6,7 +6,6 @@ import com.depromeet.whatnow.consts.PROD
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.util.CollectionUtils
-import java.util.*
 
 @Component
 class SpringEnvironmentHelper(
@@ -27,7 +26,7 @@ class SpringEnvironmentHelper(
         get() {
             return environment.activeProfiles.contains(DEV)
         }
-    val isProdAndStagingProfile: Boolean
+    val isProdAndDevProfile: Boolean
         get() {
             val activeProfiles = environment.activeProfiles.toList()
             return CollectionUtils.containsAny(PROD_AND_DEV, activeProfiles)

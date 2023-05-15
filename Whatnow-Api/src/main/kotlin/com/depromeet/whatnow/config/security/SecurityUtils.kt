@@ -15,7 +15,7 @@ class SecurityUtils {
                 val authentication = SecurityContextHolder.getContext().authentication
                     ?: throw Error("비즈니스 에러로 전환예정")
                 return if (authentication.isAuthenticated && !CollectionUtils.containsAny(authentication.authorities, notUserAuthority)) {
-                    java.lang.Long.valueOf(authentication.name)
+                    authentication.name.toLong()
                 } else {
                     0L
                 }
