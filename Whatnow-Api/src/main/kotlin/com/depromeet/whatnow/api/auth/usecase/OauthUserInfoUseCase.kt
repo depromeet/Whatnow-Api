@@ -1,8 +1,8 @@
 package com.depromeet.whatnow.api.auth.usecase
 
 import com.depromeet.whatnow.api.auth.dto.response.OauthUserInfoResponse
-import com.depromeet.whatnow.api.auth.usecase.helper.KakaoOauthHelper
-import com.depromeet.whatnow.api.auth.usecase.helper.OauthUserInfoDto
+import com.depromeet.whatnow.api.auth.helper.KakaoOauthHelper
+import com.depromeet.whatnow.api.auth.helper.OauthUserInfoDto
 import org.springframework.stereotype.Service
 
 @Service

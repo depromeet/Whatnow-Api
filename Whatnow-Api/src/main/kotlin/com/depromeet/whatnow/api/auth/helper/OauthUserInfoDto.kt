@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.auth.usecase.helper
+package com.depromeet.whatnow.api.auth.helper
 
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.OauthProvider
