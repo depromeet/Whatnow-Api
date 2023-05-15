@@ -53,7 +53,7 @@ class JwtTokenFilter (
     fun getAuthentication(token: String): Authentication {
         val accessTokenInfo: AccessTokenInfo = jwtTokenProvider.parseAccessToken(token)
         val userDetails: UserDetails =
-            AuthDetails(accessTokenInfo.getUserId().toString(), accessTokenInfo.getRole())
+            AuthDetails(accessTokenInfo.userId.toString(), accessTokenInfo.role)
         return UsernamePasswordAuthenticationToken(
             userDetails, "user", userDetails.authorities
         )
