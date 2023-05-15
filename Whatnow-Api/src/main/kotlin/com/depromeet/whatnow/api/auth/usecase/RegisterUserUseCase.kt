@@ -7,6 +7,7 @@ import com.depromeet.whatnow.api.auth.dto.response.OauthTokenResponse
 import com.depromeet.whatnow.api.auth.dto.response.TokenAndUserResponse
 import com.depromeet.whatnow.api.auth.helper.KakaoOauthHelper
 import com.depromeet.whatnow.api.auth.helper.OauthUserInfoDto
+import com.depromeet.whatnow.api.auth.usecase.helper.TokenGenerateHelper
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.service.UserDomainService
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service
 class RegisterUserUseCase(
     val userDomainService: UserDomainService,
     val kakaoOauthHelper: KakaoOauthHelper,
+    val tokenGenerateHelper: TokenGenerateHelper,
 ) {
 
     /**
@@ -26,7 +28,7 @@ class RegisterUserUseCase(
         val oauthAccessToken: String = kakaoOauthHelper.getOauthToken(code).accessToken
         val oauthUserInfo: OauthUserInfoDto = kakaoOauthHelper.getUserInfo(oauthAccessToken)
         val user: User = userDomainService.upsertUser(oauthUserInfo.username, oauthUserInfo.profileImage, oauthUserInfo.isDefaultImage, oauthUserInfo.toOauthInfo(), oauthUserInfo.oauthId)
-        return TokenAndUserResponse("나중에 넣을 예정(우리 백엔드 토큰)", "나중에 넣을 예정(우리 백엔드 토큰)", user)
+        return tokenGenerateHelper.execute(user)
     }
 
     /**
@@ -53,7 +55,7 @@ class RegisterUserUseCase(
         val oauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken)
         val user: User = userDomainService.registerUser(registerRequest.username, registerRequest.profileImage, registerRequest.isDefaultImage, oauthInfo, oauthInfo.oauthId)
 
-        return TokenAndUserResponse("나중에 넣을 예정(우리 백엔드 토큰)", "나중에 넣을 예정(우리 백엔드 토큰)", user)
+        return tokenGenerateHelper.execute(user)
     }
 
     /**

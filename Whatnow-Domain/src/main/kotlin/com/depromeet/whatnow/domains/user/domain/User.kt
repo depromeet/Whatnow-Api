@@ -26,12 +26,15 @@ class User(
     var profileImg: String, // 프로필 이미지도 vo 로 빼면 더 이쁠듯
     var isDefaultImg: Boolean,
 
-    var lastLogin: LocalDateTime = LocalDateTime.now(),
+    var lastLoginAt: LocalDateTime = LocalDateTime.now(),
 
     var fcmToken: String = "", // vo 로 빼서 알림 수신여부 까지 같이 관리하면 그림이 더 이쁠듯 합니다.
 
     @Enumerated(EnumType.STRING)
     var status: UserStatus = UserStatus.NORMAL,
+
+    @Enumerated(EnumType.STRING)
+    var accountRole: AccountRole = AccountRole.USER,
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,5 +46,12 @@ class User(
     // 원래 되어야하는데.. postpersist가 콜백이라서 그런지 아예 다른 스레드에서 돌아버리네요..
     fun registerEvent() {
         Events.raise(UserSignUpEvent(this.id!!))
+    }
+
+    fun login() {
+        if (status != UserStatus.NORMAL) {
+//            throw ForbiddenUserException.EXCEPTION
+        }
+        lastLoginAt = LocalDateTime.now()
     }
 }

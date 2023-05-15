@@ -22,10 +22,10 @@ class JwtTokenHelper(
     private val jwtSecretKey: String,
 
     @Value("\${auth.jwt.access-exp}")
-    private val accessExpireIn: Int,
+    val accessExpireIn: Long,
 
     @Value("\${auth.jwt.refresh-exp}")
-    private val refreshExpireIn: Int,
+    val refreshExpireIn: Long,
 ) {
     fun getJws(token: String): Jws<Claims> {
         return JwsParseExecuter {

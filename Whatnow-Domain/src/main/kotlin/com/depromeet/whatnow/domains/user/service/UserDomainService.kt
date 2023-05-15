@@ -39,4 +39,11 @@ class UserDomainService(
         userRepository.findByOauthInfo(oauthInfo)?. let { throw Error("이미 회원가입했으면 안됨 ( 나중에 비즈니스 에러로 교체 예정") }
         return userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
     }
+
+    @Transactional
+    fun loginUser(oauthInfo: OauthInfo): User {
+        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러") }
+        user.login()
+        return user
+    }
 }
