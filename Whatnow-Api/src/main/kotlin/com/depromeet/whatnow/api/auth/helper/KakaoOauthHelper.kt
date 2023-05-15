@@ -61,7 +61,7 @@ class KakaoOauthHelper(
 
     fun unlink(oid: String) {
         val kakaoAdminKey: String = oauthProperties.kakao.adminKey
-        val unlinkKaKaoTarget: UnlinkKaKaoTarget = UnlinkKaKaoTarget(oid)
+        val unlinkKaKaoTarget = UnlinkKaKaoTarget(oid)
         val header = "KakaoAK $kakaoAdminKey"
         kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget)
     }
