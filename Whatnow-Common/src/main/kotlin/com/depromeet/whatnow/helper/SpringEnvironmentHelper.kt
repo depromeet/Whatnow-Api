@@ -16,26 +16,20 @@ class SpringEnvironmentHelper(
     private val PROD_AND_DEV = listOf(DEV, PROD)
     val isProdProfile: Boolean
         get() {
-            val activeProfiles = environment.activeProfiles
-            val currentProfile = Arrays.stream(activeProfiles).toList()
-            return currentProfile.contains(PROD)
+            val activeProfiles = environment.activeProfiles.toList()
+            return activeProfiles.contains(PROD)
         }
     val isLocalProfile: Boolean
         get() {
-            val activeProfiles = environment.activeProfiles
-            val currentProfile = Arrays.stream(activeProfiles).toList()
-            return currentProfile.contains(LOCAL)
+            return environment.activeProfiles.contains(LOCAL)
         }
     val isDevProfile: Boolean
         get() {
-            val activeProfiles = environment.activeProfiles
-            val currentProfile = Arrays.stream(activeProfiles).toList()
-            return currentProfile.contains(DEV)
+            return environment.activeProfiles.contains(DEV)
         }
     val isProdAndStagingProfile: Boolean
         get() {
-            val activeProfiles = environment.activeProfiles
-            val currentProfile = Arrays.stream(activeProfiles).toList()
-            return CollectionUtils.containsAny(PROD_AND_DEV, currentProfile)
+            val activeProfiles = environment.activeProfiles.toList()
+            return CollectionUtils.containsAny(PROD_AND_DEV, activeProfiles)
         }
 }
