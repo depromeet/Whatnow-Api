@@ -54,4 +54,15 @@ class User(
         }
         lastLoginAt = LocalDateTime.now()
     }
+
+    fun withDraw() {
+        if (status == UserStatus.DELETED) {
+//            throw AlreadyDeletedUserException.EXCEPTION
+        }
+        status = UserStatus.DELETED
+        nickname = "탈퇴유저"
+        profileImg = ""
+        fcmToken = ""
+        oauthInfo = oauthInfo.withDrawOauthInfo()
+    }
 }

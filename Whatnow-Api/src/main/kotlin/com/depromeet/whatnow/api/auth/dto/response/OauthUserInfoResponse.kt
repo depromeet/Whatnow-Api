@@ -3,7 +3,7 @@ package com.depromeet.whatnow.api.auth.dto.response
 import com.depromeet.whatnow.api.auth.helper.OauthUserInfoDto
 
 data class OauthUserInfoResponse(
-    val email: String,
+    val email: String?,
     val profileImage: String,
     val isDefaultImage: Boolean,
     val username: String,
