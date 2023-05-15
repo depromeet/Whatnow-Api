@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import org.springframework.web.util.WebUtils
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -34,12 +33,6 @@ class JwtTokenFilter(
     }
 
     private fun resolveToken(request: HttpServletRequest): String? {
-        // 쿠키방식 지원
-        val accessTokenCookie = WebUtils.getCookie(request, "accessToken")
-        if (accessTokenCookie != null) {
-            return accessTokenCookie.value
-        }
-        // 기존 jwt 방식 지원
         val rawHeader = request.getHeader(AUTH_HEADER)
         return if (rawHeader != null && rawHeader.length > BEARER.length && rawHeader.startsWith(
                 BEARER,
