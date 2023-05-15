@@ -6,7 +6,7 @@ class CodeException(
     private val errorCode: BaseErrorCode,
 ) : RuntimeException() {
 
-    val errorReason : ErrorReason
+    val errorReason: ErrorReason
         get() {
             return errorCode.errorReason
         }

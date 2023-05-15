@@ -110,7 +110,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
 //        val code: BaseErrorCode? = e.errorCode
-        val errorReason: ErrorReason? = e.getErrorReason()
+        val errorReason: ErrorReason? = e.errorReason
         val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
         return ResponseEntity.status(HttpStatus.valueOf(errorReason?.status!!))
             .body<ErrorResponse>(errorResponse)

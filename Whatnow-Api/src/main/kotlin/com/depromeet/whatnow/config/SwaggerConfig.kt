@@ -162,7 +162,7 @@ class SwaggerConfig {
                     val exception = field.getter.call(bean) as CodeException
                     val annotation = field.findAnnotation<ExplainError>()!!
                     val value = annotation.value
-                    val errorReason = exception.getErrorReason()
+                    val errorReason = exception.errorReason
                     ExampleHolder.builder()
                         .holder(getSwaggerExample(value, errorReason))
                         .code(errorReason?.status)
