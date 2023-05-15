@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.http.HttpServletRequest
 import javax.validation.ConstraintViolationException
 
-@RestControllerAdvice()
+@RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     /**요청 url을 resource로 담아 상위 객체에 처리를 위임한다.*/

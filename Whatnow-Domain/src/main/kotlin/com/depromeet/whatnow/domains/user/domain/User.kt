@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.domains.user.domain
 
+import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
 import java.time.LocalDateTime

@@ -79,13 +79,13 @@ enum class GlobalErrorCode(val status: Int, val code: String, val reason: String
     OTHER_SERVER_INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "OTHER_SERVER_500_1", "다른 서버에서 알 수 없는 서버 오류가 발생했습니다."),
     ;
 
-    override fun errorReason(): ErrorReason {
-        return ErrorReason(status, code, reason)
-    }
+    override val errorReason: ErrorReason
+        get() { return ErrorReason(status, code, reason) }
 
-    override fun explainError(): String {
-        val field = this.javaClass.getField(name)
-        val annotation = field.getAnnotation(ExplainError::class.java)
-        return if (Objects.nonNull(annotation)) annotation.value else reason
-    }
+    override val explainError: String
+        get() {
+            val field = this.javaClass.getField(name)
+            val annotation = field.getAnnotation(ExplainError::class.java)
+            return if (Objects.nonNull(annotation)) annotation.value else reason
+        }
 }
