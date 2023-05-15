@@ -79,7 +79,7 @@ subprojects{
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-        implementation("io.github.oshai:kotlin-logging-jvm:3.0.5") //logger
+        runtimeOnly("io.github.microutils:kotlin-logging-jvm:3.0.5")//logger
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation ("org.mockito.kotlin:mockito-kotlin:4.1.0")
