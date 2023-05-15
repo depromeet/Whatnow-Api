@@ -11,8 +11,8 @@ class RefreshTokenRedisEntity(
     var id: Long,
 
     @Indexed
-    val refreshToken: String,
+    var refreshToken: String,
 
     @TimeToLive // TTL
-    val ttl: Long,
+    var ttl: Long,
 )

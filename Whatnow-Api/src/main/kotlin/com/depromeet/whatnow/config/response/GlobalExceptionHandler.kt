@@ -23,7 +23,6 @@ import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
-//    val logger: Logger = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
     /**요청 url을 resource로 담아 상위 객체에 처리를 위임한다.*/
     override fun handleExceptionInternal(
