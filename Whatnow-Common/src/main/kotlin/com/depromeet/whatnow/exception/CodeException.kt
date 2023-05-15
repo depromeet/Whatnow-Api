@@ -3,11 +3,11 @@ package com.depromeet.whatnow.exception
 import com.depromeet.whatnow.dto.ErrorReason
 
 class CodeException(
-    e: ErrorReason,
+    private val errorCode: BaseErrorCode,
 ) : RuntimeException() {
 
-    var errorCode: BaseErrorCode? = null
-    fun getErrorReason(): ErrorReason? {
-        return errorCode?.errorReason
-    }
+    val errorReason: ErrorReason
+        get() {
+            return errorCode.errorReason
+        }
 }

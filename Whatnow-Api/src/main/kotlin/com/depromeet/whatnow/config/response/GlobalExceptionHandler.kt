@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.http.HttpServletRequest
 import javax.validation.ConstraintViolationException
 
-@RestControllerAdvice()
+@RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     /**요청 url을 resource로 담아 상위 객체에 처리를 위임한다.*/
@@ -110,7 +110,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
 //        val code: BaseErrorCode? = e.errorCode
-        val errorReason: ErrorReason? = e.getErrorReason()
+        val errorReason: ErrorReason? = e.errorReason
         val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
         return ResponseEntity.status(HttpStatus.valueOf(errorReason?.status!!))
             .body<ErrorResponse>(errorResponse)
