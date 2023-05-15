@@ -3,7 +3,7 @@ package com.depromeet.whatnow.config.response
 import com.depromeet.whatnow.consts.BAD_REQUEST
 import com.depromeet.whatnow.dto.ErrorReason
 import com.depromeet.whatnow.dto.ErrorResponse
-import com.depromeet.whatnow.exception.CodeException
+import com.depromeet.whatnow.exception.WhatnowCodeException
 import com.depromeet.whatnow.exception.GlobalErrorCode
 import com.depromeet.whatnow.exception.WhatNowDynamicException
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -104,9 +104,9 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity.status(HttpStatus.valueOf(e.status)).body<ErrorResponse>(errorResponse)
     }
 
-    @ExceptionHandler(CodeException::class)
+    @ExceptionHandler(WhatnowCodeException::class)
     fun codeExceptionHandler(
-        e: CodeException,
+        e: WhatnowCodeException,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
 //        val code: BaseErrorCode? = e.errorCode

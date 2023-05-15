@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.config
+package com.depromeet.whatnow.config.swagger
 
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
 import com.depromeet.whatnow.annotation.ApiErrorExceptionsExample
@@ -8,7 +8,7 @@ import com.depromeet.whatnow.dto.ErrorReason
 import com.depromeet.whatnow.dto.ErrorResponse
 import com.depromeet.whatnow.example.dto.ExampleHolder
 import com.depromeet.whatnow.exception.BaseErrorCode
-import com.depromeet.whatnow.exception.CodeException
+import com.depromeet.whatnow.exception.WhatnowCodeException
 import com.depromeet.whatnow.interfaces.SwaggerExampleExceptions
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.swagger.v3.core.jackson.ModelResolver
@@ -156,10 +156,10 @@ class SwaggerConfig {
         val bean = applicationContext!!.getBean(type.javaClass)
         val statusWithExampleHolders: Map<Int?, List<ExampleHolder>> = type.kotlin.declaredMemberProperties
             .filter { it.findAnnotation<ExplainError>() != null }
-            .filter { it.returnType.classifier == CodeException::class }
+            .filter { it.returnType.classifier == WhatnowCodeException::class }
             .mapNotNull { field ->
                 try {
-                    val exception = field.getter.call(bean) as CodeException
+                    val exception = field.getter.call(bean) as WhatnowCodeException
                     val annotation = field.findAnnotation<ExplainError>()!!
                     val value = annotation.value
                     val errorReason = exception.errorReason
