@@ -14,6 +14,6 @@ data class OauthProperties(
         val clientSecret: String,
         val redirectUrl: String,
         val appId: String,
-        val adminKey : String,
+        val adminKey: String,
     )
 }
