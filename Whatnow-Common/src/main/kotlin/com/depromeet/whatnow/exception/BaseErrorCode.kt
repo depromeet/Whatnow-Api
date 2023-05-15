@@ -3,8 +3,8 @@ package com.depromeet.whatnow.exception
 import com.depromeet.whatnow.dto.ErrorReason
 
 interface BaseErrorCode {
-    val errorReason: ErrorReason?
+    fun errorReason(): ErrorReason
 
-    @get:Throws(NoSuchFieldException::class)
-    val explainError: String?
+//    @get:Throws(NoSuchFieldException::class)
+    fun explainError(): String
 }

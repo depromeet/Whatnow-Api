@@ -11,12 +11,13 @@ import com.depromeet.whatnow.consts.SERVICE_UNAVAILABLE
 import com.depromeet.whatnow.consts.TOO_MANY_REQUESTS
 import com.depromeet.whatnow.consts.UNAUTHORIZED
 import com.depromeet.whatnow.dto.ErrorReason
+import java.util.*
 
 /**
  * 글로벌 관련 예외 코드들이 나온 곳입니다. 인증 , global, aop 종류등 도메인 제외한 exception 코드들이 모이는 곳입니다. 도메인 관련 Exception
  * code 들은 도메인 내부 exception 패키지에 위치시키면 됩니다.
  */
-enum class GlobalErrorCode(status: Int, code: String, reason: String) : BaseErrorCode {
+enum class GlobalErrorCode(val status: Int, val code: String, val reason: String) : BaseErrorCode {
     @ExplainError("예상할 수 없는 에러가 발생했습니다. 관리자에게 문의하세요")
     INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "GLOBAL_500_1", "서버 오류, 관리자에게 문의하세요"),
 
@@ -75,15 +76,16 @@ enum class GlobalErrorCode(status: Int, code: String, reason: String) : BaseErro
     OTHER_SERVER_NOT_FOUND(NOT_FOUND, "OTHER_SERVER_404_1", "다른 서버에서 잘못된 Resource를 요청했습니다."),
 
     @ExplainError("다른 서버에서 발생한 알 수 없는 서버 예외입니다.")
-    OTHER_SERVER_INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "OTHER_SERVER_500_1", "다른 서버에서 알 수 없는 서버 오류가 발생했습니다.");
+    OTHER_SERVER_INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "OTHER_SERVER_500_1", "다른 서버에서 알 수 없는 서버 오류가 발생했습니다."),
+    ;
 
-    override val errorReason: ErrorReason
-        get() = ErrorReason(status, code, reason)
+    override fun errorReason(): ErrorReason {
+        return ErrorReason(status, code, reason)
+    }
 
-    override val explainError: String
-        get() = reason ?: ""
-
-    var status: Int? = null
-    var code: String? = null
-    var reason: String? = null
+    override fun explainError(): String {
+        val field = this.javaClass.getField(name)
+        val annotation = field.getAnnotation(ExplainError::class.java)
+        return if (Objects.nonNull(annotation)) annotation.value else reason
+    }
 }
