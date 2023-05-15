@@ -7,7 +7,7 @@ data class ErrorResponse(
     val code: String,
     val reason: String,
     val path: String,
-    ) {
+) {
 
     val timeStamp: LocalDateTime = LocalDateTime.now()
 

@@ -1,9 +1,9 @@
 package com.depromeet.whatnow.config.security
 
+import com.depromeet.whatnow.consts.SWAGGER_PATTERNS
 import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
-import org.springframework.http.HttpMethod
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -17,11 +17,10 @@ import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler
 
-
 @EnableWebSecurity
 class SecurityConfig(
     val filterConfig: FilterConfig,
-    val springEnvironmentHelper: SpringEnvironmentHelper
+    val springEnvironmentHelper: SpringEnvironmentHelper,
 ) {
     @Value("\${swagger.user}")
     lateinit var swaggerUser: String
@@ -56,28 +55,17 @@ class SecurityConfig(
         // commence 로 401 넘겨줌. -> 응답 헤더에 www-authenticate 로 인증하라는 응답줌.
         // 브라우저가 basic auth 실행 시켜줌.
         // 개발 환경에서만 스웨거 비밀번호 미설정.
-        if (springEnvironmentHelper.isProdAndStagingProfile()) {
-            http.authorizeRequests().mvcMatchers(SwaggerPatterns).authenticated().and().httpBasic()
+        if (springEnvironmentHelper.isProdAndStagingProfile) {
+            http.authorizeRequests().mvcMatchers(*SWAGGER_PATTERNS).authenticated().and().httpBasic()
         }
         http.authorizeRequests()
-            .mvcMatchers(SwaggerPatterns)
+            .mvcMatchers(*SWAGGER_PATTERNS) // * 표시는 spread operater 임 refrence https://stackoverflow.com/questions/45854994/convert-kotlin-array-to-java-varargs
             .permitAll()
             .mvcMatchers("/v1/auth/oauth/**")
             .permitAll()
             .mvcMatchers("/v1/auth/token/refresh")
             .permitAll()
-            .mvcMatchers(HttpMethod.GET, "/v1/events/{eventId:[0-9]*$}")
-            .permitAll()
-            .mvcMatchers(HttpMethod.GET, "/v1/events/{eventId:[0-9]*$}/ticketItems")
-            .permitAll()
-            .mvcMatchers(HttpMethod.GET, "/v1/events/{eventId:[0-9]*$}/comments/**")
-            .permitAll()
-            .mvcMatchers(HttpMethod.GET, "/v1/events/search")
-            .permitAll()
-            .mvcMatchers(HttpMethod.GET, "/v1/examples/health")
-            .permitAll()
-            .mvcMatchers(HttpMethod.POST, "/v1/coupons/campaigns")
-            .hasRole("SUPER_ADMIN") // 인증 이필요한 모든 요청은 USER 권한을 최소한 가지고있어야한다.
+//            .hasRole("ADMIN") // 인증 이필요한 모든 요청은 USER 권한을 최소한 가지고있어야한다.
             // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다
             // 따라서 스웨거용 인메모리 유저가 basic auth 필터를 통과해서 들어오더라도
             // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.
@@ -91,7 +79,7 @@ class SecurityConfig(
     @Bean
     fun roleHierarchy(): RoleHierarchyImpl {
         val roleHierarchy = RoleHierarchyImpl()
-        roleHierarchy.setHierarchy("ROLE_SUPER_ADMIN > ROLE_ADMIN > ROLE_MANAGER > ROLE_USER")
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER")
         return roleHierarchy
     }
 

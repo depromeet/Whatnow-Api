@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.config.security
 
-import com.depromeet.whatnow.config.consts.WhatnowStatic
 import com.depromeet.whatnow.config.jwt.AccessTokenInfo
 import com.depromeet.whatnow.config.jwt.JwtTokenHelper
 import com.depromeet.whatnow.config.static.AUTH_HEADER
@@ -12,19 +11,19 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.util.WebUtils
-import java.io.IOException
 import javax.servlet.FilterChain
-import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtTokenFilter (
-    val jwtTokenProvider: JwtTokenHelper
-        ) : OncePerRequestFilter() {
+class JwtTokenFilter(
+    val jwtTokenProvider: JwtTokenHelper,
+) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
-        request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain,
     ) {
         val token = resolveToken(request)
         if (token != null) {
@@ -43,11 +42,13 @@ class JwtTokenFilter (
         // 기존 jwt 방식 지원
         val rawHeader = request.getHeader(AUTH_HEADER)
         return if (rawHeader != null && rawHeader.length > BEARER.length && rawHeader.startsWith(
-               BEARER
+                BEARER,
             )
         ) {
             rawHeader.substring(BEARER.length)
-        } else null
+        } else {
+            null
+        }
     }
 
     fun getAuthentication(token: String): Authentication {
@@ -55,7 +56,9 @@ class JwtTokenFilter (
         val userDetails: UserDetails =
             AuthDetails(accessTokenInfo.userId.toString(), accessTokenInfo.role)
         return UsernamePasswordAuthenticationToken(
-            userDetails, "user", userDetails.authorities
+            userDetails,
+            "user",
+            userDetails.authorities,
         )
     }
 }

@@ -3,9 +3,9 @@ package com.depromeet.whatnow.config.response
 import com.depromeet.whatnow.consts.BAD_REQUEST
 import com.depromeet.whatnow.dto.ErrorReason
 import com.depromeet.whatnow.dto.ErrorResponse
-import com.depromeet.whatnow.exception.WhatnowCodeException
 import com.depromeet.whatnow.exception.GlobalErrorCode
 import com.depromeet.whatnow.exception.WhatNowDynamicException
+import com.depromeet.whatnow.exception.WhatnowCodeException
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

@@ -21,4 +21,14 @@ const val REQUEST_TIMEOUT = 408
 const val TOO_MANY_REQUESTS = 429
 const val ZERO = 0L
 const val KID = "kid"
+const val PROD = "prod"
+const val DEV = "dev"
+const val LOCAL = "local"
+
+val SWAGGER_PATTERNS = arrayOf(
+    "/swagger-resources/**",
+    "/swagger-ui/**",
+    "/v3/api-docs/**",
+    "/v3/api-docs",
+)
 class WhatNowStatic
