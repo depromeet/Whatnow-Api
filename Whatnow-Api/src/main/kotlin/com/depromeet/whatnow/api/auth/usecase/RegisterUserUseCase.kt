@@ -5,8 +5,8 @@ import com.depromeet.whatnow.api.auth.dto.response.AbleRegisterResponse
 import com.depromeet.whatnow.api.auth.dto.response.OauthLoginLinkResponse
 import com.depromeet.whatnow.api.auth.dto.response.OauthTokenResponse
 import com.depromeet.whatnow.api.auth.dto.response.TokenAndUserResponse
-import com.depromeet.whatnow.api.auth.usecase.helper.KakaoOauthHelper
-import com.depromeet.whatnow.api.auth.usecase.helper.OauthUserInfoDto
+import com.depromeet.whatnow.api.auth.helper.KakaoOauthHelper
+import com.depromeet.whatnow.api.auth.helper.OauthUserInfoDto
 import com.depromeet.whatnow.api.auth.usecase.helper.TokenGenerateHelper
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User

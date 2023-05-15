@@ -5,9 +5,8 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-data-redis")
     api("com.mysql:mysql-connector-j")
     implementation(project(":Whatnow-Infrastructure"))
-
-    // for test profile
-    runtimeOnly("com.h2database:h2")
+    implementation(project(":Whatnow-Common"))
+    api("com.h2database:h2")
 }
 
 tasks.getByName<BootJar>("bootJar") {
