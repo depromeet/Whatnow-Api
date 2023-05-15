@@ -5,6 +5,7 @@ import com.depromeet.whatnow.api.KakaoOauthClient
 import com.depromeet.whatnow.api.dto.KakaoInformationResponse
 import com.depromeet.whatnow.api.dto.KakaoTokenResponse
 import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
+import com.depromeet.whatnow.api.dto.UnlinkKaKaoTarget
 import com.depromeet.whatnow.config.OauthProperties
 import com.depromeet.whatnow.config.jwt.OIDCDecodePayload
 import com.depromeet.whatnow.config.static.BEARER
@@ -58,10 +59,10 @@ class KakaoOauthHelper(
         return OauthInfo(oidcDecodePayload.sub, OauthProvider.KAKAO)
     }
 
-    fun unlink(oid: String?) {
-        val kakaoAdminKey: String = oauthProperties.kakao.()
-        val unlinkKaKaoTarget: UnlinkKaKaoTarget = UnlinkKaKaoTarget.from(oid)
-        val header: String = "KakaoAK $kakaoAdminKey"
+    fun unlink(oid: String) {
+        val kakaoAdminKey: String = oauthProperties.kakao.adminKey
+        val unlinkKaKaoTarget: UnlinkKaKaoTarget = UnlinkKaKaoTarget(oid)
+        val header = "KakaoAK $kakaoAdminKey"
         kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget)
     }
 }
