@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 data class ErrorResponse(
     val status: Int,
     val code: String,
-    val reason: String,
+    val reason: String?,
     val path: String,
 ) {
 

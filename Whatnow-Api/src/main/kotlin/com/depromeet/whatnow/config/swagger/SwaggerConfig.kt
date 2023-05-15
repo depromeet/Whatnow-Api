@@ -178,7 +178,7 @@ class SwaggerConfig {
         addExamplesToResponses(responses, statusWithExampleHolders)
     }
 
-    private fun getSwaggerExample(value: String?, errorReason: ErrorReason?): Example {
+    private fun getSwaggerExample(value: String, errorReason: ErrorReason): Example {
         val errorResponse = ErrorResponse.of(errorReason, "요청시 패스정보입니다.")
         val example = Example()
         example.description(value)

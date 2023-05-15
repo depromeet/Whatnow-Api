@@ -39,7 +39,12 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
             .build()
             .toUriString()
 
-        val errorResponse: ErrorResponse = ErrorResponse(status.value(), ex.message, url)
+        val errorResponse = ErrorResponse(
+            status.value(),
+            status.name,
+            ex.message,
+            url,
+        )
         return super.handleExceptionInternal(ex, errorResponse, headers, status, request)
     }
 
@@ -86,7 +91,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
             reason = bindingErrors.toString(),
         )
         val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
-        return ResponseEntity.status(errorReason.status!!)
+        return ResponseEntity.status(errorReason.status)
             .body(errorResponse)
     }
 
@@ -110,9 +115,9 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
 //        val code: BaseErrorCode? = e.errorCode
-        val errorReason: ErrorReason? = e.errorReason
+        val errorReason: ErrorReason = e.errorReason
         val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
-        return ResponseEntity.status(HttpStatus.valueOf(errorReason?.status!!))
+        return ResponseEntity.status(HttpStatus.valueOf(errorReason.status))
             .body<ErrorResponse>(errorResponse)
     }
 
@@ -139,7 +144,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
             path = url,
         )
 
-        return ResponseEntity.status(HttpStatus.valueOf(internalServerError.status!!))
+        return ResponseEntity.status(HttpStatus.valueOf(internalServerError.status))
             .body<ErrorResponse>(errorResponse)
     }
 }
