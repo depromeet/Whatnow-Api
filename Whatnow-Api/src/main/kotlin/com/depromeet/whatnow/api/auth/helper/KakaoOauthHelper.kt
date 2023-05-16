@@ -5,6 +5,7 @@ import com.depromeet.whatnow.api.KakaoOauthClient
 import com.depromeet.whatnow.api.dto.KakaoInformationResponse
 import com.depromeet.whatnow.api.dto.KakaoTokenResponse
 import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
+import com.depromeet.whatnow.api.dto.UnlinkKaKaoTarget
 import com.depromeet.whatnow.config.OauthProperties
 import com.depromeet.whatnow.config.jwt.OIDCDecodePayload
 import com.depromeet.whatnow.config.static.BEARER
@@ -57,11 +58,11 @@ class KakaoOauthHelper(
         val oidcDecodePayload: OIDCDecodePayload = getOIDCDecodePayload(idToken)
         return OauthInfo(oidcDecodePayload.sub, OauthProvider.KAKAO)
     }
-    // 회원탈퇴용 나중에 만들예정
-//    fun unlink(oid: String?) {
-//        val kakaoAdminKey: String = oauthProperties.getKakaoAdminKey()
-//        val unlinkKaKaoTarget: UnlinkKaKaoTarget = UnlinkKaKaoTarget.from(oid)
-//        val header: String = "KakaoAK $kakaoAdminKey"
-//        kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget)
-//    }
+
+    fun unlink(oid: String) {
+        val kakaoAdminKey: String = oauthProperties.kakao.adminKey
+        val unlinkKaKaoTarget = UnlinkKaKaoTarget(oid)
+        val header = "KakaoAK $kakaoAdminKey"
+        kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget)
+    }
 }

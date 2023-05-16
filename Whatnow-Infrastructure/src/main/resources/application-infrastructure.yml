@@ -20,7 +20,7 @@ oauth:
     client-secret: ${KAKAO_SECRET}
     redirect-url: ${KAKAO_REDIRECT}
     app-id: ${KAKAO_APP_ID:default}
-    admin-key: ${KAKAO_ADMIN_KEY}
+    admin-key: ${KAKAO_ADMIN_KEY:}
 feign:
   kakao:
     info : https://kapi.kakao.com

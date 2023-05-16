@@ -3,6 +3,7 @@ package com.depromeet.whatnow.domains.user.service
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.repository.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -45,5 +46,11 @@ class UserDomainService(
         val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러") }
         user.login()
         return user
+    }
+
+    @Transactional
+    fun withDrawUser(currentUserId: Long) {
+        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러") }
+        user.withDraw()
     }
 }
