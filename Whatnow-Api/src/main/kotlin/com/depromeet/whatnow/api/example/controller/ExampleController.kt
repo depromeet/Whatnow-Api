@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.example.controller
 
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
+import com.depromeet.whatnow.api.config.KakaoKauthErrorCode
 import com.depromeet.whatnow.domains.user.exception.UserErrorCode
 import com.depromeet.whatnow.exception.GlobalErrorCode
 import io.swagger.v3.oas.annotations.Operation
@@ -23,4 +24,9 @@ class ExampleController() {
     @Operation(summary = "유저 도메인 관련 에러 코드 나열")
     @ApiErrorCodeExample(UserErrorCode::class)
     fun userErrorCode() {}
+
+    @GetMapping("/kakao")
+    @Operation(summary = "카카오 auth 관련 에러코드 나열")
+    @ApiErrorCodeExample(KakaoKauthErrorCode::class)
+    fun kakaoErrorCode() {}
 }
