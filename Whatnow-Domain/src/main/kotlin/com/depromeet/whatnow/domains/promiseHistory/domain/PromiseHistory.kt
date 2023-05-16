@@ -14,5 +14,4 @@ class PromiseHistory(
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "promise_history_id")
     val id: Long? = null,
-) {
-}
+)
