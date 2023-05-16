@@ -31,10 +31,10 @@ enum class GlobalErrorCode(val status: Int, val code: String, val reason: String
     REFRESH_TOKEN_EXPIRED(FORBIDDEN, "AUTH_403_1", "인증시간이 만료되었습니다. 인증토큰 재발급을 요청하세요"),
 
     @ExplainError("헤더에 accessToken의 형식이 틀릴떄 발생하는 오류입니다, 토큰이 위조됐을 가능성이 있습니다.")
-    INVALID_TOKEN(UNAUTHORIZED, "AUTH_403_2", "토큰의 형식이 일치하지 않습니다. 적절한 형식으로 다시 요청하세요"),
+    INVALID_TOKEN(FORBIDDEN, "AUTH_403_2", "토큰의 형식이 일치하지 않습니다. 적절한 형식으로 다시 요청하세요"),
 
     @ExplainError("헤더에 accessToken이 없을때 발생하는 오류입니다")
-    ACCESS_TOKEN_NOT_FOUND(UNAUTHORIZED, "AUTH_403_3", "토큰이 존재하지 않습니다. 적절한 토큰을 헤더에 넣어주세요"),
+    ACCESS_TOKEN_NOT_FOUND(FORBIDDEN, "AUTH_403_3", "토큰이 존재하지 않습니다. 적절한 토큰을 헤더에 넣어주세요"),
 
     @ExplainError("없는 resource로 요청했습니다. 다른 요청으로 다시 시도해주세요")
     RESOURCE_NOT_FOUND(NOT_FOUND, "GLOBAL_404_1", "The requested resource was not found on the server."),
