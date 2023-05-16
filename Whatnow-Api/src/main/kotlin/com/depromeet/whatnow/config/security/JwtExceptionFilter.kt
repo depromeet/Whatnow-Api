@@ -36,7 +36,6 @@ class JwtExceptionFilter(
         return ErrorResponse.of(errorCode.errorReason, path)
     }
 
-    @Throws(IOException::class)
     private fun responseToClient(response: HttpServletResponse, errorResponse: ErrorResponse) {
         response.characterEncoding = "UTF-8"
         response.contentType = MediaType.APPLICATION_JSON_VALUE

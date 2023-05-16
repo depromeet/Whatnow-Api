@@ -1,5 +1,7 @@
 package com.depromeet.whatnow.config.jwt
 
+import com.depromeet.whatnow.exception.custom.ExpiredTokenException
+import com.depromeet.whatnow.exception.custom.InvalidTokenException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Header
@@ -11,31 +13,29 @@ import io.jsonwebtoken.UnsupportedJwtException
 fun JwtParseExecuter(operation: () -> Jwt<Header<*>, Claims>): Jwt<Header<*>, Claims> {
     return try {
         operation()
-    } catch (e: io.jsonwebtoken.security.SecurityException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: MalformedJwtException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: ExpiredJwtException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: UnsupportedJwtException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: IllegalArgumentException) {
-        throw Exception("에러정책이후 바꿀예정")
+    } catch (ex: Exception) {
+        when (ex) {
+            is io.jsonwebtoken.security.SecurityException,
+            is MalformedJwtException,
+            is UnsupportedJwtException,
+            is IllegalArgumentException -> throw InvalidTokenException.EXCEPTION
+            is ExpiredJwtException -> throw ExpiredTokenException.EXCEPTION
+            else -> throw ex
+        }
     }
 }
 
 fun JwsParseExecuter(operation: () -> Jws<Claims>): Jws<Claims> {
     return try {
         operation()
-    } catch (e: io.jsonwebtoken.security.SecurityException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: MalformedJwtException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: ExpiredJwtException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: UnsupportedJwtException) {
-        throw Exception("에러정책이후 바꿀예정")
-    } catch (e: IllegalArgumentException) {
-        throw Exception("에러정책이후 바꿀예정")
+    } catch (ex: Exception) {
+        when (ex) {
+            is io.jsonwebtoken.security.SecurityException,
+            is MalformedJwtException,
+            is UnsupportedJwtException,
+            is IllegalArgumentException -> throw InvalidTokenException.EXCEPTION
+            is ExpiredJwtException -> throw ExpiredTokenException.EXCEPTION
+            else -> throw ex
+        }
     }
 }

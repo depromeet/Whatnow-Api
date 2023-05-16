@@ -6,6 +6,9 @@ import com.depromeet.whatnow.config.static.REFRESH_TOKEN
 import com.depromeet.whatnow.config.static.TOKEN_ISSUER
 import com.depromeet.whatnow.config.static.TOKEN_ROLE
 import com.depromeet.whatnow.config.static.TOKEN_TYPE
+import com.depromeet.whatnow.exception.custom.ExpiredTokenException
+import com.depromeet.whatnow.exception.custom.InvalidTokenException
+import com.depromeet.whatnow.exception.custom.RefreshTokenExpiredException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts
@@ -91,7 +94,7 @@ class JwtTokenHelper(
             val claims: Claims = getJws(token).body
             return AccessTokenInfo(claims.subject.toLong(), claims[TOKEN_ROLE] as String)
         }
-        throw Exception("에러정책이후 바꿀예정")
+        throw InvalidTokenException.EXCEPTION
     }
 
     fun parseRefreshToken(token: String): Long {
@@ -100,9 +103,9 @@ class JwtTokenHelper(
                 val claims: Claims = getJws(token).body
                 return claims.subject.toLong()
             }
-        } catch (e: Exception) {
-            throw Exception("에러정책이후 바꿀예정")
+        } catch (e: ExpiredTokenException) {
+            throw RefreshTokenExpiredException.EXCEPTION
         }
-        throw Exception("에러정책이후 바꿀예정")
+        throw InvalidTokenException.EXCEPTION
     }
 }
