@@ -8,6 +8,9 @@ dependencies{
     api ("org.springframework.boot:spring-boot-starter-data-redis")
     api ("org.redisson:redisson:3.19.0")
 
+    implementation(project(":Whatnow-Common"))
+
+
     testImplementation ("org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5")
     testImplementation ("org.springframework.cloud:spring-cloud-contract-wiremock:3.1.5")
 }
