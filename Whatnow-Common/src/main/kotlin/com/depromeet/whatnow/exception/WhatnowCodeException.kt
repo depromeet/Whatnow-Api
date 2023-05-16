@@ -2,7 +2,7 @@ package com.depromeet.whatnow.exception
 
 import com.depromeet.whatnow.dto.ErrorReason
 
-class WhatnowCodeException(
+open class WhatnowCodeException(
     val errorCode: BaseErrorCode,
 ) : RuntimeException() {
 

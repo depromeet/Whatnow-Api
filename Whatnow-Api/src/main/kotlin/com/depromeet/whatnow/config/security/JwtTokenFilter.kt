@@ -25,7 +25,7 @@ class JwtTokenFilter(
         filterChain: FilterChain,
     ) {
         val token = resolveToken(request)
-        if (token != null) {
+        token?. run {
             val authentication = getAuthentication(token)
             SecurityContextHolder.getContext().authentication = authentication
         }
@@ -33,11 +33,8 @@ class JwtTokenFilter(
     }
 
     private fun resolveToken(request: HttpServletRequest): String? {
-        val rawHeader = request.getHeader(AUTH_HEADER)
-        return if (rawHeader != null && rawHeader.length > BEARER.length && rawHeader.startsWith(
-                BEARER,
-            )
-        ) {
+        val rawHeader = request.getHeader(AUTH_HEADER) ?: return null
+        return if (rawHeader.length > BEARER.length && rawHeader.startsWith(BEARER)) {
             rawHeader.substring(BEARER.length)
         } else {
             null

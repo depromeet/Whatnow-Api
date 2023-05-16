@@ -2,6 +2,8 @@ package com.depromeet.whatnow.domains.user.service
 
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
+import com.depromeet.whatnow.domains.user.exception.AlreadySignUpUserException
+import com.depromeet.whatnow.domains.user.exception.UserNotFoundException
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -37,20 +39,20 @@ class UserDomainService(
     }
 
     fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String): User {
-        userRepository.findByOauthInfo(oauthInfo)?. let { throw Error("이미 회원가입했으면 안됨 ( 나중에 비즈니스 에러로 교체 예정") }
+        userRepository.findByOauthInfo(oauthInfo)?. let { throw AlreadySignUpUserException.EXCEPTION }
         return userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
     }
 
     @Transactional
     fun loginUser(oauthInfo: OauthInfo): User {
-        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러") }
+        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
         user.login()
         return user
     }
 
     @Transactional
     fun withDrawUser(currentUserId: Long) {
-        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw Error("유저없으면 안됨 나중에 바꿀거임 이에러") }
+        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
         user.withDraw()
     }
 }

@@ -44,7 +44,6 @@ class SecurityConfig(
     }
 
     @Bean
-    @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.formLogin().disable().cors().and().csrf().disable()
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

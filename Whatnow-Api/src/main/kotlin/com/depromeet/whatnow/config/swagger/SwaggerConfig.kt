@@ -94,19 +94,20 @@ class SwaggerConfig {
                 handlerMethod.getMethodAnnotation(ApiErrorCodeExample::class.java)
             val tags = getTags(handlerMethod)
             // DisableSecurity 어노테이션있을시 스웨거 시큐리티 설정 삭제
-            if (methodAnnotation != null) {
+            methodAnnotation ?.run {
                 operation.security = emptyList()
             }
+
             // 태그 중복 설정시 제일 구체적인 값만 태그로 설정
-            if (!tags.isEmpty()) {
+            if (tags.isNotEmpty()) {
                 operation.tags = listOf(tags[0])
             }
             // ApiErrorExceptionsExample 어노테이션 단 메소드 적용
-            if (apiErrorExceptionsExample != null) {
+            apiErrorExceptionsExample ?.run {
                 generateExceptionResponseExample(operation, apiErrorExceptionsExample.value.java)
             }
             // ApiErrorCodeExample 어노테이션 단 메소드 적용
-            if (apiErrorCodeExample != null) {
+            apiErrorCodeExample ?.run {
                 generateErrorCodeResponseExample(operation, apiErrorCodeExample.value)
             }
             operation
@@ -121,8 +122,8 @@ class SwaggerConfig {
         val responses = operation.responses
         val errorCodes = type.java.enumConstants as? Array<out BaseErrorCode> ?: return
         val statusWithExampleHolders: Map<Int?, List<ExampleHolder>> = errorCodes
-            .mapNotNull { baseErrorCode ->
-                baseErrorCode?.errorReason?.let { errorReason ->
+            .map { baseErrorCode ->
+                baseErrorCode.errorReason.let { errorReason ->
                     try {
                         ExampleHolder.builder()
                             .holder(
@@ -157,7 +158,7 @@ class SwaggerConfig {
         val statusWithExampleHolders: Map<Int?, List<ExampleHolder>> = type.kotlin.declaredMemberProperties
             .filter { it.findAnnotation<ExplainError>() != null }
             .filter { it.returnType.classifier == WhatnowCodeException::class }
-            .mapNotNull { field ->
+            .map { field ->
                 try {
                     val exception = field.getter.call(bean) as WhatnowCodeException
                     val annotation = field.findAnnotation<ExplainError>()!!
@@ -165,7 +166,7 @@ class SwaggerConfig {
                     val errorReason = exception.errorReason
                     ExampleHolder.builder()
                         .holder(getSwaggerExample(value, errorReason))
-                        .code(errorReason?.status)
+                        .code(errorReason.status)
                         .name(field.name)
                         .build()
                 } catch (e: IllegalAccessException) {

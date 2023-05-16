@@ -2,9 +2,11 @@ package com.depromeet.whatnow.api
 
 import com.depromeet.whatnow.config.InfraIntegrateProfileResolver
 import com.depromeet.whatnow.config.InfraIntegrateTestConfig
+import com.depromeet.whatnow.exception.WhatNowDynamicException
 import com.github.tomakehurst.wiremock.client.WireMock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
@@ -43,6 +45,27 @@ class KakaoOauthClientTest {
         assertEquals(response.idToken, "idToken")
         assertEquals(response.accessToken, "accessToken")
         assertEquals(response.refreshToken, "refreshToken")
+    }
+
+    @Test
+    fun `카카오 400번대 에러시 에러응답객체로 파싱되어야한다`() {
+        val file = ResourceUtils.getFile("classpath:payload/kauth-KOE320-response.json").toPath()
+        WireMock.stubFor(
+            WireMock.post(WireMock.urlPathEqualTo("/oauth/token"))
+                .willReturn(
+                    WireMock.aResponse()
+                        .withStatus(HttpStatus.BAD_REQUEST.value())
+                        .withHeader(
+                            "Content-Type",
+                            MediaType.APPLICATION_JSON_VALUE,
+                        )
+                        .withBody(Files.readAllBytes(file)),
+                ),
+        )
+        var exception = assertThrows<WhatNowDynamicException> {
+            kakaoOauthClient.kakaoAuth("CLIENT_ID", "REDIRECT_URI", "CODE", "CLIENT_SECRET")
+        }
+        assertEquals(exception.code, "KAKAO_KOE320")
     }
 
 //    @Test

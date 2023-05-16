@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.config.jwt
 
 import com.depromeet.whatnow.config.consts.KID
+import com.depromeet.whatnow.exception.custom.InvalidTokenException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Header
 import io.jsonwebtoken.Jws
@@ -32,7 +33,7 @@ class JwtOIDCHelper {
 
     private fun getUnsignedToken(token: String): String {
         val splitToken = token.split("\\.".toRegex())
-        if (splitToken.size != 3) throw Exception("에러정책이후 바꿀예정")
+        if (splitToken.size != 3) throw InvalidTokenException.EXCEPTION
         return splitToken[0] + "." + splitToken[1] + "."
     }
 

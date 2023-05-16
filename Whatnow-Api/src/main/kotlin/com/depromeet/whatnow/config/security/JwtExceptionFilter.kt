@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -36,7 +35,6 @@ class JwtExceptionFilter(
         return ErrorResponse.of(errorCode.errorReason, path)
     }
 
-    @Throws(IOException::class)
     private fun responseToClient(response: HttpServletResponse, errorResponse: ErrorResponse) {
         response.characterEncoding = "UTF-8"
         response.contentType = MediaType.APPLICATION_JSON_VALUE
