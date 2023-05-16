@@ -1,5 +1,7 @@
 package com.depromeet.whatnow.common.aop.lock
 
+import com.depromeet.whatnow.exception.custom.BadLockIdentifierException
+import com.depromeet.whatnow.exception.custom.NotAvailableRedissonLockException
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -30,12 +32,12 @@ class RedissonLockAop(
         try {
             val available = rLock.tryLock(redissonLock.waitTime, redissonLock.leaseTime, redissonLock.timeUnit)
             if (!available) {
-                throw Exception("에러정책 이후 변할 예정")
+                throw NotAvailableRedissonLockException.EXCEPTION
             }
 
             return redissonCallNewTransaction
                 .proceed(joinPoint)
-        } catch (e: TransactionTimedOutException) {
+        } catch (e: TransactionTimedOutException) { // WhatnowCodeException , WhatnowDynamicException
             throw e
         } finally {
             try {
@@ -57,6 +59,6 @@ class RedissonLockAop(
                 return args[i].toString()
             }
         }
-        throw Exception("에러정책 이후 변할 예정")
+        throw BadLockIdentifierException.EXCEPTION
     }
 }

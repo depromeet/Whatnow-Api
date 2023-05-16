@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.config.security
 
+import com.depromeet.whatnow.exception.custom.SecurityContextNotFoundException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.CollectionUtils
@@ -13,7 +14,7 @@ class SecurityUtils {
         val currentUserId: Long
             get() {
                 val authentication = SecurityContextHolder.getContext().authentication
-                    ?: throw Error("비즈니스 에러로 전환예정")
+                    ?: throw SecurityContextNotFoundException.EXCEPTION
                 return if (authentication.isAuthenticated && !CollectionUtils.containsAny(authentication.authorities, notUserAuthority)) {
                     authentication.name.toLong()
                 } else {
