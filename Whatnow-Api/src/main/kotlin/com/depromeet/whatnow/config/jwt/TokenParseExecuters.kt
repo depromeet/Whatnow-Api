@@ -18,7 +18,8 @@ fun JwtParseExecuter(operation: () -> Jwt<Header<*>, Claims>): Jwt<Header<*>, Cl
             is io.jsonwebtoken.security.SecurityException,
             is MalformedJwtException,
             is UnsupportedJwtException,
-            is IllegalArgumentException -> throw InvalidTokenException.EXCEPTION
+            is IllegalArgumentException,
+            -> throw InvalidTokenException.EXCEPTION
             is ExpiredJwtException -> throw ExpiredTokenException.EXCEPTION
             else -> throw ex
         }
@@ -33,7 +34,8 @@ fun JwsParseExecuter(operation: () -> Jws<Claims>): Jws<Claims> {
             is io.jsonwebtoken.security.SecurityException,
             is MalformedJwtException,
             is UnsupportedJwtException,
-            is IllegalArgumentException -> throw InvalidTokenException.EXCEPTION
+            is IllegalArgumentException,
+            -> throw InvalidTokenException.EXCEPTION
             is ExpiredJwtException -> throw ExpiredTokenException.EXCEPTION
             else -> throw ex
         }

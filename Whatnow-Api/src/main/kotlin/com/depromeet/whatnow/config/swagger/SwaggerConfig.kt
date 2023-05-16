@@ -109,7 +109,6 @@ class SwaggerConfig {
             // ApiErrorCodeExample 어노테이션 단 메소드 적용
             apiErrorCodeExample ?.run {
                 generateErrorCodeResponseExample(operation, apiErrorCodeExample.value)
-
             }
             operation
         }

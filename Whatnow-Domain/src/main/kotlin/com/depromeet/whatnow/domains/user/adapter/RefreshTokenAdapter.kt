@@ -2,8 +2,8 @@ package com.depromeet.whatnow.domains.user.adapter
 
 import com.depromeet.whatnow.domains.user.domain.RefreshTokenRedisEntity
 import com.depromeet.whatnow.domains.user.repository.RefreshTokenRepository
+import com.depromeet.whatnow.exception.custom.RefreshTokenExpiredException
 import org.springframework.stereotype.Service
-import java.lang.Error
 
 @Service
 class RefreshTokenAdapter(
@@ -12,7 +12,7 @@ class RefreshTokenAdapter(
 
     fun queryRefreshToken(refreshToken: String): RefreshTokenRedisEntity {
         return refreshTokenRepository
-            .findByRefreshToken(refreshToken) ?: run { throw Error("엔티티 못찾음 에러바꾸기 나중에") }
+            .findByRefreshToken(refreshToken) ?: run { throw RefreshTokenExpiredException.EXCEPTION }
     }
 
     fun save(refreshToken: RefreshTokenRedisEntity): RefreshTokenRedisEntity {
