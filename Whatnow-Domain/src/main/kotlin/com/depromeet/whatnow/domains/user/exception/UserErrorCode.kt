@@ -13,7 +13,7 @@ enum class UserErrorCode(val status: Int, val code: String, val reason: String) 
     @ExplainError("회원가입시에 이미 회원가입한 유저일시 발생하는 오류. 회원가입전엔 항상 register valid check 를 해주세요")
     USER_ALREADY_SIGNUP(BAD_REQUEST, "USER_400_1", "이미 회원가입한 유저입니다."),
 
-    @ExplainError("정지 처리된 유저일 경우 밣생하는 오류")
+    @ExplainError("정지 처리된 유저일 경우 발생하는 오류")
     USER_FORBIDDEN(FORBIDDEN, "USER_403_1", "접근이 제한된 유저입니다."),
 
     @ExplainError("탈퇴한 유저로 접근하려는 경우")
