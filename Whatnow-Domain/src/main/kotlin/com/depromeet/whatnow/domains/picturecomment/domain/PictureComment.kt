@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.promiseInteraction.domain
+package com.depromeet.whatnow.domains.picturecomment.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import javax.persistence.Column
@@ -9,18 +9,16 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table(name = "tbl_promise_interaction")
-class PromiseInteraction(
-    var promiseId: Long,
-
-    var interactionId: Long,
+@Table(name = "tbl_picture_comment")
+class PictureComment(
+    var pictureId: Long,
 
     var userId: Long,
 
-    var count: Long,
+    var comment: String,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "promise_interaction_id")
+    @Column(name = "picture_comment_id")
     val id: Long? = null,
 ) : BaseTimeEntity()
