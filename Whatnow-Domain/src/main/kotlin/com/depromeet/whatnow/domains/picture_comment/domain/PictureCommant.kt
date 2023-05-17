@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.picture_comment.domain
+package com.depromeet.whatnow.domains.pictureComment.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import javax.persistence.*
