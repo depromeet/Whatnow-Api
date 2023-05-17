@@ -11,6 +11,8 @@ import javax.persistence.Table
 @Table(name = "tbl_promise_progress")
 class PromiseProgress(
 
+    var type: PromiseProgressType,
+
     var state: String, // 상태 코드
 
     var kr: String, // 한글
