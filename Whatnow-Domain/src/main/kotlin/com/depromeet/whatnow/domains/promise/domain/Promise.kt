@@ -3,16 +3,22 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgressType
-import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Embedded
+import javax.persistence.Entity
+import javax.persistence.Enumerated
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
 @Table(name = "tbl_promise")
 class Promise(
 
     @Column(updatable = true)
-    var endTime : LocalDateTime = LocalDateTime.now(),
+    var endTime: LocalDateTime,
 
     // 약속명
     var title: String,
@@ -28,5 +34,5 @@ class Promise(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promise_history_id")
-    val id: Long? = null
+    val id: Long? = null,
 ) : BaseTimeEntity()
