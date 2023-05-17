@@ -37,7 +37,7 @@ class User(
     var accountRole: AccountRole = AccountRole.USER,
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     val id: Long? = null,
 ) : BaseTimeEntity() {

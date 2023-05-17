@@ -1,5 +1,6 @@
-package com.depromeet.whatnow.domains.promiseHistory.domain
+package com.depromeet.whatnow.domains.promisehistory.domain
 
+import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.vo.PlaceVo
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -35,7 +36,7 @@ class PromiseHistory(
     var avatarIds: MutableSet<Long> = mutableSetOf(),
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promise_history_id")
     val id: Long? = null,
-)
+) : BaseTimeEntity()
