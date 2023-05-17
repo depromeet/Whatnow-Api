@@ -10,6 +10,13 @@ import javax.persistence.Table
 @Entity
 @Table(name = "tbl_promise_progress")
 class PromiseProgress(
+
+    var state: String, // 상태 코드
+
+    var kr: String, // 한글
+
+    var img: String, // 이미지
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "promise_progress_id")
