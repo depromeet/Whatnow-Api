@@ -22,5 +22,5 @@ class Picture(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "picture_id")
-    val id: Long? = null
-): BaseTimeEntity()
+    val id: Long? = null,
+) : BaseTimeEntity()
