@@ -2,6 +2,8 @@ package com.depromeet.whatnow.domains.promiseProgress.domain
 
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -11,6 +13,7 @@ import javax.persistence.Table
 @Table(name = "tbl_promise_progress")
 class PromiseProgress(
 
+    @Enumerated(EnumType.STRING)
     var type: PromiseProgressType,
 
     var state: String, // 상태 코드
