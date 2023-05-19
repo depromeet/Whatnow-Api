@@ -1,8 +1,6 @@
 name: Build Location Server
 on:
   push:
-    branches:
-      - develop
     tags:
       - Api-v*.*.*
 jobs:
@@ -63,4 +61,4 @@ jobs:
           context: ./Whatnow-Location
           # image push 최적화
           push: true
-          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/whatnow-location:latest
+          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/whatnow-location:${{steps.get_version.outputs.VERSION }}
