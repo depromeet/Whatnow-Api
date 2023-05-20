@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AccessDeniedFilter : OncePerRequestFilter() {
-    private val objectMapper: ObjectMapper? = null
+class AccessDeniedFilter(
+    val objectMapper: ObjectMapper,
+) :
+    OncePerRequestFilter() {
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         val servletPath = request.servletPath
         return PatternMatchUtils.simpleMatch(SWAGGER_PATTERNS, servletPath)
@@ -64,6 +66,6 @@ class AccessDeniedFilter : OncePerRequestFilter() {
         response.characterEncoding = "UTF-8"
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         response.status = errorResponse.status
-        response.writer.write(objectMapper!!.writeValueAsString(errorResponse))
+        response.writer.write(objectMapper.writeValueAsString(errorResponse))
     }
 }
