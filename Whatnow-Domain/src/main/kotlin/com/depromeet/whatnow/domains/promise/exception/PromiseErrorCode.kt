@@ -35,6 +35,4 @@ enum class PromiseErrorCode(val status: Int, val code: String, val reason: Strin
             val annotation = field.getAnnotation(ExplainError::class.java)
             return if (Objects.nonNull(annotation)) annotation.value else reason
         }
-
-
 }

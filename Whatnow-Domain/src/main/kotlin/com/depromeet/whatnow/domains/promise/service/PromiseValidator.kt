@@ -16,7 +16,7 @@ class PromiseValidator(
         val promises = promiseAdaptor.queryPromiseByMainUserIdAfterNow(promise.mainUserId)
         promises.filter { it.endTime > promise.endTime }.forEach {
             // 약속시간이 1시간 사이에 겹치면 등록 불가능
-            if (it.endTime.dayOfYear == promise.endTime.dayOfYear){
+            if (it.endTime.dayOfYear == promise.endTime.dayOfYear) {
                 throw DoublePromiseException.EXCEPTION
             }
         }

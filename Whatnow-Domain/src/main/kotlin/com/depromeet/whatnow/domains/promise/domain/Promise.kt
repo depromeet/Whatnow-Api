@@ -3,8 +3,6 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.PlaceVo
-import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgressType
-import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -66,7 +64,6 @@ class Promise(
     }
 
     fun updatePromiseProgressType(promiseType: PromiseType) {
-        this.promiseType= promiseType
+        this.promiseType = promiseType
     }
-
 }

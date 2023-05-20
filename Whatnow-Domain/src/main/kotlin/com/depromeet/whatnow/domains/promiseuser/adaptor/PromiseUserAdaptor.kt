@@ -5,9 +5,9 @@ import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.repository.PromiseUserRepository
 import org.springframework.data.repository.findByIdOrNull
 
-//@Adaptor
+// @Adaptor
 class PromiseUserAdaptor(
-    val promiseUserRepository: PromiseUserRepository
+    val promiseUserRepository: PromiseUserRepository,
 ) {
     fun queryPromise(promiseId: Long): PromiseUser {
         return promiseUserRepository.findByIdOrNull(promiseId) ?: run { throw PromiseNotFoundException.EXCEPTION }

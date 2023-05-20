@@ -7,11 +7,10 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
-//@Adaptor
-//차후에 컴포넌트 내릴거임
+// @Adaptor
 @Component
 class PromiseAdaptor(
-    var promiseRepository: PromiseRepository
+    var promiseRepository: PromiseRepository,
 ) {
     fun queryPromise(promiseId: Long): Promise {
         return promiseRepository.findByIdOrNull(promiseId) ?: run { throw PromiseNotFoundException.EXCEPTION }

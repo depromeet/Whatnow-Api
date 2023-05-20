@@ -4,7 +4,6 @@ import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
-import com.depromeet.whatnow.domains.promise.exception.DoublePromiseException
 import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgressType
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -21,13 +20,13 @@ class PromiseDomainService(
         mainUserId: Long,
         meetPlace: PlaceVo?,
         promiseType: PromiseType,
-        ): Promise {
+    ): Promise {
         val promise = Promise(
             endTime = endTime,
             title = title,
             mainUserId = mainUserId,
             meetPlace = meetPlace,
-            promiseType = promiseType
+            promiseType = promiseType,
         )
         // 추 후 validation 추가
         promiseValidator.validateDoublePromise(promise)
@@ -49,6 +48,7 @@ class PromiseDomainService(
         promise.delayPromise(endTime)
         return promise
     }
+
     // 약속장소 변경
     @Transactional
     fun movePromisePlace(promiseId: Long, placeVo: PlaceVo): Promise {

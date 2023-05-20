@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.domains.promise.exception
 
-import com.depromeet.whatnow.domains.user.exception.UserErrorCode
 import com.depromeet.whatnow.exception.WhatnowCodeException
 
 class DoublePromiseException : WhatnowCodeException(
