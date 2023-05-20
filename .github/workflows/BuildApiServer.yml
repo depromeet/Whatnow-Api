@@ -1,8 +1,6 @@
 name: Build Api Server
 on:
   push:
-    branches:
-      - develop
     tags:
       - Api-v*.*.*
 jobs:
