@@ -15,7 +15,8 @@ import javax.persistence.Table
 class PromiseProgress(
 
     @Enumerated(EnumType.STRING)
-    var type: PromiseProgressType,
+    @Column(name = "type")
+    var group: PromiseProgressGroup,
 
     var state: String, // 상태 코드
 

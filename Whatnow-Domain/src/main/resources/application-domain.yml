@@ -20,11 +20,11 @@ spring:
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
-    sql:
-      init:
-        mode: always
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  sql:
+    init:
+      mode: always
 logging:
   level:
     com.zaxxer.hikari.HikariConfig: DEBUG
