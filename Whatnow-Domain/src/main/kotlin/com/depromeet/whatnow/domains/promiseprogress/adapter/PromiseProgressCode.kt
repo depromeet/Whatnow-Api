@@ -9,7 +9,7 @@ import com.depromeet.whatnow.consts.NOT_FOUND as NOT_FOUND_CONST
 enum class PromiseProgressCode(val status: Int, val code: String, val reason: String) : BaseErrorCode {
 
     @ExplainError("약속 진행 단계를 찾을 수 없는 경우")
-    NOT_FOUND(NOT_FOUND_CONST, "PROMISE_PROGRESS_404_1", "유저 정보를 찾을 수 없습니다."),
+    NOT_FOUND(NOT_FOUND_CONST, "PROMISE_PROGRESS_404_1", "약속 진행 단계를 찾을 수 없습니다."),
     ;
 
     override val errorReason: ErrorReason
