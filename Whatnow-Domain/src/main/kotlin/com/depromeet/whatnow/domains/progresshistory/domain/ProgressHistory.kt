@@ -10,9 +10,10 @@ import javax.persistence.Table
 @Entity
 @Table(name = "tbl_progress_history")
 class ProgressHistory(
-    var userId: Long,
 
     var promiseId: Long,
+
+    var userId: Long,
 
     var prePromiseProgressId: Long?,
 
@@ -22,5 +23,4 @@ class ProgressHistory(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "progress_history_id")
     val id: Long? = null,
-) {
-}
+)
