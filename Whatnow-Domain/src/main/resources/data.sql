@@ -1,4 +1,4 @@
-INSERT INTO tbl_promise_progress(promise_progress_id, type, state , kr, img )
+INSERT INTO tbl_promise_progress(promise_progress_id, type, code , kr, img )
 VALUES
     (1,'PREPARING','SHOWER' ,'씻는중',''),
     (2,'PREPARING','LEAVE_SOON' ,'곧 나감',''),
@@ -11,6 +11,6 @@ VALUES
     (9,'LATE','URGENCY' ,'다급함',''),
     (10,'EXPECTED_TIME','AFTER_SOON' ,'곧 도착',''),
     (11,'EXPECTED_TIME','AFTER_5' ,'5분뒤 도착',''),
-    (12,'EXPECTED_TIME','AFTER_10' ,'10분뒤 도착','')
+    (12,'EXPECTED_TIME','AFTER_10' ,'10분뒤 도착',''),
     (13,'DEFAULT','DEFAULT' ,'기본 속성','')
-    ON DUPLICATE KEY UPDATE type = VALUES (type), state = VALUES (state), kr = VALUES (kr), img = VALUES (img);
+    ON DUPLICATE KEY UPDATE type = VALUES (type), code = VALUES (code), kr = VALUES (kr), img = VALUES (img);

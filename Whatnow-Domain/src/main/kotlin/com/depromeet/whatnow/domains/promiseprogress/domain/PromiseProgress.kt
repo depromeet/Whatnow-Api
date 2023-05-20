@@ -18,7 +18,7 @@ class PromiseProgress(
     @Column(name = "type")
     var group: PromiseProgressGroup,
 
-    var state: String, // 상태 코드
+    var code: String, // 상태 코드
 
     var kr: String, // 한글
 
