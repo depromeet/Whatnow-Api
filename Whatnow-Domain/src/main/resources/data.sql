@@ -12,4 +12,5 @@ VALUES
     (10,'EXPECTED_TIME','AFTER_SOON' ,'곧 도착',''),
     (11,'EXPECTED_TIME','AFTER_5' ,'5분뒤 도착',''),
     (12,'EXPECTED_TIME','AFTER_10' ,'10분뒤 도착','')
+    (13,'DEFAULT','DEFAULT' ,'기본 속성','')
     ON DUPLICATE KEY UPDATE type = VALUES (type), state = VALUES (state), kr = VALUES (kr), img = VALUES (img);

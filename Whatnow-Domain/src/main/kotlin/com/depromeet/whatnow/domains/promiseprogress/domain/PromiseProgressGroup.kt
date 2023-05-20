@@ -5,4 +5,5 @@ enum class PromiseProgressGroup(val kr: String) {
     MOVING("가는 중"),
     LATE("지각"),
     EXPECTED_TIME("예정시간"),
+    DEFAULT("기본"),
 }
