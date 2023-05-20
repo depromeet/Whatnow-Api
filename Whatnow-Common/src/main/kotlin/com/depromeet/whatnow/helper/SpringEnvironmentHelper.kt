@@ -1,13 +1,13 @@
 package com.depromeet.whatnow.helper
 
+import com.depromeet.whatnow.annotation.Helper
 import com.depromeet.whatnow.consts.DEV
 import com.depromeet.whatnow.consts.LOCAL
 import com.depromeet.whatnow.consts.PROD
 import org.springframework.core.env.Environment
-import org.springframework.stereotype.Component
 import org.springframework.util.CollectionUtils
 
-@Component
+@Helper
 class SpringEnvironmentHelper(
     val environment: Environment,
 ) {

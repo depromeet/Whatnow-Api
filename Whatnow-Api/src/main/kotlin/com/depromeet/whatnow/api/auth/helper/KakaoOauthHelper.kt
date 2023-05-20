@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.auth.helper
 
+import com.depromeet.whatnow.annotation.Helper
 import com.depromeet.whatnow.api.KakaoInfoClient
 import com.depromeet.whatnow.api.KakaoOauthClient
 import com.depromeet.whatnow.api.dto.KakaoInformationResponse
@@ -11,9 +12,8 @@ import com.depromeet.whatnow.config.jwt.OIDCDecodePayload
 import com.depromeet.whatnow.config.static.BEARER
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.OauthProvider
-import org.springframework.stereotype.Service
 
-@Service
+@Helper
 class KakaoOauthHelper(
     val oauthProperties: OauthProperties,
     val kakaoInfoClient: KakaoInfoClient,

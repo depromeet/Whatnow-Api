@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.config.jwt
 
+import com.depromeet.whatnow.annotation.Helper
 import com.depromeet.whatnow.config.static.ACCESS_TOKEN
 import com.depromeet.whatnow.config.static.MILLI_TO_SECOND
 import com.depromeet.whatnow.config.static.REFRESH_TOKEN
@@ -14,12 +15,11 @@ import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.util.*
 
-@Component
+@Helper
 class JwtTokenHelper(
     @Value("\${auth.jwt.secret-key}")
     private val jwtSecretKey: String,

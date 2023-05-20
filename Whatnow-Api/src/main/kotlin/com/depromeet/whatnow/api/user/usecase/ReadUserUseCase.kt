@@ -1,12 +1,12 @@
 package com.depromeet.whatnow.api.user.usecase
 
+import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
 
-@Service
+@UseCase
 class ReadUserUseCase(
     val userRepository: UserRepository,
 ) {

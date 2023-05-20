@@ -1,12 +1,12 @@
 package com.depromeet.whatnow.api.auth.helper
 
+import com.depromeet.whatnow.annotation.Helper
 import com.depromeet.whatnow.api.dto.OIDCPublicKeyDto
 import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
 import com.depromeet.whatnow.config.jwt.JwtOIDCHelper
 import com.depromeet.whatnow.config.jwt.OIDCDecodePayload
-import org.springframework.stereotype.Component
 
-@Component
+@Helper
 class OauthOIDCHelper(
     val jwtOIDCProvider: JwtOIDCHelper,
 ) {
