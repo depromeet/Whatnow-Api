@@ -11,4 +11,9 @@ class PromiseProgressAdapter(
     fun findAll(): List<PromiseProgress> {
         return promiseProgressRepository.findAll()
     }
+
+    fun queryByCode(code: String): PromiseProgress {
+        return promiseProgressRepository.findByCode(code)
+            ?: run { throw PromiseProgressNotFoundException.EXCEPTION }
+    }
 }

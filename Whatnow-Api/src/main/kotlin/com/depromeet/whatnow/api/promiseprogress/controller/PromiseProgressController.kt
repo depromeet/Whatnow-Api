@@ -9,15 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/promise/progress")
-@Tag(name = "5(일단 5번으로 잡음 순서). [약속진행 상태 조회]")
+@RequestMapping("/v1/promise")
+@Tag(name = "5(일단 5번으로 잡음 순서). [약속진행상태]")
 @SecurityRequirement(name = "access-token")
 class PromiseProgressController(
     val promiseProgressReadUseCase: PromiseProgressReadUseCase,
 ) {
 
-    @GetMapping
+    @GetMapping("/progress")
     fun getPromiseProgresses(): List<PromiseProgressGroupElement> {
         return promiseProgressReadUseCase.execute()
     }
+//
+//    @PostMapping("/{promiseId}/progress/{progressCode}")
+//    fun changePromiseProgress(): List<PromiseProgressGroupElement> {
+//        return promiseProgressReadUseCase.execute()
+//    }
 }

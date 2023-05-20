@@ -14,7 +14,11 @@ class PromiseProgressReadUseCase(
         return promiseProgressAdapter.findAll().map {
                 p ->
             PromiseProgressDto.from(p)
-        }.groupBy { p -> p.group }.map { (k, value) ->
+        }.groupBy {
+                p ->
+            p.group
+        }.map {
+                (k, value) ->
             PromiseProgressGroupElement(k, value)
         }
     }
