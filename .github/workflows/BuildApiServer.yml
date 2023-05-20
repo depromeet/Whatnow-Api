@@ -1,8 +1,8 @@
 name: Build Api Server
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - Api-v*.*.*
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,6 +35,9 @@ jobs:
           RELEASE_VERSION_WITHOUT_V="$(cut -d'v' -f2 <<< ${GITHUB_REF#refs/*/})"
           echo "RELEASE_VERSION_WITHOUT_V=$RELEASE_VERSION_WITHOUT_V" >> $GITHUB_ENV
 
+      - name: Start containers  # test 돌릴때 레디스 필요
+        run: docker-compose up -d
+
       - name: Gradle Build
         uses: gradle/gradle-build-action@v2
 
@@ -58,4 +61,4 @@ jobs:
           context: ./Whatnow-Api
           # image push 최적화
           push: true
-          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/deploy-test:latest
+          tags: ${{secrets.NCP_CONTAINER_REGISTRY}}/whatnow-api:${{ steps.get_version.outputs.VERSION }}

@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    include:
+      - infrastructure
+      - domain
+springdoc:
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  swagger-ui:
+    tags-sorter: alpha
+auth:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY:testkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkey}
+    access-exp: ${JWT_ACCESS_EXP:3600}
+    refresh-exp: ${JWT_REFRESH_EXP:3600}
+
+swagger:
+  user: ${SWAGGER_USER:user}
+  password: ${SWAGGER_PASSWORD:password}
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+#logging:
+#  level:
+#    root: info
+#logging:
+#  level:
+#    org.springframework.data.*.*: debug
+#    org.springframework.cache.*: debug
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    ROOT: WARN
