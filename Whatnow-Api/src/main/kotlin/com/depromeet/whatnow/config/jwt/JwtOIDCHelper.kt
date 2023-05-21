@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.config.jwt
 
+import com.depromeet.whatnow.annotation.Helper
 import com.depromeet.whatnow.consts.KID
 import com.depromeet.whatnow.exception.custom.InvalidTokenException
 import io.jsonwebtoken.Claims
@@ -7,14 +8,13 @@ import io.jsonwebtoken.Header
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwt
 import io.jsonwebtoken.Jwts
-import org.springframework.stereotype.Component
 import java.math.BigInteger
 import java.security.Key
 import java.security.KeyFactory
 import java.security.spec.RSAPublicKeySpec
 import java.util.*
 
-@Component
+@Helper
 class JwtOIDCHelper {
 
     fun getKidFromUnsignedTokenHeader(token: String, iss: String, aud: String): String {
