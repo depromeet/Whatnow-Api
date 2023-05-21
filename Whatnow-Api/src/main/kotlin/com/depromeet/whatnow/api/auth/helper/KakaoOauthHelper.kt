@@ -9,7 +9,7 @@ import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
 import com.depromeet.whatnow.api.dto.UnlinkKaKaoTarget
 import com.depromeet.whatnow.config.OauthProperties
 import com.depromeet.whatnow.config.jwt.OIDCDecodePayload
-import com.depromeet.whatnow.config.static.BEARER
+import com.depromeet.whatnow.consts.BEARER
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.OauthProvider
 

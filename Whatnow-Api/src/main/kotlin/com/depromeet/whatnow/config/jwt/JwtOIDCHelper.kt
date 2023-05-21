@@ -1,7 +1,7 @@
 package com.depromeet.whatnow.config.jwt
 
 import com.depromeet.whatnow.annotation.Helper
-import com.depromeet.whatnow.config.consts.KID
+import com.depromeet.whatnow.consts.KID
 import com.depromeet.whatnow.exception.custom.InvalidTokenException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Header
