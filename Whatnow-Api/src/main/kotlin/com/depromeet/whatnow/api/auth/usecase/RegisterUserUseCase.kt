@@ -13,7 +13,7 @@ import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.service.UserDomainService
 
-@UseCase // TODO : UseCase annotation 을 커스텀 하게 만들고싶은데 위치를 어디로 줘야할지? 커먼 레이어가없음
+@UseCase
 class RegisterUserUseCase(
     val userDomainService: UserDomainService,
     val kakaoOauthHelper: KakaoOauthHelper,
