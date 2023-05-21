@@ -1,11 +1,11 @@
 package com.depromeet.whatnow.api.promiseprogress.usecase
 
+import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressDto
 import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressGroupElement
 import com.depromeet.whatnow.domains.promiseprogress.adapter.PromiseProgressAdapter
-import org.springframework.stereotype.Component
 
-@Component
+@UseCase
 class PromiseProgressReadUseCase(
     val promiseProgressAdapter: PromiseProgressAdapter,
 ) {

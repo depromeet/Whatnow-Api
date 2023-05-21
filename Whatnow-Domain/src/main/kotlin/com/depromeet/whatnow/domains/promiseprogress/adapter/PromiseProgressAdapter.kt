@@ -1,10 +1,11 @@
 package com.depromeet.whatnow.domains.promiseprogress.adapter
 
+import com.depromeet.whatnow.annotation.Adapter
 import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgress
+import com.depromeet.whatnow.domains.promiseprogress.exception.PromiseProgressNotFoundException
 import com.depromeet.whatnow.domains.promiseprogress.repository.PromiseProgressRepository
-import org.springframework.stereotype.Component
 
-@Component
+@Adapter
 class PromiseProgressAdapter(
     val promiseProgressRepository: PromiseProgressRepository,
 ) {

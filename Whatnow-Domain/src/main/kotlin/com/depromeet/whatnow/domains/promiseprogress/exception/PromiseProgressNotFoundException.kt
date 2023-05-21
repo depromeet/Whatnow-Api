@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.promiseprogress.adapter
+package com.depromeet.whatnow.domains.promiseprogress.exception
 
 import com.depromeet.whatnow.exception.WhatnowCodeException
 
