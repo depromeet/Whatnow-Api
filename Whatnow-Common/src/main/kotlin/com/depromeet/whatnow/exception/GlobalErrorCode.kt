@@ -33,6 +33,9 @@ enum class GlobalErrorCode(val status: Int, val code: String, val reason: String
     @ExplainError("헤더에 accessToken의 형식이 틀릴떄 발생하는 오류입니다, 토큰이 위조됐을 가능성이 있습니다.")
     INVALID_TOKEN(FORBIDDEN, "AUTH_403_2", "토큰의 형식이 일치하지 않습니다. 적절한 형식으로 다시 요청하세요"),
 
+    @ExplainError("헤더에 accessToken이 ")
+    ACCESS_TOKEN_NOT_EXIST(UNAUTHORIZED, "AUTH_401_2", "토큰이 존재하지 않습니다. 적절한 토큰을 헤더에 넣어주세요"),
+
     @ExplainError("헤더에 accessToken이 없을때 발생하는 오류입니다")
     ACCESS_TOKEN_NOT_FOUND(FORBIDDEN, "AUTH_403_3", "토큰이 존재하지 않습니다. 적절한 토큰을 헤더에 넣어주세요"),
 
