@@ -12,7 +12,6 @@ import javax.transaction.Transactional
 @Service
 class PromiseDomainService(
     val promiseAdaptor: PromiseAdaptor,
-    val promiseValidator: PromiseValidator,
 ) {
     fun registerPromise(
         endTime: LocalDateTime,
@@ -28,8 +27,6 @@ class PromiseDomainService(
             meetPlace = meetPlace,
             promiseType = promiseType,
         )
-        // 추 후 validation 추가
-        promiseValidator.validateDoublePromise(promise)
         return promiseAdaptor.save(promise)
     }
 
@@ -77,10 +74,5 @@ class PromiseDomainService(
     fun deletePromise(promiseId: Long) {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.deletePromise()
-    }
-
-    @Transactional
-    fun findById(promiseId: Long): Promise {
-        return promiseAdaptor.queryPromise(promiseId)
     }
 }
