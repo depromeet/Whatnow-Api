@@ -4,7 +4,7 @@ import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
-import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgressType
+import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgressGroup
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import javax.transaction.Transactional
@@ -56,14 +56,14 @@ class PromiseDomainService(
 
     // 약속 진행상태(출발 전, 이동 중, 도착, ETC) 변경
     @Transactional
-    fun pendingPromiseProgressType(promiseId: Long, promiseProgressType: PromiseProgressType): Promise {
+    fun pendingPromiseProgressType(promiseId: Long, promiseProgressGroup: PromiseProgressGroup): Promise {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.pendingPromise()
         return promise
     }
 
     @Transactional
-    fun endPromiseProgressType(promiseId: Long, promiseProgressType: PromiseProgressType): Promise {
+    fun endPromiseProgressType(promiseId: Long, promiseProgressGroup: PromiseProgressGroup): Promise {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.endPromise()
         return promise
