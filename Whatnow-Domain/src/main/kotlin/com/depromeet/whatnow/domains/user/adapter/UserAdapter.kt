@@ -1,12 +1,12 @@
 package com.depromeet.whatnow.domains.user.adapter
 
+import com.depromeet.whatnow.annotation.Adapter
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.exception.UserNotFoundException
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Component
 
-@Component
+@Adapter
 class UserAdapter(
     val userRepository: UserRepository,
 ) {

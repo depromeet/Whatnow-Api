@@ -2,7 +2,7 @@ name: Build Location Server
 on:
   push:
     tags:
-      - Api-v*.*.*
+      - Location-v*.*.*
 jobs:
   build:
     runs-on: ubuntu-latest

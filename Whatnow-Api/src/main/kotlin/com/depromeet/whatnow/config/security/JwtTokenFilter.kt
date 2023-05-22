@@ -2,8 +2,8 @@ package com.depromeet.whatnow.config.security
 
 import com.depromeet.whatnow.config.jwt.AccessTokenInfo
 import com.depromeet.whatnow.config.jwt.JwtTokenHelper
-import com.depromeet.whatnow.config.static.AUTH_HEADER
-import com.depromeet.whatnow.config.static.BEARER
+import com.depromeet.whatnow.consts.AUTH_HEADER
+import com.depromeet.whatnow.consts.BEARER
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
