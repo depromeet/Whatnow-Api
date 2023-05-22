@@ -1,12 +1,7 @@
 package com.depromeet.whatnow.domains.picture.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "tbl_picture")
@@ -17,7 +12,7 @@ class Picture(
 
     var uri: String,
 
-    var key: String,
+    var uuid: String,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
