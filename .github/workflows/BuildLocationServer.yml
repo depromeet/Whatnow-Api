@@ -2,7 +2,7 @@ name: Build Location Server
 on:
   push:
     tags:
-      - Api-v*.*.*
+      - Location-v*.*.*
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
         id: get_version
         run: |
           RELEASE_VERSION_WITHOUT_V="$(cut -d'v' -f2 <<< ${GITHUB_REF#refs/*/})"
-          echo "RELEASE_VERSION_WITHOUT_V=$RELEASE_VERSION_WITHOUT_V" >> $GITHUB_ENV
+          echo ::set-output name=VERSION::$RELEASE_VERSION_WITHOUT_V 
 
       - name: Start containers  # test 돌릴때 레디스 필요
         run: docker-compose up -d

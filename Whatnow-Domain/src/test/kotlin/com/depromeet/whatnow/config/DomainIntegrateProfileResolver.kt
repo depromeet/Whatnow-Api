@@ -5,6 +5,6 @@ import org.springframework.test.context.ActiveProfilesResolver
 class DomainIntegrateProfileResolver : ActiveProfilesResolver {
 
     override fun resolve(testClass: Class<*>): Array<String> {
-        return arrayOf("infrastructure", "domain")
+        return arrayOf("test", "infrastructure", "domain")
     }
 }

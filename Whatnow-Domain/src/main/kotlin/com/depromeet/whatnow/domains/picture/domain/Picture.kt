@@ -17,7 +17,7 @@ class Picture(
 
     var uri: String,
 
-    var key: String,
+    var uuid: String,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

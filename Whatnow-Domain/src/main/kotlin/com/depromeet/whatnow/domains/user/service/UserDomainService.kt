@@ -1,15 +1,15 @@
 package com.depromeet.whatnow.domains.user.service
 
+import com.depromeet.whatnow.annotation.DomainService
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.exception.AlreadySignUpUserException
 import com.depromeet.whatnow.domains.user.exception.UserNotFoundException
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Service
+@DomainService
 class UserDomainService(
     val userRepository: UserRepository,
 ) {

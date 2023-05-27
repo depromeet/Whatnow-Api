@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.promise.domain
+package com.depromeet.whatnow.domains.promiseuser.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.vo.CoordinateVo

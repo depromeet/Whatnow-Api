@@ -1,11 +1,11 @@
 package com.depromeet.whatnow.domains.user.adapter
 
+import com.depromeet.whatnow.annotation.Adapter
 import com.depromeet.whatnow.domains.user.domain.RefreshTokenRedisEntity
 import com.depromeet.whatnow.domains.user.repository.RefreshTokenRepository
 import com.depromeet.whatnow.exception.custom.RefreshTokenExpiredException
-import org.springframework.stereotype.Service
 
-@Service
+@Adapter
 class RefreshTokenAdapter(
     val refreshTokenRepository: RefreshTokenRepository,
 ) {

@@ -1,14 +1,14 @@
 package com.depromeet.whatnow.api.auth.usecase
 
+import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.auth.helper.KakaoOauthHelper
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.user.adapter.RefreshTokenAdapter
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.service.UserDomainService
-import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Service
+@UseCase
 class WithDrawUseCase(
     val refreshTokenAdapter: RefreshTokenAdapter,
     val userAdapter: UserAdapter,

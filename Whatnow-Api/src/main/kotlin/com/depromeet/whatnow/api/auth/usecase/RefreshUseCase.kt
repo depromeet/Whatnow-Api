@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.auth.usecase
 
+import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.auth.dto.response.TokenAndUserResponse
 import com.depromeet.whatnow.api.auth.usecase.helper.TokenGenerateHelper
 import com.depromeet.whatnow.config.jwt.JwtTokenHelper
@@ -7,9 +8,8 @@ import com.depromeet.whatnow.domains.user.adapter.RefreshTokenAdapter
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.service.UserDomainService
-import org.springframework.stereotype.Service
 
-@Service
+@UseCase
 class RefreshUseCase(
     val refreshTokenAdapter: RefreshTokenAdapter,
     val jwtTokenHelper: JwtTokenHelper,
