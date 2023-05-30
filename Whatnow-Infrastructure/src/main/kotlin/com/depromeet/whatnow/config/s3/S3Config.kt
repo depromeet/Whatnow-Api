@@ -21,7 +21,7 @@ class S3Config(
     val region: String,
 
     @Value("\${ncp.s3.endpoint}")
-    val endPoint: String
+    val endPoint: String,
 ) {
     @Bean
     fun amazonS3(): AmazonS3 {

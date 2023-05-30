@@ -1,17 +1,11 @@
 package com.depromeet.whatnow.api.image.controller
 
-import com.amazonaws.HttpMethod
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.Headers
-import com.amazonaws.services.s3.model.CannedAccessControlList
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.depromeet.whatnow.api.image.dto.ImageUrlResponse
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
 import com.depromeet.whatnow.config.s3.ImageFileExtension
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -24,13 +18,13 @@ import java.util.*
 @RequestMapping("/v1")
 @SecurityRequirement(name = "access-token")
 class ImageController(
-    val getPresignedUrlUseCase: GetPresignedUrlUseCase
+    val getPresignedUrlUseCase: GetPresignedUrlUseCase,
 ) {
     @Operation(summary = "약속 관련 이미지 업로드 Presigned URL 발급")
     @GetMapping("/promise/{promiseId}/images")
     fun getPresignedUrlOfPromise(
         @PathVariable promiseId: Long,
-        @RequestParam fileExtension: ImageFileExtension
+        @RequestParam fileExtension: ImageFileExtension,
     ): ImageUrlResponse {
         return getPresignedUrlUseCase.forPromise(promiseId, fileExtension)
     }

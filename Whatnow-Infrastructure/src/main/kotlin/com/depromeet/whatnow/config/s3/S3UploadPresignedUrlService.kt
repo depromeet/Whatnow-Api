@@ -14,7 +14,7 @@ class S3UploadPresignedUrlService(
     val amazonS3: AmazonS3,
 
     @Value("\${ncp.s3.bucket}")
-    val bucket: String
+    val bucket: String,
 ) {
     fun forPromise(promiseId: Long, fileExtension: ImageFileExtension): ImageUrlDto {
         val uuid = UUID.randomUUID().toString()
@@ -23,7 +23,7 @@ class S3UploadPresignedUrlService(
             getGeneratePreSignedUrlRequest(bucket, fileName, fileExtension.uploadExtension)
 
         val generatePresignedUrl = amazonS3.generatePresignedUrl(generatePresignedUrlRequest)
-        return ImageUrlDto(generatePresignedUrl.toString(),  uuid);
+        return ImageUrlDto(generatePresignedUrl.toString(), uuid)
     }
 
     private fun getForPromiseFimeName(uuid: String, promiseId: Long, fileExtension: ImageFileExtension): String {
@@ -31,14 +31,17 @@ class S3UploadPresignedUrlService(
     }
 
     private fun getGeneratePreSignedUrlRequest(
-        bucket: String, fileName: String, fileExtension: String
+        bucket: String,
+        fileName: String,
+        fileExtension: String,
     ): GeneratePresignedUrlRequest {
-        val generatePresignedUrlRequest = GeneratePresignedUrlRequest(bucket, fileName , HttpMethod.PUT)
+        val generatePresignedUrlRequest = GeneratePresignedUrlRequest(bucket, fileName, HttpMethod.PUT)
             .withKey(fileName)
             .withContentType("image/$fileExtension")
             .withExpiration(getPreSignedUrlExpiration())
         generatePresignedUrlRequest.addRequestParameter(
-            Headers.S3_CANNED_ACL, CannedAccessControlList.PublicRead.toString()
+            Headers.S3_CANNED_ACL,
+            CannedAccessControlList.PublicRead.toString(),
         )
         return generatePresignedUrlRequest
     }
