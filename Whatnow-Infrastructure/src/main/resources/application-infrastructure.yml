@@ -25,6 +25,13 @@ feign:
   kakao:
     info : https://kapi.kakao.com
     oauth : https://kauth.kakao.com
+ncp:
+  s3:
+    access-key: ${NCP_ACCESS_KEY:}
+    secret-key: ${NCP_SECRET_KEY:}
+    bucket: ${NCP_BUCKET:}
+    region: ${NCP_REGION:}
+    endpoint: ${NCP_ENDPOINT:}
 #ncp:
 #  service-id: ${NCP_SERVICE_ID:}
 #  access-key: ${NCP_ACCESS_KEY:}
