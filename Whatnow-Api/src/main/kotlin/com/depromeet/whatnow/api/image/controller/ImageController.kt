@@ -21,7 +21,7 @@ class ImageController(
     val getPresignedUrlUseCase: GetPresignedUrlUseCase,
 ) {
     @Operation(summary = "약속 관련 이미지 업로드 Presigned URL 발급")
-    @GetMapping("/promise/{promiseId}/images")
+    @GetMapping("/promises/{promiseId}/images")
     fun getPresignedUrlOfPromise(
         @PathVariable promiseId: Long,
         @RequestParam fileExtension: ImageFileExtension,
