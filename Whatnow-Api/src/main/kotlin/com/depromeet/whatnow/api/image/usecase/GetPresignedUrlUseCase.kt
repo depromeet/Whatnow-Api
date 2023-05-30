@@ -10,7 +10,6 @@ class GetPresignedUrlUseCase(
     val presignedUrlService: S3UploadPresignedUrlService,
 ) {
     fun forPromise(promiseId: Long, fileExtension: ImageFileExtension): ImageUrlResponse {
-        presignedUrlService.forPromise(promiseId, fileExtension)
         return ImageUrlResponse.from(presignedUrlService.forPromise(promiseId, fileExtension))
     }
 }
