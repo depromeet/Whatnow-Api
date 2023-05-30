@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class S3Configs(
+class S3Config(
     @Value("\${ncp.s3.access-key}")
     val accessKey: String,
 
