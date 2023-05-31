@@ -3,6 +3,9 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.events.domainEvent.EndTimePromiseEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -12,6 +15,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.PostPersist
+import javax.persistence.PostUpdate
 import javax.persistence.Table
 
 @Entity
@@ -27,7 +31,7 @@ class Promise(
     var mainUserId: Long,
 
     @Embedded
-    var meetPlace: PlaceVo?,
+    var meetPlace: PlaceVo? = null,
 
     @Enumerated
     var promiseType: PromiseType = PromiseType.BEFORE,
@@ -39,17 +43,24 @@ class Promise(
 
 //    차후 이벤트 domain 설계 되면 생성시에 Domain 계층에서 validate 하겠습니다
 //    var promiseValidator: PromiseValidator,
-
 ) : BaseTimeEntity() {
     @PostPersist
-    fun createPromise() {
-        Events.raise(PromiseRegisterEvent.from(this))
+    fun createPromiseEvent() {
+        println("endTime = ${this.id!!}")
+        Events.raise(PromiseRegisterEvent(this.id!!, this.mainUserId))
     }
 
+    @PostUpdate
+    fun updatePromiseEvent() {
+        Events.raise(PromiseUpdateEvent(this.id!!))
+    }
     fun updateTitle(title: String) {
         this.title = title
     }
 
+    fun updateEndTime(endTime: LocalDateTime) {
+        this.endTime = endTime
+    }
     fun delayPromise(endTime: LocalDateTime) {
         this.endTime = endTime
     }
@@ -60,7 +71,9 @@ class Promise(
 
     fun endPromise() {
         this.promiseType = PromiseType.END
+        Events.raise(EndTimePromiseEvent(this.id!!))
     }
+
     fun pendingPromise() {
         this.promiseType = PromiseType.PENDING
     }

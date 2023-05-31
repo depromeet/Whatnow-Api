@@ -9,7 +9,6 @@ import com.depromeet.whatnow.domains.promiseprogress.adapter.PromiseProgressAdap
 class PromiseProgressReadUseCase(
     val promiseProgressAdapter: PromiseProgressAdapter,
 ) {
-
     fun execute(): List<PromiseProgressGroupElement> {
         return promiseProgressAdapter.findAll().map {
                 p ->
