@@ -28,4 +28,8 @@ class PromiseUserAdaptor(
     fun findByUserId(userId: Long): List<PromiseUser> {
         return promiseUserRepository.findByUserId(userId)
     }
+
+    fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
+        return promiseUserRepository.findByPromiseIdAndUserId(promiseId, userId) ?: run { throw PromiseNotFoundException.EXCEPTION }
+    }
 }

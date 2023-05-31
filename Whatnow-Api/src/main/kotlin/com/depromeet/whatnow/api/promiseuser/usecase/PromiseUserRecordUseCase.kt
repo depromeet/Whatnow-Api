@@ -25,4 +25,9 @@ class PromiseUserRecordUseCase(
         promiseUserDomainService.withDraw(promiseId, userId)
         return PromiseUserDto.from(promiseUserDomainService.queryPromiseUser(promiseId))
     }
+
+    fun updatePromiseUserType(promiseId: Long, userId: Long, status: String): PromiseUserDto {
+        val promiseUser = promiseUserDomainService.updatePromiseUserType(promiseId, userId, status)
+        return PromiseUserDto.from(promiseUser!!)
+    }
 }

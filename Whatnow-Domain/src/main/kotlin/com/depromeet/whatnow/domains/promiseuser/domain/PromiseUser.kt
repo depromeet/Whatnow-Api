@@ -54,4 +54,8 @@ class PromiseUser(
     fun updatePromiseUserTypeToLate() {
         this.promiseUserType = PromiseUserType.LATE
     }
+
+    fun updatePromiseUserType(status: String) {
+        this.promiseUserType = PromiseUserType.valueOf(status)
+    }
 }

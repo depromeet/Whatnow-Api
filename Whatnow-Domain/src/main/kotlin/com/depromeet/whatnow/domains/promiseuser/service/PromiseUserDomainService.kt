@@ -23,6 +23,11 @@ class PromiseUserDomainService(
 //        promiseUserAdaptor.save(promiseUser)
     }
 
+    fun updatePromiseUserType(promiseId: Long, userId: Long, status: String): PromiseUser? {
+        val promiseUser = promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
+        promiseUser?.updatePromiseUserType(status)
+        return promiseUser
+    }
     /**
      * 초기 약속 생성
      * */
