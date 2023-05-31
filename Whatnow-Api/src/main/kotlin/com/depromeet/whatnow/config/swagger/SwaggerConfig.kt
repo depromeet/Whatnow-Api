@@ -24,14 +24,12 @@ import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
 import io.swagger.v3.oas.models.security.SecurityScheme
-import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.customizers.OperationCustomizer
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.HandlerMethod
 import java.util.function.Consumer
-import javax.servlet.ServletContext
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.findAnnotation
@@ -42,11 +40,11 @@ class SwaggerConfig {
     private val applicationContext: ApplicationContext? = null
 
     @Bean
-    fun openAPI(servletContext: ServletContext): OpenAPI {
-        val contextPath = servletContext.contextPath
-        val server = Server().url(contextPath)
+    fun openAPI(): OpenAPI {
+//        val contextPath = servletContext.contextPath
+//        val server = Server().url(contextPath)
         return OpenAPI().apply {
-            servers = listOf(server)
+//            servers = listOf(server)
             components = authSetting()
             info = swaggerInfo()
         }
