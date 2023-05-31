@@ -58,7 +58,7 @@ class SecurityConfig(
             http.authorizeRequests().mvcMatchers(*SWAGGER_PATTERNS).authenticated().and().httpBasic()
         }
         http.authorizeRequests()
-            .mvcMatchers("/v1/example/health") // * 표시는 spread operater 임 refrence https://stackoverflow.com/questions/45854994/convert-kotlin-array-to-java-varargs
+            .mvcMatchers("/v1/example/health")
             .permitAll()
             .mvcMatchers(*SWAGGER_PATTERNS) // * 표시는 spread operater 임 refrence https://stackoverflow.com/questions/45854994/convert-kotlin-array-to-java-varargs
             .permitAll()
