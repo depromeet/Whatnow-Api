@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/promise-users")
+@RequestMapping("/v1/")
 @Tag(name = "4. [약속 유저]")
 @SecurityRequirement(name = "access-token")
 class PromiseUserController(
