@@ -5,22 +5,21 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class S3UploadPresignedUrlService(
     val amazonS3: AmazonS3,
-
-    @Value("\${ncp.s3.bucket}")
-    val bucket: String,
+    s3Properties: S3Properties
 ) {
+    val s3Secret: S3Properties.S3Secret = s3Properties.s3
+
     fun forPromise(promiseId: Long, fileExtension: ImageFileExtension): ImageUrlDto {
         val uuid = UUID.randomUUID().toString()
         var fileName = getForPromiseFimeName(uuid, promiseId, fileExtension)
         val generatePresignedUrlRequest =
-            getGeneratePreSignedUrlRequest(bucket, fileName, fileExtension.uploadExtension)
+            getGeneratePreSignedUrlRequest(s3Secret.bucket, fileName, fileExtension.uploadExtension)
 
         val generatePresignedUrl = amazonS3.generatePresignedUrl(generatePresignedUrlRequest)
         return ImageUrlDto(generatePresignedUrl.toString(), uuid)
