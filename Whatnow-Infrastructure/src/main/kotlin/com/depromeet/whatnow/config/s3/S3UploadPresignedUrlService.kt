@@ -11,7 +11,7 @@ import java.util.*
 @Service
 class S3UploadPresignedUrlService(
     val amazonS3: AmazonS3,
-    s3Properties: S3Properties
+    s3Properties: S3Properties,
 ) {
     val s3Secret: S3Properties.S3Secret = s3Properties.s3
 
