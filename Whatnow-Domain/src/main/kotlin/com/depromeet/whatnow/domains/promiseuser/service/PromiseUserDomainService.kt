@@ -17,17 +17,18 @@ class PromiseUserDomainService(
     /**
      * 참여한 유저가 약속 참여를 취소합니다.
      * */
+    @Transactional
     fun withDraw(promiseId: Long, userId: Long) {
         val promiseUser = promiseUserAdaptor.queryPromise(promiseId)
         promiseUser.cancelPromiseUser()
-//        promiseUserAdaptor.save(promiseUser)
     }
 
-    fun updatePromiseUserType(promiseId: Long, userId: Long, status: String): PromiseUser? {
+    fun updatePromiseUserType(promiseId: Long, userId: Long, status: String): PromiseUser {
         val promiseUser = promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
-        promiseUser?.updatePromiseUserType(status)
+        promiseUser.updatePromiseUserType(status)
         return promiseUser
     }
+
     /**
      * 초기 약속 생성
      * */

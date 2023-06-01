@@ -3,6 +3,7 @@ package com.depromeet.whatnow.domains.promiseuser.adaptor
 import com.depromeet.whatnow.annotation.Adapter
 import com.depromeet.whatnow.domains.promise.exception.PromiseNotFoundException
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
+import com.depromeet.whatnow.domains.promiseuser.exception.PromiseUserNotFoundException
 import com.depromeet.whatnow.domains.promiseuser.repository.PromiseUserRepository
 import org.springframework.data.repository.findByIdOrNull
 
@@ -30,6 +31,6 @@ class PromiseUserAdaptor(
     }
 
     fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
-        return promiseUserRepository.findByPromiseIdAndUserId(promiseId, userId) ?: run { throw PromiseNotFoundException.EXCEPTION }
+        return promiseUserRepository.findByPromiseIdAndUserId(promiseId, userId) ?: run { throw PromiseUserNotFoundException.EXCEPTION }
     }
 }

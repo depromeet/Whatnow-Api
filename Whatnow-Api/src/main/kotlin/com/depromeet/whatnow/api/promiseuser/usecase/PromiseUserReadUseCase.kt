@@ -2,7 +2,6 @@ package com.depromeet.whatnow.api.promiseuser.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promiseuser.dto.PromiseUserDto
-import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.READY
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.valueOf
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
@@ -11,8 +10,6 @@ import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainServic
 class PromiseUserReadUseCase(
     val promiseUserDomainService: PromiseUserDomainService,
 ) {
-    fun execute(promiseId: Long): List<PromiseUser> = promiseUserDomainService.findByPromiseId(promiseId)
-
     fun findByPromiseId(promiseId: Long): List<PromiseUserDto> {
         return promiseUserDomainService.findByPromiseId(promiseId).map { PromiseUserDto.from(it) }
     }
