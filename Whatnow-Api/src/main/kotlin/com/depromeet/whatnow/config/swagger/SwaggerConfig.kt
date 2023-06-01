@@ -24,6 +24,7 @@ import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
 import io.swagger.v3.oas.models.security.SecurityScheme
+import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.customizers.OperationCustomizer
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
@@ -42,9 +43,9 @@ class SwaggerConfig {
     @Bean
     fun openAPI(): OpenAPI {
 //        val contextPath = servletContext.contextPath
-//        val server = Server().url(contextPath)
+        val server = Server().url("/")
         return OpenAPI().apply {
-//            servers = listOf(server)
+            servers = listOf(server)
             components = authSetting()
             info = swaggerInfo()
         }
