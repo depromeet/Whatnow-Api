@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class CorsConfig: WebMvcConfigurer{
+class CorsConfig : WebMvcConfigurer {
     val springEnvironmentHelper: SpringEnvironmentHelper? = null
     override fun addCorsMappings(registry: CorsRegistry) {
         val allowedOriginPatterns = ArrayList<String>()
