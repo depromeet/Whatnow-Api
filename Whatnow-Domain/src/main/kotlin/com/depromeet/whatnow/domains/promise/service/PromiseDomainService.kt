@@ -13,6 +13,7 @@ import javax.transaction.Transactional
 class PromiseDomainService(
     val promiseAdaptor: PromiseAdaptor,
 ) {
+
     fun registerPromise(
         endTime: LocalDateTime,
         title: String,
@@ -38,7 +39,6 @@ class PromiseDomainService(
         return promise
     }
 
-    // 약속 지연시키기
     @Transactional
     fun delayPromise(promiseId: Long, endTime: LocalDateTime): Promise {
         val promise = promiseAdaptor.queryPromise(promiseId)
@@ -74,5 +74,9 @@ class PromiseDomainService(
     fun deletePromise(promiseId: Long) {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.deletePromise()
+    }
+
+    fun findByPromiseId(promiseId: Long): Promise {
+        return promiseAdaptor.queryPromise(promiseId)
     }
 }
