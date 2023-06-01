@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "X. [예시]")
 class ExampleController() {
 
+    @GetMapping("/health")
+    @Operation(summary = "서버 상태 체크")
+    fun health() {}
+
     @GetMapping("/global")
     @Operation(summary = "글로벌 ( 인증 , aop, 서버 내부 오류등)  관련 에러 코드 나열")
     @ApiErrorCodeExample(GlobalErrorCode::class)
