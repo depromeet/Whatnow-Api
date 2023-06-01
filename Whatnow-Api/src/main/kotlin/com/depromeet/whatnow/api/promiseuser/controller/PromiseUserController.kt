@@ -23,13 +23,13 @@ class PromiseUserController(
     val promiseUserReadUseCase: PromiseUserReadUseCase,
 ) {
     @Operation(summary = "약속 유저(promise) 생성", description = "약속에 유저가 참여합니다.")
-    @PostMapping("promise/{promise-id}/users")
+    @PostMapping("promises/{promise-id}/users")
     fun joinPromise(@PathVariable("promise-id") promiseId: Long, userId: Long, userLocation: CoordinateVo): PromiseUserDto {
         return promiseUserRecordUseCase.createPromiseUser(promiseId, userId, userLocation)
     }
 
     @Operation(summary = "약속 id로 약속 유저(promiseUser) 조회", description = "약속ID 로 약속 유저를 조회합니다.")
-    @GetMapping("promises/{promiseId}/promise-users")
+    @GetMapping("promises/{promiseId}/users")
     fun getPromiseUser(@PathVariable("promise-id") promiseId: Long): List<PromiseUserDto> {
         return promiseUserReadUseCase.findByPromiseId(promiseId)
     }
