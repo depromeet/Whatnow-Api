@@ -23,6 +23,7 @@ class PromiseUserDomainService(
         promiseUser.cancelPromiseUser()
     }
 
+    @Transactional
     fun updatePromiseUserType(promiseId: Long, userId: Long, status: String): PromiseUser {
         val promiseUser = promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
         promiseUser.updatePromiseUserType(status)
@@ -32,6 +33,7 @@ class PromiseUserDomainService(
     /**
      * 초기 약속 생성
      * */
+    @Transactional
     fun createPromiseUser(promiseUser: PromiseUser): PromiseUser {
         return promiseUserAdaptor.save(promiseUser)
     }

@@ -35,6 +35,12 @@ class PromiseUserController(
     }
 
     @Operation(summary = "유저가 약속을 취소(상태로 변경)", description = "userId로 참여한 약속 유저를 취소(cancel) 합니다.")
+    @GetMapping("promises/{promise-id}/users/{user-id}/status/{status}")
+    fun getPromiseUserByPromiseUserType(@PathVariable("promise-id") promiseId: Long, @PathVariable("user-id") userId: Long, @PathVariable("status") status: String): List<PromiseUserDto> {
+        return promiseUserReadUseCase.findPromiseUserByPromiseUserType(promiseId, userId, status)
+    }
+
+    @Operation(summary = "유저가 약속을 취소(상태로 변경)", description = "userId로 참여한 약속 유저를 취소(cancel) 합니다.")
     @PutMapping("promises/{promise-id}/users/{user-id}/status/{status}")
     fun cancelPromise(@PathVariable("promise-id") promiseId: Long, @PathVariable("user-id") userId: Long, @PathVariable("status") status: String): PromiseUserDto {
         return promiseUserRecordUseCase.updatePromiseUserType(promiseId, userId, status)

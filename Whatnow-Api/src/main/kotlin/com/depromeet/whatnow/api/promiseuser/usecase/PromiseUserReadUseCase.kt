@@ -13,6 +13,14 @@ class PromiseUserReadUseCase(
     fun findByPromiseId(promiseId: Long): List<PromiseUserDto> {
         return promiseUserDomainService.findByPromiseId(promiseId).map { PromiseUserDto.from(it) }
     }
+    fun findPromiseUserByPromiseUserType(promiseId: Long, userId: Long, status: String): List<PromiseUserDto> {
+        return promiseUserDomainService.findByPromiseId(promiseId)
+//            userType 와 status 를 비교해서 같은 것만 반환
+            .filter {
+                it.userId == userId && it.promiseUserType == valueOf(status)
+            }
+            .map { PromiseUserDto.from(it) }
+    }
 
     fun findByUserIdOnReady(userId: Long): List<PromiseUserDto> {
         return promiseUserDomainService.findByUserId(userId)
