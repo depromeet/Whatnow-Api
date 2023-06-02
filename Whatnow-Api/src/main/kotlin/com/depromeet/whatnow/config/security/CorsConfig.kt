@@ -1,6 +1,5 @@
 package band.gosrock.api.config.security
 
-import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
