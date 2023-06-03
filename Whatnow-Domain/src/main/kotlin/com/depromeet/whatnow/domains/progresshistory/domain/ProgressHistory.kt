@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.domains.progresshistory.domain
 
 import com.depromeet.whatnow.consts.DEFAULT_PROMISE_PROGRESS
+import com.depromeet.whatnow.domains.progresshistory.exception.PromiseIsSameException
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -25,11 +26,14 @@ class ProgressHistory(
     @Column(name = "progress_history_id")
     val id: Long? = null,
 ) {
-    fun change(progressCode: Long) {
+    fun change(progressId: Long) {
+        if (progressId == currentPromiseProgressId) {
+            throw PromiseIsSameException.EXCEPTION
+        }
         currentPromiseProgressId?.let { // init default 이지 않을 때
             prePromiseProgressId = currentPromiseProgressId
         }
-        currentPromiseProgressId = progressCode
+        currentPromiseProgressId = progressId
     }
 
     companion object {
