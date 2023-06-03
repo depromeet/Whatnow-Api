@@ -3,6 +3,7 @@ package com.depromeet.whatnow.domains.progresshistory.service
 import com.depromeet.whatnow.annotation.DomainService
 import com.depromeet.whatnow.domains.progresshistory.adapter.ProgressHistoryAdapter
 import com.depromeet.whatnow.domains.progresshistory.domain.ProgressHistory
+import org.springframework.transaction.annotation.Transactional
 
 @DomainService
 class ProgressHistoryDomainService(
@@ -18,7 +19,10 @@ class ProgressHistoryDomainService(
         progressHistoryAdapter.delete(history)
     }
 
-    fun change(promiseId: Long, progressCode: Long) {
-        TODO("Not yet implemented")
+    @Transactional
+    fun change(promiseId: Long, userId: Long, progressCode: Long): ProgressHistory {
+        val history = progressHistoryAdapter.findByPromiseIdAndUserId(promiseId, userId)
+        history.change(progressCode)
+        return history
     }
 }

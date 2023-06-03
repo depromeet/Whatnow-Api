@@ -34,7 +34,7 @@ class PromiseProgressController(
     }
 
     @PostMapping("/{promiseId}/progress/{progressCode}")
-    fun changePromiseProgress(@PathVariable progressCode: Long, @PathVariable promiseId: Long): UserProgressResponse {
+    fun changePromiseProgress(@PathVariable progressCode: String, @PathVariable promiseId: Long): UserProgressResponse {
         return promiseHistoryChangeUseCase.execute(promiseId, progressCode)
     }
 }

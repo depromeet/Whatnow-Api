@@ -25,6 +25,13 @@ class ProgressHistory(
     @Column(name = "progress_history_id")
     val id: Long? = null,
 ) {
+    fun change(progressCode: Long) {
+        afterPromiseProgressId?.let { // init default 이지 않을 때
+            prePromiseProgressId = afterPromiseProgressId
+        }
+        afterPromiseProgressId = progressCode
+    }
+
     companion object {
         fun of(progressId: Long, userId: Long): ProgressHistory {
             return ProgressHistory(progressId, userId, DEFAULT_PROMISE_PROGRESS, null)
