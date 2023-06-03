@@ -19,8 +19,13 @@ class ProgressHistoryReadUseCase(
         promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId) // 해당 유저가 있는지 검증을... 함 해야햐긴함!
 
         val history = progressHistoryAdapter.findByPromiseIdAndUserId(promiseId, userId)
-        val preProgress = promiseProgressAdapter.queryId(history.prePromiseProgressId!!)
-        val newProgress = promiseProgressAdapter.queryId(history.currentPromiseProgressId!!)
-        return UserProgressResponse(userAdapter.queryUser(userId), PromiseProgressDto.from(newProgress), PromiseProgressDto.from(preProgress))
+        val currentProgress = promiseProgressAdapter.queryId(history.currentPromiseProgressId!!)
+
+        return history.prePromiseProgressId ?.let {
+            val preProgress = promiseProgressAdapter.queryId(history.prePromiseProgressId!!)
+            UserProgressResponse(userAdapter.queryUser(userId), PromiseProgressDto.from(currentProgress), PromiseProgressDto.from(preProgress))
+        } ?: run {
+            UserProgressResponse(userAdapter.queryUser(userId), PromiseProgressDto.from(currentProgress), null)
+        }
     }
 }
