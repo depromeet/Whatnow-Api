@@ -38,7 +38,7 @@ class PromiseUser(
     @PostUpdate
     fun cancelPromiseUser() {
         this.promiseUserType = PromiseUserType.CANCEL
-        Events.raise(PromiseUserCancelEvent(this.id!!))
+        Events.raise(PromiseUserCancelEvent(this.promiseId, this.userId, this.id!!))
     }
 
     @PostPersist

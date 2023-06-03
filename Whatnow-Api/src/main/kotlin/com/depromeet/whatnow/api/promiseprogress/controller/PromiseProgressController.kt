@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @SecurityRequirement(name = "access-token")
 class PromiseProgressController(
     val promiseProgressReadUseCase: PromiseProgressReadUseCase,
-    val promiseProgressChangeUseCase: PromiseProgressChangeUseCase
+    val promiseProgressChangeUseCase: PromiseProgressChangeUseCase,
 ) {
 
     @GetMapping("/progresses")
@@ -27,6 +27,6 @@ class PromiseProgressController(
 
     @PostMapping("/{promiseId}/progress/{progressCode}")
     fun changePromiseProgress(@PathVariable progressCode: String, @PathVariable promiseId: String): List<PromiseProgressGroupElement> {
-        return promiseProgressChangeUseCase.execute(promiseId,progressCode)
+        return promiseProgressChangeUseCase.execute(promiseId, progressCode)
     }
 }
