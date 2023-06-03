@@ -20,7 +20,7 @@ class ProgressHistoryReadUseCase(
 
         val history = progressHistoryAdapter.findByPromiseIdAndUserId(promiseId, userId)
         val preProgress = promiseProgressAdapter.queryId(history.prePromiseProgressId!!)
-        val newProgress = promiseProgressAdapter.queryId(history.afterPromiseProgressId!!)
+        val newProgress = promiseProgressAdapter.queryId(history.currentPromiseProgressId!!)
         return UserProgressResponse(userAdapter.queryUser(userId), PromiseProgressDto.from(newProgress), PromiseProgressDto.from(preProgress))
     }
 }

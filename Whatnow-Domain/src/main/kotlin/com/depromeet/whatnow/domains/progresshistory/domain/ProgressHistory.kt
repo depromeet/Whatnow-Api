@@ -16,9 +16,9 @@ class ProgressHistory(
 
     var userId: Long,
 
-    var prePromiseProgressId: Long?,
+    var currentPromiseProgressId: Long?,
 
-    var afterPromiseProgressId: Long?,
+    var prePromiseProgressId: Long?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ class ProgressHistory(
     val id: Long? = null,
 ) {
     fun change(progressCode: Long) {
-        afterPromiseProgressId?.let { // init default 이지 않을 때
-            prePromiseProgressId = afterPromiseProgressId
+        currentPromiseProgressId?.let { // init default 이지 않을 때
+            prePromiseProgressId = currentPromiseProgressId
         }
-        afterPromiseProgressId = progressCode
+        currentPromiseProgressId = progressCode
     }
 
     companion object {
