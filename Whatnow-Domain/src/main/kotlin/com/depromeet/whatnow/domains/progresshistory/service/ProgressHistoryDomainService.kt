@@ -17,4 +17,8 @@ class ProgressHistoryDomainService(
         val history = progressHistoryAdapter.findByPromiseIdAndUserId(promiseId, userId)
         progressHistoryAdapter.delete(history)
     }
+
+    fun change(promiseId: Long, progressCode: Long) {
+        TODO("Not yet implemented")
+    }
 }

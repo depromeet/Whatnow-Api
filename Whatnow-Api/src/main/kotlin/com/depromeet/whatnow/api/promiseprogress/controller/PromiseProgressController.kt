@@ -1,7 +1,9 @@
 package com.depromeet.whatnow.api.promiseprogress.controller
 
 import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressGroupElement
-import com.depromeet.whatnow.api.promiseprogress.usecase.PromiseProgressChangeUseCase
+import com.depromeet.whatnow.api.promiseprogress.dto.response.UserProgressResponse
+import com.depromeet.whatnow.api.promiseprogress.usecase.ProgressHistoryChangeUseCase
+import com.depromeet.whatnow.api.promiseprogress.usecase.ProgressHistoryReadUseCase
 import com.depromeet.whatnow.api.promiseprogress.usecase.PromiseProgressReadUseCase
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -17,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 @SecurityRequirement(name = "access-token")
 class PromiseProgressController(
     val promiseProgressReadUseCase: PromiseProgressReadUseCase,
-    val promiseProgressChangeUseCase: PromiseProgressChangeUseCase,
+    val promiseHistoryChangeUseCase: ProgressHistoryChangeUseCase,
+    val promiseHistoryReadUseCase: ProgressHistoryReadUseCase,
 ) {
 
     @GetMapping("/progresses")
@@ -25,8 +28,13 @@ class PromiseProgressController(
         return promiseProgressReadUseCase.execute()
     }
 
+    @GetMapping("/{promiseId}/user/{userId}")
+    fun getUserProgress(@PathVariable promiseId: Long, @PathVariable userId: Long): UserProgressResponse {
+        return promiseHistoryReadUseCase.execute(promiseId, userId)
+    }
+
     @PostMapping("/{promiseId}/progress/{progressCode}")
-    fun changePromiseProgress(@PathVariable progressCode: String, @PathVariable promiseId: String): List<PromiseProgressGroupElement> {
-        return promiseProgressChangeUseCase.execute(promiseId, progressCode)
+    fun changePromiseProgress(@PathVariable progressCode: Long, @PathVariable promiseId: Long): UserProgressResponse {
+        return promiseHistoryChangeUseCase.execute(promiseId, progressCode)
     }
 }
