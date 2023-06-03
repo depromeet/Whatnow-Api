@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.domains.progresshistory.domain
 
+import com.depromeet.whatnow.consts.DEFAULT_PROMISE_PROGRESS
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -23,4 +24,10 @@ class ProgressHistory(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "progress_history_id")
     val id: Long? = null,
-)
+) {
+    companion object {
+        fun of(progressId: Long, userId: Long): ProgressHistory {
+            return ProgressHistory(progressId, userId, DEFAULT_PROMISE_PROGRESS, null)
+        }
+    }
+}
