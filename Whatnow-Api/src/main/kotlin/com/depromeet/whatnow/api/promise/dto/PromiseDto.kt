@@ -9,7 +9,7 @@ data class PromiseDto(
     val mainUserId: Long,
     val meetPlace: PlaceVo?,
     val endTime: LocalDateTime,
-){
+) {
     companion object {
         fun from(p: Promise?): PromiseDto {
             // Check if p is null and handle the null case appropriately

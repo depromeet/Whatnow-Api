@@ -8,9 +8,9 @@ import com.depromeet.whatnow.domains.promise.domain.Promise
 
 @UseCase
 class PromiseRegisterUseCase(
-    val promiseAdaptor: PromiseAdaptor
+    val promiseAdaptor: PromiseAdaptor,
 ) {
-    fun createPromise(promiseRequest: PromiseRequest) : PromiseDto{
+    fun createPromise(promiseRequest: PromiseRequest): PromiseDto {
         val promise = promiseAdaptor.save(
             Promise(
                 title = promiseRequest.title,
@@ -21,6 +21,4 @@ class PromiseRegisterUseCase(
         )
         return PromiseDto.from(promise)
     }
-
-
 }

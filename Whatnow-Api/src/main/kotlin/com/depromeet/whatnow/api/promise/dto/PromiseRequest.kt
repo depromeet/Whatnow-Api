@@ -7,5 +7,5 @@ data class PromiseRequest(
     val title: String,
     val mainUserId: Long,
     val meetPlace: PlaceVo,
-    val endTime: LocalDateTime
+    val endTime: LocalDateTime,
 )

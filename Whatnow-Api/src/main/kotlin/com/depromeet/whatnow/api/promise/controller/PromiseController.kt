@@ -20,7 +20,7 @@ class PromiseController(
 ) {
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")
     @PostMapping("/promise")
-    fun createPromise(@RequestBody promiseRequest: PromiseRequest) : PromiseDto {
+    fun createPromise(@RequestBody promiseRequest: PromiseRequest): PromiseDto {
         return promiseRegisterUseCase.createPromise(promiseRequest)
     }
 }
