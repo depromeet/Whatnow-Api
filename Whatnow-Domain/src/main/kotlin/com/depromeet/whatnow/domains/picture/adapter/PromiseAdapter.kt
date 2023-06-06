@@ -9,8 +9,7 @@ import com.depromeet.whatnow.domains.picture.repository.PictureRepository
 class PromiseAdapter(
     val pictureRepository: PictureRepository,
 ) {
-    fun save(userId: Long, promiseId: Long, imageKey: String) {
-        val imageUrl = IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
+    fun save(userId: Long, promiseId: Long, imageUrl: String, imageKey: String) {
         val picture = Picture(userId, promiseId, imageUrl, imageKey)
         pictureRepository.save(picture)
     }

@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.domains.picture.service
 
+import com.depromeet.whatnow.consts.IMAGE_DOMAIN
 import com.depromeet.whatnow.domains.picture.adapter.PromiseAdapter
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -10,6 +11,7 @@ class PictureDomainService(
 ) {
     @Transactional
     fun successUploadImage(userId: Long, promiseId: Long, imageKey: String) {
-        pictureAdapter.save(userId, promiseId, imageKey)
+        val imageUrl = IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
+        pictureAdapter.save(userId, promiseId, imageUrl, imageKey)
     }
 }
