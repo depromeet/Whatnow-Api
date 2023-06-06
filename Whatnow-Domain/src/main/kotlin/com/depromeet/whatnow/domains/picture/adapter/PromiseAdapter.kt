@@ -1,7 +1,6 @@
 package com.depromeet.whatnow.domains.picture.adapter
 
 import com.depromeet.whatnow.annotation.Adapter
-import com.depromeet.whatnow.consts.IMAGE_DOMAIN
 import com.depromeet.whatnow.domains.picture.domain.Picture
 import com.depromeet.whatnow.domains.picture.repository.PictureRepository
 
