@@ -18,7 +18,7 @@ class Picture(
 
     var promiseId: Long,
 
-    var uri: String,
+    var url: String,
 
     var uuid: String,
 
