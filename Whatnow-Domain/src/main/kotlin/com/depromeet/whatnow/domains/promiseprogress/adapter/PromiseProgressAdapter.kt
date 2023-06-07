@@ -24,8 +24,4 @@ class PromiseProgressAdapter(
             throw PromiseProgressNotFoundException.EXCEPTION
         }
     }
-
-    fun findById(progressId: Long): PromiseProgress? {
-        return promiseProgressRepository.findByIdOrNull(progressId)
-    }
 }
