@@ -26,6 +26,8 @@ const val DEV = "dev"
 const val LOCAL = "local"
 const val WITHDRAW_PREFIX = "withdraw"
 
+const val IMAGE_DOMAIN = "https://image.whatnow.kr/"
+
 val SWAGGER_PATTERNS = arrayOf(
     "/swagger-resources/**",
     "/swagger-ui/**",
