@@ -4,6 +4,7 @@ import com.depromeet.whatnow.annotation.Adapter
 import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgress
 import com.depromeet.whatnow.domains.promiseprogress.exception.PromiseProgressNotFoundException
 import com.depromeet.whatnow.domains.promiseprogress.repository.PromiseProgressRepository
+import org.springframework.data.repository.findByIdOrNull
 
 @Adapter
 class PromiseProgressAdapter(
@@ -16,5 +17,11 @@ class PromiseProgressAdapter(
     fun queryByCode(code: String): PromiseProgress {
         return promiseProgressRepository.findByCode(code)
             ?: run { throw PromiseProgressNotFoundException.EXCEPTION }
+    }
+
+    fun queryId(progressId: Long): PromiseProgress {
+        return promiseProgressRepository.findByIdOrNull(progressId) ?: run {
+            throw PromiseProgressNotFoundException.EXCEPTION
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.depromeet.whatnow.api.example.controller
 
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
 import com.depromeet.whatnow.api.config.KakaoKauthErrorCode
+import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErrorCode
 import com.depromeet.whatnow.domains.user.exception.UserErrorCode
 import com.depromeet.whatnow.exception.GlobalErrorCode
 import io.swagger.v3.oas.annotations.Operation
@@ -33,4 +34,9 @@ class ExampleController() {
     @Operation(summary = "카카오 auth 관련 에러코드 나열")
     @ApiErrorCodeExample(KakaoKauthErrorCode::class)
     fun kakaoErrorCode() {}
+
+    @GetMapping("/promises/progresses/history")
+    @Operation(summary = "약속 히스토리 관련 에러코드 나열")
+    @ApiErrorCodeExample(PromiseHistoryErrorCode::class)
+    fun progressHistoryErrorCode() {}
 }
