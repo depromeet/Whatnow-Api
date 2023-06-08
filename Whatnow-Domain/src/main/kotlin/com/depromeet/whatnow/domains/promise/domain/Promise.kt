@@ -59,6 +59,7 @@ class Promise(
 
     fun updateEndTime(endTime: LocalDateTime) {
         this.endTime = endTime
+        pendingPromise()
     }
     fun delayPromise(endTime: LocalDateTime) {
         this.endTime = endTime
@@ -83,5 +84,10 @@ class Promise(
 
     fun updatePromiseProgressType(promiseType: PromiseType) {
         this.promiseType = promiseType
+    }
+
+    fun updateMeetPlace(meetPlace: PlaceVo) {
+        this.meetPlace = meetPlace
+        Events.raise(PromiseUpdateEvent(this.id!!))
     }
 }
