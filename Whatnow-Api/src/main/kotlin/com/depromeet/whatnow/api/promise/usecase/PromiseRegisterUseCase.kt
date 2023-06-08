@@ -6,6 +6,7 @@ import com.depromeet.whatnow.api.promise.dto.PromiseRequest
 import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
+import java.time.LocalDateTime
 
 @UseCase
 class PromiseRegisterUseCase(
@@ -26,6 +27,12 @@ class PromiseRegisterUseCase(
     fun updatePromiseMeetPlace(promiseId: Long, meetPlace: PlaceVo): PromiseDto {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.updateMeetPlace(meetPlace)
+        return PromiseDto.from(promise)
+    }
+
+    fun updatePromiseEndTime(promiseId: Long, endTime: LocalDateTime): PromiseDto {
+        val promise = promiseAdaptor.queryPromise(promiseId)
+        promise.updateEndTime(endTime)
         return PromiseDto.from(promise)
     }
 }

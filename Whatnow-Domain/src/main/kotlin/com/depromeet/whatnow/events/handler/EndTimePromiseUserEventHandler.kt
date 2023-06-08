@@ -2,8 +2,8 @@ package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.domains.promise.service.PromiseDomainService
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
-import com.depromeet.whatnow.events.domainEvent.EndTimePromiseEvent
 import com.depromeet.whatnow.events.domainEvent.MeetPromiseUserEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEndTimeEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionPhase
@@ -15,8 +15,8 @@ class EndTimePromiseUserEventHandler(
     val promiseUserDomainService: PromiseUserDomainService,
 ) {
     @Async
-    @TransactionalEventListener(classes = [EndTimePromiseEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterUserEvent(endTimePromiseEvent: EndTimePromiseEvent) {
+    @TransactionalEventListener(classes = [PromiseUpdateEndTimeEvent::class], phase = TransactionPhase.AFTER_COMMIT)
+    fun handleRegisterUserEvent(endTimePromiseEvent: PromiseUpdateEndTimeEvent) {
         val promiseId: Long = endTimePromiseEvent.promiseId
         val promiseUsers = promiseUserDomainService.findByPromiseId(promiseId)
         for (promiseUser in promiseUsers) {

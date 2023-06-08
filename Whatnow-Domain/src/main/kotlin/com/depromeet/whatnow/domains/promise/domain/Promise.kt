@@ -3,8 +3,8 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.PlaceVo
-import com.depromeet.whatnow.events.domainEvent.EndTimePromiseEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEndTimeEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -71,7 +71,7 @@ class Promise(
 
     fun endPromise() {
         this.promiseType = PromiseType.END
-        Events.raise(EndTimePromiseEvent(this.id!!))
+        Events.raise(PromiseUpdateEndTimeEvent(this.id!!, this.endTime))
     }
 
     fun pendingPromise() {
