@@ -30,17 +30,17 @@ class PromiseController(
 
 //    1. 약속 장소 변경
     @Operation(summary = "약속(promise) 장소 수정", description = "약속 장소를 변경합니다.")
-    @PutMapping("/promises/location/{promise-id}")
+    @PutMapping("/promises/{promise-id}/location")
     fun updatePromiseLocation(@RequestParam(value = "promise-id") promiseId: Long, @RequestBody meetPlace: PlaceVo): PromiseDto {
         return promiseRegisterUseCase.updatePromiseMeetPlace(promiseId, meetPlace)
     }
 
     @Operation(summary = "약속(promise)시간 수정", description = "약속을 수정합니다. (약속 제목, 약속 장소, 약속 시간)")
     @PutMapping("/promises/{promise-id}/end-times/{end-time}")
-    fun updatePromiseEndTime(@RequestParam(value = "proprommise-id") promiseId: Long, @RequestParam(value = "promise-id") endTime: LocalDateTime): PromiseDto {
+    fun updatePromiseEndTime(@RequestParam(value = "promise-id") promiseId: Long, @RequestParam(value = "end-time") endTime: LocalDateTime): PromiseDto {
         return promiseRegisterUseCase.updatePromiseEndTime(promiseId, endTime)
     }
-
 //    3. 약속 제목 수정
+
 //    4. 약속 삭제
 }

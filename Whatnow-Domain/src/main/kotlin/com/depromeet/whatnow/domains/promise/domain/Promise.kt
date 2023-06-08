@@ -3,9 +3,9 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateMeetPlaceEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEndTimeEvent
-import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.PostPersist
-import javax.persistence.PostUpdate
 import javax.persistence.Table
 
 @Entity
@@ -47,11 +46,6 @@ class Promise(
     @PostPersist
     fun createPromiseEvent() {
         Events.raise(PromiseRegisterEvent(this.id!!))
-    }
-
-    @PostUpdate
-    fun updatePromiseEvent() {
-        Events.raise(PromiseUpdateEvent(this.id!!))
     }
     fun updateTitle(title: String) {
         this.title = title
@@ -88,6 +82,6 @@ class Promise(
 
     fun updateMeetPlace(meetPlace: PlaceVo) {
         this.meetPlace = meetPlace
-        Events.raise(PromiseUpdateEvent(this.id!!))
+        Events.raise(PromiseUpdateMeetPlaceEvent(this.id!!,this.meetPlace!!))
     }
 }
