@@ -44,6 +44,8 @@ class PromiseRegisterUseCase(
         promise.updateEndTime(endTime)
         return PromiseDto.from(promise)
     }
+    // 월단위 약속 조회
+    fun
 
     fun findPromiseByUserIdSeparatedType(userId: Long): List<PromiseSplitedByPromiseTypeDto> {
         // 참여한 유저를 기준으로 약속 조회 (방장 기준이 아님)
@@ -70,5 +72,28 @@ class PromiseRegisterUseCase(
             val user = userRepository.findById(eachUser.userId).orElse(null)
             UserInfoVo.from(user)
         }
+    }
+
+    fun findPromiseByUserIdSeparatedWithYearMonth(
+        userId: Long,
+        yearMonth: String,
+    ): List<PromiseDto> {
+        // 참여한 유저를 기준으로 약속 조회 (방장 기준이 아님)
+        val promiseUsers = promiseUserAdaptor.findByUserId(userId)
+
+        val promiseDtoList = mutableListOf<PromiseDto>()
+
+        for (promiseUser in promiseUsers) {
+            val promise = promiseAdaptor.queryPromise(promiseUser.promiseId)
+            // 내가 참여한 약속들
+            val eachPromiseUsers = promiseUserAdaptor.findByPromiseId(promiseUser.promiseId)
+            // 내가 참여한 약속들에 참여한 사람들 정보
+            val participant = getParticipantUserInfo(eachPromiseUsers)
+            val promiseFindDto = PromiseFindDto.from(promise, participant)
+            promiseDtoList.plus(promiseFindDto)
+        }
+        promiseDtoList.filter{ promiseDto ->
+            promiseDto.endTime.year.toString() + promiseDto.endTime.monthValue.toString() == yearMonth}
+        return promiseDtoList
     }
 }

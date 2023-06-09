@@ -50,10 +50,12 @@ class PromiseController(
         return promiseRegisterUseCase.findPromiseByUserIdSeparatedType(userId)
     }
 
-//    일단위 약속 조회
-//    월단위 약속 조회
-//    약속 취소
-//    3. 약속 제목 수정
+    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
+    @GetMapping("/promises/users/{user-id}/year-month/{year-month}")
+    fun findByPromiseByUserDaily(@RequestParam(value = "user-id") userId: Long,@RequestParam(value = "year-month") yearMonth: String): List<PromiseDto> {
+        return promiseRegisterUseCase.findPromiseByUserIdSeparatedWithYearMonth(userId, yearMonth)
+    }
 
+//    3. 약속 제목 수정
 //    4. 약속 삭제
 }
