@@ -6,16 +6,20 @@ import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
 import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
-import com.depromeet.whatnow.domains.promise.domain.PromiseType.BEFORE
+import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
+import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
+import com.depromeet.whatnow.domains.user.repository.UserRepository
 import java.time.LocalDateTime
 
 @UseCase
 class PromiseRegisterUseCase(
     val promiseAdaptor: PromiseAdaptor,
     val promiseUserAdaptor: PromiseUserAdaptor,
+    val userRepository: UserRepository,
 ) {
     fun createPromise(promiseRequest: PromiseRequest): PromiseDto {
         val promise = promiseAdaptor.save(
@@ -41,31 +45,30 @@ class PromiseRegisterUseCase(
         return PromiseDto.from(promise)
     }
 
-    fun findPromiseByUserIdSeperatedType(userId: Long): List<PromiseSplitedByPromiseTypeDto> {
+    fun findPromiseByUserIdSeparatedType(userId: Long): List<PromiseSplitedByPromiseTypeDto> {
         // 참여한 유저를 기준으로 약속 조회 (방장 기준이 아님)
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-        val userIds = promiseUsers.map { it.userId }
-        val promiseIds = promiseUsers.map { it.promiseId }
 
-//        예정된 약속
-        val expectedPromises = PromiseSplitedByPromiseTypeDto(promiseType = "BEFORE")
-//        지난 약속
-        val pastPromises = PromiseSplitedByPromiseTypeDto(promiseType = "PAST")
+        val promiseSplitByPromiseTypeDto = mutableListOf<PromiseSplitedByPromiseTypeDto>()
 
-        for (promise in promiseUsers) {
-            val promise = promiseAdaptor.queryPromise(promise.id!!)
-            var promiseType = promise.promiseType
-            if (promiseType == BEFORE) {
-                expectedPromises.addPromise(promise)
-            } else {
-                pastPromises.addPromise(promise)
-            }
+        for (promiseUser in promiseUsers) {
+            val promise = promiseAdaptor.queryPromise(promiseUser.promiseId)
+            // 내가 참여한 약속들
+            val eachPromiseUsers = promiseUserAdaptor.findByPromiseId(promiseUser.promiseId)
+            // 내가 참여한 약속들에 참여한 사람들 정보
+            val participant = getParticipantUserInfo(eachPromiseUsers)
+            val promiseType = if (promise.promiseType == PromiseType.BEFORE) "BEFORE" else "PAST"
+            val promiseFindDto = PromiseFindDto.from(promise, participant)
+            val dto = PromiseSplitedByPromiseTypeDto(promiseType, listOf(promiseFindDto))
+            promiseSplitByPromiseTypeDto += dto
         }
-        val listOf1 = listOf<PromiseSplitedByPromiseTypeDto>()
-        listOf1.plus(expectedPromises)
-        listOf1.plus(pastPromises)
+        return promiseSplitByPromiseTypeDto
+    }
 
-        return listOf1
-
+    private fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
+        return promiseUsers.map { eachUser ->
+            val user = userRepository.findById(eachUser.userId).orElse(null)
+            UserInfoVo.from(user)
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.depromeet.whatnow.api.promise.controller
 
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
+import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.api.promise.usecase.PromiseRegisterUseCase
 import com.depromeet.whatnow.common.vo.PlaceVo
 import io.swagger.v3.oas.annotations.Operation
@@ -41,12 +42,14 @@ class PromiseController(
     fun updatePromiseEndTime(@RequestParam(value = "promise-id") promiseId: Long, @RequestParam(value = "end-time") endTime: LocalDateTime): PromiseDto {
         return promiseRegisterUseCase.updatePromiseEndTime(promiseId, endTime)
     }
+
 //    나의 약속 전부 조회
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     @GetMapping("/promises/users/{user-id}/")
-    fun findByPromiseByUser(@RequestParam(value = "user-id") userId: Long): PromiseDto {
-        return promiseRegisterUseCase.findPromiseByUserIdSeperatedType(userId)
+    fun findByPromiseByUser(@RequestParam(value = "user-id") userId: Long): List<PromiseSplitedByPromiseTypeDto> {
+        return promiseRegisterUseCase.findPromiseByUserIdSeparatedType(userId)
     }
+
 //    일단위 약속 조회
 //    월단위 약속 조회
 //    약속 취소
