@@ -2,25 +2,19 @@ package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
-import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
-import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.common.vo.PlaceVo
-import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
-import com.depromeet.whatnow.domains.promise.domain.PromiseType
-import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
-import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
-import com.depromeet.whatnow.domains.user.repository.UserRepository
+import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
 import java.time.LocalDateTime
+import javax.transaction.Transactional
 
 @UseCase
 class PromiseRegisterUseCase(
     val promiseAdaptor: PromiseAdaptor,
-    val promiseUserAdaptor: PromiseUserAdaptor,
-    val userRepository: UserRepository,
 ) {
+    @Transactional
     fun createPromise(promiseRequest: PromiseRequest): PromiseDto {
         val promise = promiseAdaptor.save(
             Promise(
@@ -33,67 +27,28 @@ class PromiseRegisterUseCase(
         return PromiseDto.from(promise)
     }
 
+    @Transactional
     fun updatePromiseMeetPlace(promiseId: Long, meetPlace: PlaceVo): PromiseDto {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.updateMeetPlace(meetPlace)
         return PromiseDto.from(promise)
     }
 
+    @Transactional
     fun updatePromiseEndTime(promiseId: Long, endTime: LocalDateTime): PromiseDto {
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.updateEndTime(endTime)
         return PromiseDto.from(promise)
     }
-    // 월단위 약속 조회
-    fun
 
-    fun findPromiseByUserIdSeparatedType(userId: Long): List<PromiseSplitedByPromiseTypeDto> {
-        // 참여한 유저를 기준으로 약속 조회 (방장 기준이 아님)
-        val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-
-        val promiseSplitByPromiseTypeDto = mutableListOf<PromiseSplitedByPromiseTypeDto>()
-
-        for (promiseUser in promiseUsers) {
-            val promise = promiseAdaptor.queryPromise(promiseUser.promiseId)
-            // 내가 참여한 약속들
-            val eachPromiseUsers = promiseUserAdaptor.findByPromiseId(promiseUser.promiseId)
-            // 내가 참여한 약속들에 참여한 사람들 정보
-            val participant = getParticipantUserInfo(eachPromiseUsers)
-            val promiseType = if (promise.promiseType == PromiseType.BEFORE) "BEFORE" else "PAST"
-            val promiseFindDto = PromiseFindDto.from(promise, participant)
-            val dto = PromiseSplitedByPromiseTypeDto(promiseType, listOf(promiseFindDto))
-            promiseSplitByPromiseTypeDto += dto
+    @Transactional
+    fun deletePromise(promiseId: Long, userId: Long) {
+        val promise = promiseAdaptor.queryPromise(promiseId)
+        // 방장만 전체 파토할 수 있다.
+        if (userId == promise.mainUserId) {
+            promise.deletePromise()
+        } else {
+            throw ForbiddenUserException()
         }
-        return promiseSplitByPromiseTypeDto
-    }
-
-    private fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
-        return promiseUsers.map { eachUser ->
-            val user = userRepository.findById(eachUser.userId).orElse(null)
-            UserInfoVo.from(user)
-        }
-    }
-
-    fun findPromiseByUserIdSeparatedWithYearMonth(
-        userId: Long,
-        yearMonth: String,
-    ): List<PromiseDto> {
-        // 참여한 유저를 기준으로 약속 조회 (방장 기준이 아님)
-        val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-
-        val promiseDtoList = mutableListOf<PromiseDto>()
-
-        for (promiseUser in promiseUsers) {
-            val promise = promiseAdaptor.queryPromise(promiseUser.promiseId)
-            // 내가 참여한 약속들
-            val eachPromiseUsers = promiseUserAdaptor.findByPromiseId(promiseUser.promiseId)
-            // 내가 참여한 약속들에 참여한 사람들 정보
-            val participant = getParticipantUserInfo(eachPromiseUsers)
-            val promiseFindDto = PromiseFindDto.from(promise, participant)
-            promiseDtoList.plus(promiseFindDto)
-        }
-        promiseDtoList.filter{ promiseDto ->
-            promiseDto.endTime.year.toString() + promiseDto.endTime.monthValue.toString() == yearMonth}
-        return promiseDtoList
     }
 }

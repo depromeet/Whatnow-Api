@@ -1,13 +1,16 @@
 package com.depromeet.whatnow.api.promise.controller
 
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
+import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
 import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
+import com.depromeet.whatnow.api.promise.usecase.PromiseReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseRegisterUseCase
 import com.depromeet.whatnow.common.vo.PlaceVo
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -23,6 +26,7 @@ import java.time.LocalDateTime
 @SecurityRequirement(name = "access-token")
 class PromiseController(
     val promiseRegisterUseCase: PromiseRegisterUseCase,
+    val promiseReadUseCase: PromiseReadUseCase,
 ) {
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")
     @PostMapping("/promises")
@@ -47,15 +51,19 @@ class PromiseController(
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     @GetMapping("/promises/users/{user-id}/")
     fun findByPromiseByUser(@RequestParam(value = "user-id") userId: Long): List<PromiseSplitedByPromiseTypeDto> {
-        return promiseRegisterUseCase.findPromiseByUserIdSeparatedType(userId)
+        return promiseReadUseCase.findPromiseByUserIdSeparatedType(userId)
     }
 
     @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
     @GetMapping("/promises/users/{user-id}/year-month/{year-month}")
-    fun findByPromiseByUserDaily(@RequestParam(value = "user-id") userId: Long,@RequestParam(value = "year-month") yearMonth: String): List<PromiseDto> {
-        return promiseRegisterUseCase.findPromiseByUserIdSeparatedWithYearMonth(userId, yearMonth)
+    fun findByPromiseByUserAndYearMonth(@RequestParam(value = "user-id") userId: Long, @RequestParam(value = "year-month") yearMonth: String): List<PromiseFindDto> {
+        return promiseReadUseCase.findPromiseByUserIdYearMonth(userId, yearMonth)
     }
 
-//    3. 약속 제목 수정
-//    4. 약속 삭제
+    // 약속 취소
+    @Operation(summary = "약속 취소", description = "약속을 취소합니다.")
+    @DeleteMapping("/promises/{promise-id}/user-id/{user-id}")
+    fun deletePromise(@RequestParam(value = "promise-id") promiseId: Long, @RequestParam(value = "user-id") userId: Long) {
+        promiseRegisterUseCase.deletePromise(promiseId, userId)
+    }
 }
