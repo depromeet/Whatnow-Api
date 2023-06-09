@@ -5,4 +5,5 @@ import com.depromeet.whatnow.common.vo.PlaceVo
 
 data class PromiseUpdateMeetPlaceEvent(
     val id: Long,
-    val meetPlace: PlaceVo) : DomainEvent()
+    val meetPlace: PlaceVo,
+) : DomainEvent()

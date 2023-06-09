@@ -8,11 +8,10 @@ class UserInfoVo(
     var profileImg: String?,
     var nickname: String,
     var isDefaultImg: Boolean,
-){
+) {
     companion object {
         fun from(user: User): UserInfoVo {
             return UserInfoVo(user.profileImg, user.nickname, user.isDefaultImg)
         }
     }
-
 }

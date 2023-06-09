@@ -3,9 +3,10 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.PlaceVo
-import com.depromeet.whatnow.events.domainEvent.PromiseUpdateMeetPlaceEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseCancelEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEndTimeEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateMeetPlaceEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -74,6 +75,7 @@ class Promise(
 
     fun deletePromise() {
         this.promiseType = PromiseType.DELETED
+        Events.raise(PromiseCancelEvent(this.id!!))
     }
 
     fun updatePromiseProgressType(promiseType: PromiseType) {
@@ -82,6 +84,6 @@ class Promise(
 
     fun updateMeetPlace(meetPlace: PlaceVo) {
         this.meetPlace = meetPlace
-        Events.raise(PromiseUpdateMeetPlaceEvent(this.id!!,this.meetPlace!!))
+        Events.raise(PromiseUpdateMeetPlaceEvent(this.id!!, this.meetPlace!!))
     }
 }
