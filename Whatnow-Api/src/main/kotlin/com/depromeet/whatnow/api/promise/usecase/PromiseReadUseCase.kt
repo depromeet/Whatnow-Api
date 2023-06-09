@@ -10,7 +10,6 @@ import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.user.repository.UserRepository
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -23,7 +22,7 @@ class PromiseReadUseCase(
     /**
      * method desc: 유저가 참여한 약속들을 약속 종류(BEFORE, PAST)에 따라 분리해서 조회
      * @param userId: 유저 아이디
-     * @return List<PromiseSplitedByPromiseTypeDto>: 약속 종류에 따라 분리된 약속들
+     * @return List<PromiseSplitByPromiseTypeDto>: 약속 종류에 따라 분리된 약속들
      */
     fun findPromiseByUserIdSeparatedType(userId: Long): List<PromiseSplitedByPromiseTypeDto> {
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
@@ -76,9 +75,5 @@ class PromiseReadUseCase(
         val pattern = DateTimeFormatter.ofPattern("yyyy.MM")
         val formattedDateTime = dateTime.format(pattern)
         return formattedDateTime == yearMonth
-    }
-
-    private fun isSameDay(dateTime: LocalDate, targetDate: LocalDate): Boolean {
-        return dateTime == targetDate
     }
 }

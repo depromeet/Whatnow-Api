@@ -6,7 +6,7 @@ import com.depromeet.whatnow.api.promise.dto.PromiseRequest
 import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
-import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
+import com.depromeet.whatnow.domains.promise.exception.NotHostException
 import java.time.LocalDateTime
 import javax.transaction.Transactional
 
@@ -48,7 +48,7 @@ class PromiseRegisterUseCase(
         if (userId == promise.mainUserId) {
             promise.deletePromise()
         } else {
-            throw ForbiddenUserException()
+            throw NotHostException()
         }
     }
 }
