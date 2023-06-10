@@ -2,6 +2,7 @@ package com.depromeet.whatnow.api.example.controller
 
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
 import com.depromeet.whatnow.api.config.KakaoKauthErrorCode
+import com.depromeet.whatnow.domains.picture.exception.PictureErrorCode
 import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErrorCode
 import com.depromeet.whatnow.domains.user.exception.UserErrorCode
 import com.depromeet.whatnow.exception.GlobalErrorCode
@@ -39,4 +40,9 @@ class ExampleController() {
     @Operation(summary = "약속 히스토리 관련 에러코드 나열")
     @ApiErrorCodeExample(PromiseHistoryErrorCode::class)
     fun progressHistoryErrorCode() {}
+
+    @GetMapping("/images")
+    @Operation(summary = "이미지 업로드 관련 에러코드 나열")
+    @ApiErrorCodeExample(PictureErrorCode::class)
+    fun imageErrorCode() {}
 }
