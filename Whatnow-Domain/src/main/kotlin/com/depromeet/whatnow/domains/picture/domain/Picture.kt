@@ -3,7 +3,15 @@ package com.depromeet.whatnow.domains.picture.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.events.domainEvent.PictureRegisterEvent
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.PostPersist
+import javax.persistence.Table
 
 @Entity
 @Table(name = "tbl_picture")

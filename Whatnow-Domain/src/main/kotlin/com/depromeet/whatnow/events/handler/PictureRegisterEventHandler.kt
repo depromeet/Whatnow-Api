@@ -3,7 +3,6 @@ package com.depromeet.whatnow.events.handler
 import com.depromeet.whatnow.annotation.Handler
 import com.depromeet.whatnow.events.domainEvent.PictureRegisterEvent
 import org.springframework.scheduling.annotation.Async
-import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
 
