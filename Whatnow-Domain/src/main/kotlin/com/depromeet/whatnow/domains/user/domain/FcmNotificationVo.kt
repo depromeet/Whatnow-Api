@@ -6,20 +6,20 @@ import javax.persistence.Embeddable
 class FcmNotificationVo(
     var fcmToken: String = "",
 
-    var appAlarm : Boolean,
-    ) {
+    var appAlarm: Boolean,
+) {
 
     companion object {
-        fun disableAlarm(originalState : FcmNotificationVo) : FcmNotificationVo {
-            return FcmNotificationVo(originalState.fcmToken,false)
+        fun disableAlarm(originalState: FcmNotificationVo): FcmNotificationVo {
+            return FcmNotificationVo(originalState.fcmToken, false)
         }
 
-        fun deleteToken(originalState : FcmNotificationVo) : FcmNotificationVo {
+        fun deleteToken(originalState: FcmNotificationVo): FcmNotificationVo {
             return FcmNotificationVo("", originalState.appAlarm)
         }
 
-        fun updateToken(originalState: FcmNotificationVo,fcmToken: String) : FcmNotificationVo{
-            return FcmNotificationVo(fcmToken,originalState.appAlarm)
+        fun updateToken(originalState: FcmNotificationVo, fcmToken: String): FcmNotificationVo {
+            return FcmNotificationVo(fcmToken, originalState.appAlarm)
         }
     }
 }

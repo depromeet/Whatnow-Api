@@ -29,7 +29,7 @@ class User(
     var isDefaultImg: Boolean,
 
     @Embedded
-    var fcmNotification : FcmNotificationVo,
+    var fcmNotification: FcmNotificationVo,
 
     var lastLoginAt: LocalDateTime = LocalDateTime.now(),
 
@@ -70,7 +70,7 @@ class User(
         oauthInfo = oauthInfo.withDrawOauthInfo()
     }
 
-    private fun updateToken(fcmToken : String){
-        fcmNotification = FcmNotificationVo.updateToken(this.fcmNotification,fcmToken)
+    private fun updateToken(fcmToken: String) {
+        fcmNotification = FcmNotificationVo.updateToken(this.fcmNotification, fcmToken)
     }
 }

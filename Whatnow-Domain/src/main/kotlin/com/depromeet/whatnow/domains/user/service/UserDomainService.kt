@@ -28,7 +28,7 @@ class UserDomainService(
         oauthId: String,
     ): User {
         return userRepository.findByOauthInfo(oauthInfo) ?: run {
-            val newUser = userRepository.save(User(oauthInfo, username, profileImage, defaultImage,FcmNotificationVo("", false)))
+            val newUser = userRepository.save(User(oauthInfo, username, profileImage, defaultImage, FcmNotificationVo("", false)))
             newUser.registerEvent()
             return newUser
         }
@@ -39,15 +39,21 @@ class UserDomainService(
         return true
     }
 
-    fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String,fcmToken: String,appAlarm: Boolean): User {
+    fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String, fcmToken: String, appAlarm: Boolean): User {
         userRepository.findByOauthInfo(oauthInfo)?. let { throw AlreadySignUpUserException.EXCEPTION }
-        return userRepository.save(User(oauthInfo, username, profileImage, defaultImage,
-            FcmNotificationVo(fcmToken, appAlarm)
-        ))
+        return userRepository.save(
+            User(
+                oauthInfo,
+                username,
+                profileImage,
+                defaultImage,
+                FcmNotificationVo(fcmToken, appAlarm),
+            ),
+        )
     }
 
     @Transactional
-    fun loginUser(oauthInfo: OauthInfo, fcmToken : String): User {
+    fun loginUser(oauthInfo: OauthInfo, fcmToken: String): User {
         val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
         user.login(fcmToken)
         return user
