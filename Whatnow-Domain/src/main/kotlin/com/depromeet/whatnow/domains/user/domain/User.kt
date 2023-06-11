@@ -80,4 +80,8 @@ class User(
         }
         lastLoginAt = LocalDateTime.now()
     }
+
+    fun toggleAppAlarmState() {
+        fcmNotification = FcmNotificationVo.toggleAlarm(fcmNotification)
+    }
 }

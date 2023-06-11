@@ -74,4 +74,11 @@ class UserDomainService(
         val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
         user.withDraw()
     }
+
+    @Transactional
+    fun toggleAppAlarmState(currentUserId: Long): User {
+        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
+        user.toggleAppAlarmState()
+        return user
+    }
 }

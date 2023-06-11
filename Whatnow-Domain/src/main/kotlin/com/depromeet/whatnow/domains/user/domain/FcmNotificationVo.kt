@@ -10,6 +10,9 @@ class FcmNotificationVo(
 ) {
 
     companion object {
+        fun toggleAlarm(originalState: FcmNotificationVo): FcmNotificationVo {
+            return FcmNotificationVo(originalState.fcmToken, originalState.appAlarm.not())
+        }
         fun disableAlarm(originalState: FcmNotificationVo): FcmNotificationVo {
             return FcmNotificationVo(originalState.fcmToken, false)
         }
