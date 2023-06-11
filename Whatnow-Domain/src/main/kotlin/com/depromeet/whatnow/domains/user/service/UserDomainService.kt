@@ -6,12 +6,10 @@ import com.depromeet.whatnow.domains.user.domain.FcmNotificationVo
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.exception.AlreadySignUpUserException
-import com.depromeet.whatnow.domains.user.repository.UserRepository
 import org.springframework.transaction.annotation.Transactional
 
 @DomainService
 class UserDomainService(
-    val userRepository: UserRepository,
     val userAdapter: UserAdapter,
 ) {
 
@@ -41,7 +39,7 @@ class UserDomainService(
         oauthId: String,
     ): User {
         return resultQueryByOauthInfo(oauthInfo).getOrElse {
-            val newUser = userRepository.save(User(oauthInfo, username, profileImage, defaultImage, FcmNotificationVo("", false)))
+            val newUser = userAdapter.save(User(oauthInfo, username, profileImage, defaultImage, FcmNotificationVo("", false)))
             newUser.registerEvent()
             return newUser
         }
@@ -52,18 +50,19 @@ class UserDomainService(
     }
 
     fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String, fcmToken: String, appAlarm: Boolean): User {
-        resultQueryByOauthInfo(oauthInfo).onSuccess { // 계정이 있는 경우엔 exception 발생
+        return resultQueryByOauthInfo(oauthInfo).onSuccess { // 계정이 있는 경우엔 exception 발생
             throw AlreadySignUpUserException.EXCEPTION
+        }.getOrElse {
+            userAdapter.save(
+                User(
+                    oauthInfo,
+                    username,
+                    profileImage,
+                    defaultImage,
+                    FcmNotificationVo(fcmToken, appAlarm),
+                ),
+            )
         }
-        return userRepository.save(
-            User(
-                oauthInfo,
-                username,
-                profileImage,
-                defaultImage,
-                FcmNotificationVo(fcmToken, appAlarm),
-            ),
-        )
     }
 
     @Transactional

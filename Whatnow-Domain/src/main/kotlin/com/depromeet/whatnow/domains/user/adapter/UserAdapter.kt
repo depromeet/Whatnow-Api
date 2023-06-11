@@ -19,4 +19,8 @@ class UserAdapter(
     fun queryByOauthInfo(oauthInfo: OauthInfo): User {
         return userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
     }
+
+    fun save(user: User): User {
+        return userRepository.save(user)
+    }
 }
