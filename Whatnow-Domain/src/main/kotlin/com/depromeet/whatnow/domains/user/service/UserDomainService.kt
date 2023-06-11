@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.domains.user.service
 
 import com.depromeet.whatnow.annotation.DomainService
+import com.depromeet.whatnow.domains.user.domain.FcmNotificationVo
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.exception.AlreadySignUpUserException
@@ -27,7 +28,7 @@ class UserDomainService(
         oauthId: String,
     ): User {
         return userRepository.findByOauthInfo(oauthInfo) ?: run {
-            val newUser = userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
+            val newUser = userRepository.save(User(oauthInfo, username, profileImage, defaultImage,FcmNotificationVo("", false)))
             newUser.registerEvent()
             return newUser
         }
@@ -38,15 +39,17 @@ class UserDomainService(
         return true
     }
 
-    fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String): User {
+    fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String,fcmToken: String,appAlarm: Boolean): User {
         userRepository.findByOauthInfo(oauthInfo)?. let { throw AlreadySignUpUserException.EXCEPTION }
-        return userRepository.save(User(oauthInfo, username, profileImage, defaultImage))
+        return userRepository.save(User(oauthInfo, username, profileImage, defaultImage,
+            FcmNotificationVo(fcmToken, appAlarm)
+        ))
     }
 
     @Transactional
-    fun loginUser(oauthInfo: OauthInfo): User {
+    fun loginUser(oauthInfo: OauthInfo, fcmToken : String): User {
         val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
-        user.login()
+        user.login(fcmToken)
         return user
     }
 
