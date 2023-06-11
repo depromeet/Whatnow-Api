@@ -81,4 +81,11 @@ class UserDomainService(
         user.toggleAppAlarmState()
         return user
     }
+
+    @Transactional
+    fun updateFcmToken(currentUserId: Long, fcmToken: String): User {
+        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
+        user.updateFcmToken(fcmToken)
+        return user
+    }
 }

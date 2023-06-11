@@ -84,4 +84,8 @@ class User(
     fun toggleAppAlarmState() {
         fcmNotification = FcmNotificationVo.toggleAlarm(fcmNotification)
     }
+
+    fun updateFcmToken(fcmToken: String) {
+        fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
+    }
 }
