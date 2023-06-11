@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.auth.controller
 
+import com.depromeet.whatnow.api.auth.dto.request.LoginRequest
 import com.depromeet.whatnow.api.auth.dto.request.RegisterRequest
 import com.depromeet.whatnow.api.auth.dto.response.AbleRegisterResponse
 import com.depromeet.whatnow.api.auth.dto.response.OauthLoginLinkResponse
@@ -87,8 +88,10 @@ class AuthController(
     @PostMapping("/oauth/kakao/login")
     fun kakaoOauthUserLogin(
         @RequestParam("id_token") token: String,
+        @Valid @RequestBody
+        loginRequest: LoginRequest,
     ): TokenAndUserResponse {
-        return loginUseCase.execute(token)
+        return loginUseCase.execute(token, loginRequest)
     }
 
     @Operation(summary = "refreshToken 용입니다.")

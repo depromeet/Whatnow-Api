@@ -28,7 +28,7 @@ class RefreshUseCase(
             jwtTokenHelper.parseRefreshToken(refreshToken)
         val user: User = userAdapter.queryUser(refreshUserId)
         // 리프레쉬 시에도 last로그인 정보 업데이트
-        userDomainService.loginUser(user.oauthInfo)
+        userDomainService.refreshUser(user.oauthInfo)
         return tokenGenerateHelper.execute(user) // 리프레쉬 토큰도 새로고침해서 내려줍니다.
     }
 }

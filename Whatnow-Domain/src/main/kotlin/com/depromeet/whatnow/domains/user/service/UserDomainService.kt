@@ -59,6 +59,16 @@ class UserDomainService(
         return user
     }
 
+    /**
+     * 유저가 리프레쉬 할때 ( 클라이언트와 fcm 토큰 업데이트는 로그인 회원가입 할 때만 하기로 합의 )
+     */
+    @Transactional
+    fun refreshUser(oauthInfo: OauthInfo): User {
+        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
+        user.refresh()
+        return user
+    }
+
     @Transactional
     fun withDrawUser(currentUserId: Long) {
         val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }

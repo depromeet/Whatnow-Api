@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.auth.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
+import com.depromeet.whatnow.api.auth.dto.request.LoginRequest
 import com.depromeet.whatnow.api.auth.dto.response.TokenAndUserResponse
 import com.depromeet.whatnow.api.auth.helper.KakaoOauthHelper
 import com.depromeet.whatnow.api.auth.usecase.helper.TokenGenerateHelper
@@ -14,9 +15,9 @@ class LoginUseCase(
     val userDomainService: UserDomainService,
     val tokenGenerateHelper: TokenGenerateHelper,
 ) {
-    fun execute(idToken: String): TokenAndUserResponse {
+    fun execute(idToken: String, loginRequest: LoginRequest): TokenAndUserResponse {
         val oauthInfo: OauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken)
-        val user: User = userDomainService.loginUser(oauthInfo)
+        val user: User = userDomainService.loginUser(oauthInfo, loginRequest.fcmToken)
         return tokenGenerateHelper.execute(user)
     }
 }

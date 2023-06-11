@@ -73,4 +73,11 @@ class User(
     private fun updateToken(fcmToken: String) {
         fcmNotification = FcmNotificationVo.updateToken(this.fcmNotification, fcmToken)
     }
+
+    fun refresh() {
+        if (status != UserStatus.NORMAL) {
+            throw ForbiddenUserException.EXCEPTION
+        }
+        lastLoginAt = LocalDateTime.now()
+    }
 }
