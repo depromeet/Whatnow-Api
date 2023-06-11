@@ -1,19 +1,25 @@
 package com.depromeet.whatnow.domains.user.service
 
 import com.depromeet.whatnow.annotation.DomainService
+import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.domain.FcmNotificationVo
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.exception.AlreadySignUpUserException
-import com.depromeet.whatnow.domains.user.exception.UserNotFoundException
 import com.depromeet.whatnow.domains.user.repository.UserRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.transaction.annotation.Transactional
 
 @DomainService
 class UserDomainService(
     val userRepository: UserRepository,
+    val userAdapter: UserAdapter,
 ) {
+
+    fun resultQueryByOauthInfo(oauthInfo: OauthInfo): Result<User> {
+        return runCatching {
+            userAdapter.queryByOauthInfo(oauthInfo)
+        }
+    }
 
     /**
      * 백엔드 개발용 회원가입 메서드
@@ -27,7 +33,7 @@ class UserDomainService(
         oauthInfo: OauthInfo,
         oauthId: String,
     ): User {
-        return userRepository.findByOauthInfo(oauthInfo) ?: run {
+        return resultQueryByOauthInfo(oauthInfo).getOrElse {
             val newUser = userRepository.save(User(oauthInfo, username, profileImage, defaultImage, FcmNotificationVo("", false)))
             newUser.registerEvent()
             return newUser
@@ -35,12 +41,13 @@ class UserDomainService(
     }
 
     fun checkUserCanRegister(oauthInfo: OauthInfo): Boolean {
-        userRepository.findByOauthInfo(oauthInfo)?. let { return false }
-        return true
+        return resultQueryByOauthInfo(oauthInfo).isFailure // 유저가 없으면 회원가입 가능
     }
 
     fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String, fcmToken: String, appAlarm: Boolean): User {
-        userRepository.findByOauthInfo(oauthInfo)?. let { throw AlreadySignUpUserException.EXCEPTION }
+        resultQueryByOauthInfo(oauthInfo).onSuccess { // 계정이 있는 경우엔 exception 발생
+            throw AlreadySignUpUserException.EXCEPTION
+        }
         return userRepository.save(
             User(
                 oauthInfo,
@@ -54,7 +61,7 @@ class UserDomainService(
 
     @Transactional
     fun loginUser(oauthInfo: OauthInfo, fcmToken: String): User {
-        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
+        val user = userAdapter.queryByOauthInfo(oauthInfo)
         user.login(fcmToken)
         return user
     }
@@ -64,27 +71,27 @@ class UserDomainService(
      */
     @Transactional
     fun refreshUser(oauthInfo: OauthInfo): User {
-        val user = userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
+        val user = userAdapter.queryByOauthInfo(oauthInfo)
         user.refresh()
         return user
     }
 
     @Transactional
     fun withDrawUser(currentUserId: Long) {
-        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
+        val user = userAdapter.queryUser(currentUserId)
         user.withDraw()
     }
 
     @Transactional
     fun toggleAppAlarmState(currentUserId: Long): User {
-        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
+        val user = userAdapter.queryUser(currentUserId)
         user.toggleAppAlarmState()
         return user
     }
 
     @Transactional
     fun updateFcmToken(currentUserId: Long, fcmToken: String): User {
-        val user = userRepository.findByIdOrNull(currentUserId) ?: run { throw UserNotFoundException.EXCEPTION }
+        val user = userAdapter.queryUser(currentUserId)
         user.updateFcmToken(fcmToken)
         return user
     }
