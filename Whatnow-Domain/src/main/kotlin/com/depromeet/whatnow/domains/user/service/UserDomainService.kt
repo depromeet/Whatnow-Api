@@ -15,6 +15,13 @@ class UserDomainService(
     val userAdapter: UserAdapter,
 ) {
 
+    /**
+     * https://toss.tech/article/kotlin-result
+     * 레포지토리에서 가져오던걸 어떻게 리팩토링 할 까 고민하다가 좋은 글이 있어서 공유합니다.
+     * 기본으로 query 메소드를 userAdapter로 놓고.
+     * Result 로 한번 래핑을 한뒤에, onSuccess,onFailure , getOrElse 등의 메소드를 이용해서
+     * 적절하게 대응을 할 수 있습니다. 매우 깔끔스
+     */
     fun resultQueryByOauthInfo(oauthInfo: OauthInfo): Result<User> {
         return runCatching {
             userAdapter.queryByOauthInfo(oauthInfo)
