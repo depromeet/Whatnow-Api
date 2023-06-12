@@ -7,7 +7,7 @@ VALUES
     (5,'MOVING','RUNNING' ,'뛰어가는중',''),
     (6,'MOVING','BOARDING' ,'탑승중',''),
     (7,'LATE','KNEELING' ,'무릎 꿇기',''),
-    (8,'LATE','TEAR' ,'눈물',''),
+    (8,'LATE','해' ,'눈물',''),
     (9,'LATE','URGENCY' ,'다급함',''),
     (10,'EXPECTED_TIME','AFTER_SOON' ,'곧 도착',''),
     (11,'EXPECTED_TIME','AFTER_5' ,'5분뒤 도착',''),
