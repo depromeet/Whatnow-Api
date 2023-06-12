@@ -2,6 +2,8 @@ package com.depromeet.whatnow.domains.user.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
+import com.depromeet.whatnow.domains.user.exception.AlreadyDeletedUserException
+import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
 import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -26,9 +28,10 @@ class User(
     var profileImg: String, // 프로필 이미지도 vo 로 빼면 더 이쁠듯
     var isDefaultImg: Boolean,
 
-    var lastLoginAt: LocalDateTime = LocalDateTime.now(),
+    @Embedded
+    var fcmNotification: FcmNotificationVo,
 
-    var fcmToken: String = "", // vo 로 빼서 알림 수신여부 까지 같이 관리하면 그림이 더 이쁠듯 합니다.
+    var lastLoginAt: LocalDateTime = LocalDateTime.now(),
 
     @Enumerated(EnumType.STRING)
     var status: UserStatus = UserStatus.NORMAL,
@@ -48,21 +51,41 @@ class User(
         Events.raise(UserSignUpEvent(this.id!!))
     }
 
-    fun login() {
+    fun login(fcmToken: String) {
         if (status != UserStatus.NORMAL) {
-//            throw ForbiddenUserException.EXCEPTION
+            throw ForbiddenUserException.EXCEPTION
         }
         lastLoginAt = LocalDateTime.now()
+        updateToken(fcmToken) // 로그인시에 토큰 업데이트
     }
 
     fun withDraw() {
         if (status == UserStatus.DELETED) {
-//            throw AlreadyDeletedUserException.EXCEPTION
+            throw AlreadyDeletedUserException.EXCEPTION
         }
         status = UserStatus.DELETED
         nickname = "탈퇴유저"
         profileImg = ""
-        fcmToken = ""
+        fcmNotification = FcmNotificationVo.disableAlarm(this.fcmNotification)
         oauthInfo = oauthInfo.withDrawOauthInfo()
+    }
+
+    private fun updateToken(fcmToken: String) {
+        fcmNotification = FcmNotificationVo.updateToken(this.fcmNotification, fcmToken)
+    }
+
+    fun refresh() {
+        if (status != UserStatus.NORMAL) {
+            throw ForbiddenUserException.EXCEPTION
+        }
+        lastLoginAt = LocalDateTime.now()
+    }
+
+    fun toggleAppAlarmState() {
+        fcmNotification = FcmNotificationVo.toggleAlarm(fcmNotification)
+    }
+
+    fun updateFcmToken(fcmToken: String) {
+        fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
     }
 }

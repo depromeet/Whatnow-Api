@@ -53,7 +53,15 @@ class RegisterUserUseCase(
      */
     fun registerUserByOCIDToken(idToken: String, registerRequest: RegisterRequest): TokenAndUserResponse {
         val oauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken)
-        val user: User = userDomainService.registerUser(registerRequest.username, registerRequest.profileImage, registerRequest.isDefaultImage, oauthInfo, oauthInfo.oauthId)
+        val user: User = userDomainService.registerUser(
+            registerRequest.username,
+            registerRequest.profileImage,
+            registerRequest.isDefaultImage,
+            oauthInfo,
+            oauthInfo.oauthId,
+            registerRequest.fcmToken,
+            registerRequest.appAlarm,
+        )
 
         return tokenGenerateHelper.execute(user)
     }
