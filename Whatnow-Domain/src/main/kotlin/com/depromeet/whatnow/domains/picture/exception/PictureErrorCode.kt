@@ -13,11 +13,8 @@ enum class PictureErrorCode(val status: Int, val code: String, val reason: Strin
     @ExplainError("약속 참여에 취소한 유저가 업로드 하는 경우")
     CANCELLED_USER_UPLOAD(BAD_REQUEST, "PICTURE_400_2", "약속 취소한 유저는 이미지를 업로드 할 수 없습니다."),
 
-    @ExplainError("WAIT 유저가 LATE의 코멘트를 입력한 경우")
-    WAIT_USER_INVALID_COMMENT(BAD_REQUEST, "PICTURE_400_3", "WAIT 유저는 WAIT 타입의 코멘트만 입력 할 수 있습니다."),
-
-    @ExplainError("LATE 유저가 WAIT의 코멘트를 입력한 경우")
-    LATE_USER_INVALID_COMMENT(BAD_REQUEST, "PICTURE_400_4", "LATE 유저는 LATE 타입의 코멘트만 입력 할 수 있습니다."),
+    @ExplainError("유저의 상태와 일치하는 코멘트가 아닐 경우")
+    INVALID_COMMENT_TYPE(BAD_REQUEST, "PICTURE_400_3", "유저의 상태와 일치하는 코멘트가 아닙니다."),
     ;
 
     override val errorReason: ErrorReason

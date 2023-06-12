@@ -4,9 +4,8 @@ import com.depromeet.whatnow.consts.IMAGE_DOMAIN
 import com.depromeet.whatnow.domains.picture.adapter.PromiseAdapter
 import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
 import com.depromeet.whatnow.domains.picture.exception.CancelledUserUploadException
-import com.depromeet.whatnow.domains.picture.exception.LateUserInvalidCommentException
+import com.depromeet.whatnow.domains.picture.exception.InvalidCommentTypeException
 import com.depromeet.whatnow.domains.picture.exception.UploadBeforeTrackingException
-import com.depromeet.whatnow.domains.picture.exception.WaitUserInvalidCommentException
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import org.springframework.stereotype.Service
@@ -20,40 +19,21 @@ class PictureDomainService(
     @Transactional
     fun successUploadImage(userId: Long, promiseId: Long, imageKey: String, pictureCommentType: PictureCommentType) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
-        when (promiseUser.promiseUserType) {
-            PromiseUserType.READY -> throw UploadBeforeTrackingException.EXCEPTION
-            PromiseUserType.CANCEL -> throw CancelledUserUploadException.EXCEPTION
-            PromiseUserType.WAIT -> handleWaitUser(pictureCommentType)
-            PromiseUserType.LATE -> handleLateUser(pictureCommentType)
-        }
+        validatePromiseUserType(promiseUser.promiseUserType!!, pictureCommentType)
 
         val imageUrl = IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
         pictureAdapter.save(userId, promiseId, imageUrl, imageKey, pictureCommentType)
     }
 
-    private fun handleWaitUser(pictureCommentType: PictureCommentType) {
-        if (pictureCommentType !in listOf(
-                PictureCommentType.WHAT_ARE_YOU_DOING,
-                PictureCommentType.WHAT_TIME_IS_IT_NOW,
-                PictureCommentType.DID_YOU_COME,
-                PictureCommentType.I_LL_EAT_FIRST,
-                PictureCommentType.WHERE_ARE_YOU,
-            )
-        ) {
-            throw WaitUserInvalidCommentException.EXCEPTION
-        }
-    }
-
-    private fun handleLateUser(pictureCommentType: PictureCommentType) {
-        if (pictureCommentType !in listOf(
-                PictureCommentType.RUNNING,
-                PictureCommentType.GASPING,
-                PictureCommentType.LEAVE_SOME,
-                PictureCommentType.WAIT_A_BIT,
-                PictureCommentType.SORRY_LATE,
-            )
-        ) {
-            throw LateUserInvalidCommentException.EXCEPTION
+    private fun validatePromiseUserType(promiseUserType: PromiseUserType, pictureCommentType: PictureCommentType) {
+        when (promiseUserType) {
+            PromiseUserType.READY -> throw UploadBeforeTrackingException.EXCEPTION
+            PromiseUserType.CANCEL -> throw CancelledUserUploadException.EXCEPTION
+            else -> {
+                if (pictureCommentType.promiseUserType != promiseUserType) {
+                    InvalidCommentTypeException.EXCEPTION
+                }
+            }
         }
     }
 }
