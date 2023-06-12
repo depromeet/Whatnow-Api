@@ -1,20 +1,15 @@
 package com.depromeet.whatnow.api.promiseprogress.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
-import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressDto
 import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressGroupElement
+import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress
 
 @UseCase
-class PromiseProgressReadUseCase(
-    val promiseProgressAdapter: PromiseProgressAdapter,
-) {
+class PromiseProgressReadUseCase() {
     fun execute(): List<PromiseProgressGroupElement> {
-        return promiseProgressAdapter.findAll().map {
+        return PromiseProgress.values().groupBy {
                 p ->
-            PromiseProgressDto.from(p)
-        }.groupBy {
-                p ->
-            p.group
+            p.progressGroup
         }.map {
                 (k, value) ->
             PromiseProgressGroupElement(k, value)

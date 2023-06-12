@@ -25,7 +25,7 @@ class ProgressHistory(
     @Column(name = "progress_history_id")
     val id: Long? = null,
 ) {
-    fun change(progress : PromiseProgress) {
+    fun change(progress: PromiseProgress) {
         if (progress == currentPromiseProgress) {
             throw ProgressIsSameException.EXCEPTION
         }
@@ -35,7 +35,7 @@ class ProgressHistory(
 
     companion object {
         fun of(progressId: Long, userId: Long): ProgressHistory {
-            return ProgressHistory(progressId, userId, PromiseProgress.DEFAULT,null)
+            return ProgressHistory(progressId, userId, PromiseProgress.DEFAULT, null)
         }
     }
 }
