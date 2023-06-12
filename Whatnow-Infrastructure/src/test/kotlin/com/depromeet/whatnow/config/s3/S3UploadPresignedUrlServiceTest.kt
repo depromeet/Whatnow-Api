@@ -46,13 +46,7 @@ class S3UploadPresignedUrlServiceTest {
         val presignedUrl = s3UploadPresignedUrlService.forPromise(promiseId, imageFIleExtension)
 
         // then
-        val resultUrl = """
-            https:
-            //${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}
-            /promise
-            /$promiseId
-            /${presignedUrl.key}.${imageFIleExtension.uploadExtension}
-            """
+        val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/promise/$promiseId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
 
         assertContains(presignedUrl.url, resultUrl)
     }
