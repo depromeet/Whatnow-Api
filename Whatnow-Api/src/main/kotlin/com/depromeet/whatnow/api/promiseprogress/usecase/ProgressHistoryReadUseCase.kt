@@ -4,7 +4,6 @@ import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressDto
 import com.depromeet.whatnow.api.promiseprogress.dto.response.UserProgressResponse
 import com.depromeet.whatnow.domains.progresshistory.adapter.ProgressHistoryAdapter
-import com.depromeet.whatnow.domains.promiseprogress.adapter.PromiseProgressAdapter
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 

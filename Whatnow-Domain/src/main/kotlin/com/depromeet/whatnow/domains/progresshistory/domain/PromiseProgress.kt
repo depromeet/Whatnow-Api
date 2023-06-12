@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.promiseprogress.domain
+package com.depromeet.whatnow.domains.progresshistory.domain
 
 enum class PromiseProgress(
     val progressGroup: PromiseProgressGroup,

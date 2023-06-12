@@ -25,7 +25,6 @@ const val PROD = "prod"
 const val DEV = "dev"
 const val LOCAL = "local"
 const val WITHDRAW_PREFIX = "withdraw"
-const val DEFAULT_PROMISE_PROGRESS: Long = 13
 
 const val IMAGE_DOMAIN = "https://image.whatnow.kr/"
 

@@ -5,7 +5,6 @@ import com.depromeet.whatnow.api.promiseprogress.dto.response.PromiseProgressDto
 import com.depromeet.whatnow.api.promiseprogress.dto.response.UserProgressResponse
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.progresshistory.service.ProgressHistoryDomainService
-import com.depromeet.whatnow.domains.promiseprogress.adapter.PromiseProgressAdapter
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 
 @UseCase

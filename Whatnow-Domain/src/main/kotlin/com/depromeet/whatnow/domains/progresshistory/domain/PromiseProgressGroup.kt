@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.promiseprogress.domain
+package com.depromeet.whatnow.domains.progresshistory.domain
 
 enum class PromiseProgressGroup(val kr: String) {
     PREPARING("출발 전"),
