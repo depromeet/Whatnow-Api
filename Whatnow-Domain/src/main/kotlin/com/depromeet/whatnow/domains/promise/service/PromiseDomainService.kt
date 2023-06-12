@@ -1,10 +1,10 @@
 package com.depromeet.whatnow.domains.promise.service
 
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgressGroup
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
-import com.depromeet.whatnow.domains.promiseprogress.domain.PromiseProgressGroup
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import javax.transaction.Transactional
