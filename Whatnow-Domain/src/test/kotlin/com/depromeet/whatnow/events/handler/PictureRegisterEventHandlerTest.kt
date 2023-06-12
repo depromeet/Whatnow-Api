@@ -30,7 +30,6 @@ class PictureRegisterEventHandlerTest {
     fun `사진 등록 성공 시 사진등록 이벤트가 발행되어야한다`() {
         // given
         val promiseUser = PromiseUser(1, 1, CoordinateVo(1.0, 1.0), PromiseUserType.LATE)
-//        promiseUserAdaptor.save(promiseUser)
         given(promiseUserAdaptor.findByPromiseIdAndUserId(1, 1)).willReturn(promiseUser)
 
         // when
