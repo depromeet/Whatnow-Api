@@ -3,7 +3,6 @@ package com.depromeet.whatnow.domains.picture.adapter
 import com.depromeet.whatnow.domains.picture.domain.Picture
 import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
 import com.depromeet.whatnow.domains.picture.repository.PictureRepository
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentCaptor
@@ -11,9 +10,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.given
 import org.mockito.kotlin.then
-
 
 @ExtendWith(MockitoExtension::class)
 class PictureAdapterTest {

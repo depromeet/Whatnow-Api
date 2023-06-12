@@ -1,29 +1,22 @@
 package com.depromeet.whatnow.api.picture.usecase
 
-import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
 import com.depromeet.whatnow.domains.picture.service.PictureDomainService
 import org.assertj.core.api.Assertions.assertThatCode
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.BDDMockito.given
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.any
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.test.context.support.WithMockUser
 
 @ExtendWith(MockitoExtension::class)
 class PictureUploadSuccessUseCaseTest {
     @Mock
     lateinit var pictureDomainService: PictureDomainService
-
 
     @InjectMocks
     lateinit var pictureUploadSuccessUseCase: PictureUploadSuccessUseCase

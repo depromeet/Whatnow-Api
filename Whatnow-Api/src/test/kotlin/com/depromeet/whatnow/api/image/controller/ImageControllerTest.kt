@@ -2,7 +2,6 @@ package com.depromeet.whatnow.api.image.controller
 
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
 import com.depromeet.whatnow.config.s3.ImageFileExtension
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

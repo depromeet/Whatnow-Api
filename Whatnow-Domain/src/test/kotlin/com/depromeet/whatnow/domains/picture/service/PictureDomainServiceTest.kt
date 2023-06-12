@@ -2,7 +2,6 @@ package com.depromeet.whatnow.domains.picture.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.picture.adapter.PictureAdapter
-import com.depromeet.whatnow.domains.picture.domain.Picture
 import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
 import com.depromeet.whatnow.domains.picture.exception.CancelledUserUploadException
 import com.depromeet.whatnow.domains.picture.exception.InvalidCommentTypeException
@@ -11,18 +10,13 @@ import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.any
 import org.mockito.kotlin.given
-import org.mockito.kotlin.then
 
 @ExtendWith(MockitoExtension::class)
 class PictureDomainServiceTest {
@@ -42,7 +36,7 @@ class PictureDomainServiceTest {
             promiseId = 1,
             userId = 1,
             userLocation = CoordinateVo(1.0, 1.0),
-            promiseUserType = PromiseUserType.LATE
+            promiseUserType = PromiseUserType.LATE,
         )
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
@@ -60,7 +54,7 @@ class PictureDomainServiceTest {
             promiseId = 1,
             userId = 1,
             userLocation = CoordinateVo(1.0, 1.0),
-            promiseUserType = PromiseUserType.READY
+            promiseUserType = PromiseUserType.READY,
         )
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
@@ -78,7 +72,7 @@ class PictureDomainServiceTest {
             promiseId = 1,
             userId = 1,
             userLocation = CoordinateVo(1.0, 1.0),
-            promiseUserType = PromiseUserType.CANCEL
+            promiseUserType = PromiseUserType.CANCEL,
         )
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
@@ -96,7 +90,7 @@ class PictureDomainServiceTest {
             promiseId = 1,
             userId = 1,
             userLocation = CoordinateVo(1.0, 1.0),
-            promiseUserType = PromiseUserType.LATE
+            promiseUserType = PromiseUserType.LATE,
         )
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
@@ -114,7 +108,7 @@ class PictureDomainServiceTest {
             promiseId = 1,
             userId = 1,
             userLocation = CoordinateVo(1.0, 1.0),
-            promiseUserType = PromiseUserType.WAIT
+            promiseUserType = PromiseUserType.WAIT,
         )
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
