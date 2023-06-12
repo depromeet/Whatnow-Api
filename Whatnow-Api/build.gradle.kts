@@ -9,4 +9,5 @@ dependencies {
 
     implementation("org.springdoc:springdoc-openapi-ui:1.6.12")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
 }
