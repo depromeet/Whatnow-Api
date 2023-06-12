@@ -6,7 +6,7 @@ import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
 import com.depromeet.whatnow.domains.picture.repository.PictureRepository
 
 @Adapter
-class PromiseAdapter(
+class PictureAdapter(
     val pictureRepository: PictureRepository,
 ) {
     fun save(userId: Long, promiseId: Long, imageUrl: String, imageKey: String, pictureCommentType: PictureCommentType) {

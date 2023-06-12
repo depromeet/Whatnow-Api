@@ -1,7 +1,7 @@
 package com.depromeet.whatnow.domains.picture.service
 
 import com.depromeet.whatnow.consts.IMAGE_DOMAIN
-import com.depromeet.whatnow.domains.picture.adapter.PromiseAdapter
+import com.depromeet.whatnow.domains.picture.adapter.PictureAdapter
 import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
 import com.depromeet.whatnow.domains.picture.exception.CancelledUserUploadException
 import com.depromeet.whatnow.domains.picture.exception.InvalidCommentTypeException
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PictureDomainService(
-    val pictureAdapter: PromiseAdapter,
+    val pictureAdapter: PictureAdapter,
     val promiseUserAdapter: PromiseUserAdaptor,
 ) {
     @Transactional
@@ -29,9 +29,9 @@ class PictureDomainService(
         when (promiseUserType) {
             PromiseUserType.READY -> throw UploadBeforeTrackingException.EXCEPTION
             PromiseUserType.CANCEL -> throw CancelledUserUploadException.EXCEPTION
-            else -> {
+            PromiseUserType.WAIT, PromiseUserType.LATE -> {
                 if (pictureCommentType.promiseUserType != promiseUserType) {
-                    InvalidCommentTypeException.EXCEPTION
+                    throw InvalidCommentTypeException.EXCEPTION
                 }
             }
         }
