@@ -5,6 +5,8 @@ import com.depromeet.whatnow.api.promiseprogress.dto.response.UserProgressRespon
 import com.depromeet.whatnow.api.promiseprogress.usecase.ProgressHistoryChangeUseCase
 import com.depromeet.whatnow.api.promiseprogress.usecase.ProgressHistoryReadUseCase
 import com.depromeet.whatnow.api.promiseprogress.usecase.PromiseProgressReadUseCase
+import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,17 +26,20 @@ class PromiseProgressController(
 ) {
 
     @GetMapping("/progresses")
+    @Operation(summary = "약속 진행 단계들을 이넘으로 확인합니다. 주의!! 스웨거 이넘 예시 값과 실제 요청했을 때 값이 달라요 실제 요청값 기준으로 해주세요")
     fun getPromiseProgresses(): List<PromiseProgressGroupElement> {
         return promiseProgressReadUseCase.execute()
     }
 
     @GetMapping("/{promiseId}/users/{userId}")
+    @Operation(summary = "해당 약속 그 유저의 진행상태를 확인합니다. 주의!! 스웨거 이넘 예시 값과 실제 요청했을 때 값이 달라요 실제 요청값 기준으로 해주세요")
     fun getUserProgress(@PathVariable promiseId: Long, @PathVariable userId: Long): UserProgressResponse {
         return promiseHistoryReadUseCase.execute(promiseId, userId)
     }
 
     @PatchMapping("/{promiseId}/progresses/{progressCode}")
-    fun changePromiseProgress(@PathVariable progressCode: String, @PathVariable promiseId: Long): UserProgressResponse {
+    @Operation(summary = "해당 약속 그 유저의 진행상태를 변경합니다. 주의!! 스웨거 이넘 예시 값과 실제 요청했을 때 값이 달라요 실제 요청값 기준으로 해주세요")
+    fun changePromiseProgress(@PathVariable progressCode: PromiseProgress, @PathVariable promiseId: Long): UserProgressResponse {
         return promiseHistoryChangeUseCase.execute(promiseId, progressCode)
     }
 }
