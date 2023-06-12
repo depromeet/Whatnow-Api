@@ -5,6 +5,8 @@ import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.events.domainEvent.PictureRegisterEvent
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -21,6 +23,9 @@ class Picture(
     var url: String,
 
     var uuid: String,
+
+    @Enumerated(EnumType.STRING)
+    var pictureCommentType: PictureCommentType,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
