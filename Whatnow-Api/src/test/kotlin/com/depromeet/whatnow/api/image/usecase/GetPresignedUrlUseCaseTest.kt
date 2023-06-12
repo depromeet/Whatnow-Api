@@ -22,11 +22,6 @@ class GetPresignedUrlUseCaseTest {
     @Test
     fun `PresignUrl 을 요청하면 url 을 반환한다`() {
         // given
-        ImageUrlDto(
-            url = "https://whatnow.kr/1.jpg",
-            key = "1.jpg",
-        )
-
         given(presignedUrlService.forPromise(1, ImageFileExtension.JPEG)).willReturn(
             ImageUrlDto(
                 url = "https://whatnow.kr/1.jpg",
