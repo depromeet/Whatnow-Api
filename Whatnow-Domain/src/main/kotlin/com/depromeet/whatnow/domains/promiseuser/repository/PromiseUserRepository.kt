@@ -9,4 +9,6 @@ interface PromiseUserRepository : JpaRepository<PromiseUser, Long> {
     fun findByPromiseId(promiseId: Long): List<PromiseUser>
     fun findByUserId(userId: Long): List<PromiseUser>
     fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser?
+
+    fun findByPromiseIdIn(promiseIds: List<Long>): List<PromiseUser>
 }

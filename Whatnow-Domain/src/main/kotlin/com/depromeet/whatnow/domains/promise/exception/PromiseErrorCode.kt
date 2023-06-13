@@ -16,6 +16,9 @@ enum class PromiseErrorCode(val status: Int, val code: String, val reason: Strin
     @ExplainError("정지 처리된 약속일 경우 발생하는 오류")
     PROMISE_FORBIDDEN(FORBIDDEN, "PROMISE_403_1", "접근이 제한된 약속입니다."),
 
+    @ExplainError("방장이 아닌 참여자가 약속을 전체 취소할 경우")
+    PROMISE_NOT_HOST(FORBIDDEN, "PROMISE_403_3", "방장이 아닌 참여자는 약속을 취소할 수 없습니다."),
+
     @ExplainError("삭제된 약속로 접근하려는 경우")
     PROMISE_ALREADY_DELETED(FORBIDDEN, "PROMISE_403_2", "이미 지워진 약속입니다."),
 

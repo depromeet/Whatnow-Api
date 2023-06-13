@@ -3,9 +3,10 @@ package com.depromeet.whatnow.domains.promise.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.PlaceVo
-import com.depromeet.whatnow.events.domainEvent.EndTimePromiseEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseCancelEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
-import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEndTimeEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUpdateMeetPlaceEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -15,7 +16,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.PostPersist
-import javax.persistence.PostUpdate
 import javax.persistence.Table
 
 @Entity
@@ -46,13 +46,7 @@ class Promise(
 ) : BaseTimeEntity() {
     @PostPersist
     fun createPromiseEvent() {
-        println("endTime = ${this.id!!}")
-        Events.raise(PromiseRegisterEvent(this.id!!, this.mainUserId))
-    }
-
-    @PostUpdate
-    fun updatePromiseEvent() {
-        Events.raise(PromiseUpdateEvent(this.id!!))
+        Events.raise(PromiseRegisterEvent(this.id!!))
     }
     fun updateTitle(title: String) {
         this.title = title
@@ -60,6 +54,7 @@ class Promise(
 
     fun updateEndTime(endTime: LocalDateTime) {
         this.endTime = endTime
+        pendingPromise()
     }
     fun delayPromise(endTime: LocalDateTime) {
         this.endTime = endTime
@@ -71,18 +66,24 @@ class Promise(
 
     fun endPromise() {
         this.promiseType = PromiseType.END
-        Events.raise(EndTimePromiseEvent(this.id!!))
+        Events.raise(PromiseUpdateEndTimeEvent(this.id!!, this.endTime))
     }
 
     fun pendingPromise() {
-        this.promiseType = PromiseType.PENDING
+        this.promiseType = PromiseType.BEFORE
     }
 
     fun deletePromise() {
         this.promiseType = PromiseType.DELETED
+        Events.raise(PromiseCancelEvent(this.id!!))
     }
 
     fun updatePromiseProgressType(promiseType: PromiseType) {
         this.promiseType = promiseType
+    }
+
+    fun updateMeetPlace(meetPlace: PlaceVo) {
+        this.meetPlace = meetPlace
+        Events.raise(PromiseUpdateMeetPlaceEvent(this.id!!, this.meetPlace!!))
     }
 }
