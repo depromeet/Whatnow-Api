@@ -8,6 +8,7 @@ dependencies{
     api ("org.springframework.boot:spring-boot-starter-data-redis")
     api ("org.redisson:redisson:3.19.0")
     api ("com.amazonaws:aws-java-sdk-s3:1.12.476")
+    api ("com.google.firebase:firebase-admin:9.1.1")
 
     implementation(project(":Whatnow-Common"))
 
