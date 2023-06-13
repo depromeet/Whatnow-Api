@@ -1,22 +1,24 @@
 package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
+import com.depromeet.whatnow.api.promise.annotation.RequiresMainUser
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
 import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
-import com.depromeet.whatnow.domains.promise.exception.NotHostException
+import com.depromeet.whatnow.domains.promise.service.PromiseDomainService
 import java.time.LocalDateTime
 import javax.transaction.Transactional
 
 @UseCase
 class PromiseRegisterUseCase(
     val promiseAdaptor: PromiseAdaptor,
+    val promiseDomainService: PromiseDomainService,
 ) {
     @Transactional
     fun createPromise(promiseRequest: PromiseRequest): PromiseDto {
-        val promise = promiseAdaptor.save(
+        val promise = promiseDomainService.save(
             Promise(
                 title = promiseRequest.title,
                 mainUserId = promiseRequest.mainUserId,
@@ -27,28 +29,23 @@ class PromiseRegisterUseCase(
         return PromiseDto.from(promise)
     }
 
-    @Transactional
+    @RequiresMainUser
     fun updatePromiseMeetPlace(promiseId: Long, meetPlace: PlaceVo): PromiseDto {
         val promise = promiseAdaptor.queryPromise(promiseId)
-        promise.updateMeetPlace(meetPlace)
-        return PromiseDto.from(promise)
+        val updatePromise = promiseDomainService.updateMeetPlace(promise, meetPlace)
+        return PromiseDto.from(updatePromise)
     }
 
-    @Transactional
+    @RequiresMainUser
     fun updatePromiseEndTime(promiseId: Long, endTime: LocalDateTime): PromiseDto {
         val promise = promiseAdaptor.queryPromise(promiseId)
-        promise.updateEndTime(endTime)
-        return PromiseDto.from(promise)
+        val updatePromise = promiseDomainService.updateEndTime(promise, endTime)
+        return PromiseDto.from(updatePromise)
     }
 
-    @Transactional
-    fun deletePromise(promiseId: Long, userId: Long) {
+    @RequiresMainUser
+    fun deletePromise(promiseId: Long) {
         val promise = promiseAdaptor.queryPromise(promiseId)
-        // 방장만 전체 파토할 수 있다.
-        if (userId == promise.mainUserId) {
-            promise.deletePromise()
-        } else {
-            throw NotHostException()
-        }
+        promiseDomainService.deletePromise(promise)
     }
 }

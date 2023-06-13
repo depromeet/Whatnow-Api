@@ -10,13 +10,14 @@ import com.depromeet.whatnow.common.vo.PlaceVo
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
@@ -28,6 +29,19 @@ class PromiseController(
     val promiseRegisterUseCase: PromiseRegisterUseCase,
     val promiseReadUseCase: PromiseReadUseCase,
 ) {
+    //    나의 약속 전부 조회
+    @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
+    @GetMapping("/promises/users")
+    fun findByPromiseByUser(): List<PromiseSplitedByPromiseTypeDto> {
+        return promiseReadUseCase.findPromiseByUserIdSeparatedType()
+    }
+
+    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
+    @GetMapping("/promises/users/year-month/{year-month}")
+    fun findByPromiseByUserAndYearMonth(@PathVariable(value = "year-month") yearMonth: String): List<PromiseFindDto> {
+        return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
+    }
+
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")
     @PostMapping("/promises")
     fun createPromise(@RequestBody promiseRequest: PromiseRequest): PromiseDto {
@@ -37,33 +51,25 @@ class PromiseController(
 //    1. 약속 장소 변경
     @Operation(summary = "약속(promise) 장소 수정", description = "약속 장소를 변경합니다.")
     @PutMapping("/promises/{promise-id}/location")
-    fun updatePromiseLocation(@RequestParam(value = "promise-id") promiseId: Long, @RequestBody meetPlace: PlaceVo): PromiseDto {
+    fun updatePromiseLocation(@PathVariable(value = "promise-id") promiseId: Long, @RequestBody meetPlace: PlaceVo): PromiseDto {
         return promiseRegisterUseCase.updatePromiseMeetPlace(promiseId, meetPlace)
     }
 
     @Operation(summary = "약속(promise)시간 수정", description = "약속을 수정합니다. (약속 제목, 약속 장소, 약속 시간)")
     @PutMapping("/promises/{promise-id}/end-times/{end-time}")
-    fun updatePromiseEndTime(@RequestParam(value = "promise-id") promiseId: Long, @RequestParam(value = "end-time") endTime: LocalDateTime): PromiseDto {
+    fun updatePromiseEndTime(
+        @PathVariable(value = "promise-id") promiseId: Long,
+        @RequestBody
+        @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        endTime: LocalDateTime,
+    ): PromiseDto {
         return promiseRegisterUseCase.updatePromiseEndTime(promiseId, endTime)
-    }
-
-//    나의 약속 전부 조회
-    @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
-    @GetMapping("/promises/users/{user-id}/")
-    fun findByPromiseByUser(@RequestParam(value = "user-id") userId: Long): List<PromiseSplitedByPromiseTypeDto> {
-        return promiseReadUseCase.findPromiseByUserIdSeparatedType(userId)
-    }
-
-    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
-    @GetMapping("/promises/users/{user-id}/year-month/{year-month}")
-    fun findByPromiseByUserAndYearMonth(@RequestParam(value = "user-id") userId: Long, @RequestParam(value = "year-month") yearMonth: String): List<PromiseFindDto> {
-        return promiseReadUseCase.findPromiseByUserIdYearMonth(userId, yearMonth)
     }
 
     // 약속 취소
     @Operation(summary = "약속 취소", description = "약속을 취소합니다.")
     @DeleteMapping("/promises/{promise-id}/user-id/{user-id}")
-    fun deletePromise(@RequestParam(value = "promise-id") promiseId: Long, @RequestParam(value = "user-id") userId: Long) {
-        promiseRegisterUseCase.deletePromise(promiseId, userId)
+    fun deletePromise(@PathVariable(value = "promise-id") promiseId: Long) {
+        promiseRegisterUseCase.deletePromise(promiseId)
     }
 }

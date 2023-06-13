@@ -70,7 +70,7 @@ class Promise(
     }
 
     fun pendingPromise() {
-        this.promiseType = PromiseType.PENDING
+        this.promiseType = PromiseType.BEFORE
     }
 
     fun deletePromise() {

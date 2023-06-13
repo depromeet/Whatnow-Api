@@ -4,6 +4,7 @@ import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.common.vo.UserInfoVo
+import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
@@ -24,7 +25,9 @@ class PromiseReadUseCase(
      * @param userId: 유저 아이디
      * @return List<PromiseSplitByPromiseTypeDto>: 약속 종류에 따라 분리된 약속들
      */
-    fun findPromiseByUserIdSeparatedType(userId: Long): List<PromiseSplitedByPromiseTypeDto> {
+    fun findPromiseByUserIdSeparatedType(): List<PromiseSplitedByPromiseTypeDto> {
+        val userId: Long = SecurityUtils.currentUserId
+
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
         val promiseSplitByPromiseTypeDto = mutableListOf<PromiseSplitedByPromiseTypeDto>()
 
@@ -44,7 +47,8 @@ class PromiseReadUseCase(
      * method name: findPromiseByUserIdSeparatedWithYearMonth
      * description: 유저가 참여한 약속들 중 특정 년월에 해당하는 약속들을 조회한다
      */
-    fun findPromiseByUserIdYearMonth(userId: Long, yearMonth: String): List<PromiseFindDto> {
+    fun findPromiseByUserIdYearMonth(yearMonth: String): List<PromiseFindDto> {
+        val userId: Long = SecurityUtils.currentUserId
         return findPromisesByUserId(userId)
             .filter { isSameYearMonth(it.endTime, yearMonth) }
             .map { promise ->
