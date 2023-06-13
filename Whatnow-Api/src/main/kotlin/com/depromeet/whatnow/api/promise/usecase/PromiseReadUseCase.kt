@@ -45,7 +45,7 @@ class PromiseReadUseCase(
             when (promise?.promiseType) {
                 PromiseType.BEFORE, PromiseType.END -> {
                     val promiseType = promise.promiseType
-                    val promiseFindDto = PromiseFindDto.from(promise, participant)
+                    val promiseFindDto = PromiseFindDto.of(promise, participant)
 
                     promiseSplitByPromiseTypeDto.getOrPut(promiseType) { mutableListOf() }
                         .add(promiseFindDto)
