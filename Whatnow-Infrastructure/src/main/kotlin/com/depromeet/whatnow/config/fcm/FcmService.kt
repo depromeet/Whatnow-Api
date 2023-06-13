@@ -1,14 +1,20 @@
 package com.depromeet.whatnow.config.fcm
 
 import com.google.api.core.ApiFuture
-import com.google.firebase.messaging.*
+import com.google.firebase.messaging.BatchResponse
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.Message
+import com.google.firebase.messaging.MulticastMessage
+import com.google.firebase.messaging.Notification
 import org.springframework.stereotype.Service
-
 
 @Service
 class FcmService {
     fun sendGroupMessageAsync(
-        tokenList: List<String>, title: String, content: String, imageUrl: String
+        tokenList: List<String>,
+        title: String,
+        content: String,
+        imageUrl: String,
     ): ApiFuture<BatchResponse> {
         val multicast = MulticastMessage.builder()
             .addAllTokens(tokenList)
@@ -17,7 +23,7 @@ class FcmService {
                     .setTitle(title)
                     .setBody(content)
                     .setImage(imageUrl)
-                    .build()
+                    .build(),
             ).build()
         return FirebaseMessaging.getInstance().sendMulticastAsync(multicast)
     }

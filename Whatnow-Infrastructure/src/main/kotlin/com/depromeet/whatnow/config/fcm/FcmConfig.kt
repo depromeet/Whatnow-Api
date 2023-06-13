@@ -3,18 +3,16 @@ package com.depromeet.whatnow.config.fcm
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import java.io.ByteArrayInputStream
 import java.nio.charset.StandardCharsets
 import javax.annotation.PostConstruct
 
-
 @Configuration
 class FcmConfig(
     @Value("\${fcm.certification}")
-    private val fcmCertification: String
+    private val fcmCertification: String,
 ) {
     @PostConstruct
     fun init() {
@@ -24,9 +22,9 @@ class FcmConfig(
                     .setCredentials(
                         GoogleCredentials.fromStream(
                             ByteArrayInputStream(
-                                fcmCertification.toByteArray(StandardCharsets.UTF_8)
-                            )
-                        )
+                                fcmCertification.toByteArray(StandardCharsets.UTF_8),
+                            ),
+                        ),
                     )
                     .build()
                 FirebaseApp.initializeApp(options)
