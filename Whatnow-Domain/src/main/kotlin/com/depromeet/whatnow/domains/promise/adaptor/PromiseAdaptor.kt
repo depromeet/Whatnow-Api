@@ -15,7 +15,9 @@ class PromiseAdaptor(
     fun queryPromise(promiseId: Long): Promise {
         return promiseRepository.findByIdOrNull(promiseId) ?: run { throw PromiseNotFoundException.EXCEPTION }
     }
-
+    fun queryPromises(promiseIds: List<Long>): List<Promise>{
+        return promiseRepository.findAllById(promiseIds)
+    }
     fun queryPromiseByMainUserId(mainUserId: Long): List<Promise> {
         return promiseRepository.findAllByMainUserId(mainUserId)
     }
@@ -29,4 +31,6 @@ class PromiseAdaptor(
     fun delete(promiseId: Long) {
         return promiseRepository.deleteById(promiseId)
     }
+
+
 }

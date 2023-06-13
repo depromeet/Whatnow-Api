@@ -7,6 +7,7 @@ import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.api.promise.usecase.PromiseReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseRegisterUseCase
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -32,7 +33,7 @@ class PromiseController(
     //    나의 약속 전부 조회
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     @GetMapping("/promises/users")
-    fun findByPromiseByUser(): List<PromiseSplitedByPromiseTypeDto> {
+    fun findByPromiseByUser(): Map<PromiseType,MutableList<PromiseFindDto>> {
         return promiseReadUseCase.findPromiseByUserIdSeparatedType()
     }
 

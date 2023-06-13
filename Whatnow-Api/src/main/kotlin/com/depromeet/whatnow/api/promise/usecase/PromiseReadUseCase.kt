@@ -25,20 +25,37 @@ class PromiseReadUseCase(
      * @param userId: 유저 아이디
      * @return List<PromiseSplitByPromiseTypeDto>: 약속 종류에 따라 분리된 약속들
      */
-    fun findPromiseByUserIdSeparatedType(): List<PromiseSplitedByPromiseTypeDto> {
+    fun findPromiseByUserIdSeparatedType(): Map<PromiseType,MutableList<PromiseFindDto>> {
         val userId: Long = SecurityUtils.currentUserId
 
+        // 내가 참여한 약속들(약속유저)
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-        val promiseSplitByPromiseTypeDto = mutableListOf<PromiseSplitedByPromiseTypeDto>()
+        val promiseIds = promiseUsers.map { it.promiseId }
+        //  내가 참여한 약속들
+            val promises = promiseAdaptor.queryPromises(promiseIds).associateBy { it.id }
+            // 내가 참여한 약속들에 참여한 친구들
+            val promiseUsersByPromiseId = promiseUserAdaptor.findByPromiseIds(promiseIds).groupBy { it.promiseId }
+            val promiseSplitByPromiseTypeDto = mutableMapOf<PromiseType, MutableList<PromiseFindDto>>()
 
         for (promiseUser in promiseUsers) {
-            val promise = promiseAdaptor.queryPromise(promiseUser.promiseId)
-            val eachPromiseUsers = promiseUserAdaptor.findByPromiseId(promiseUser.promiseId)
+            // 약속 하나씩
+            val promise = promises[promiseUser.promiseId]
+            val eachPromiseUsers = promiseUsersByPromiseId[promiseUser.promiseId] ?: emptyList()
             val participant = getParticipantUserInfo(eachPromiseUsers)
-            val promiseType = if (promise.promiseType == PromiseType.BEFORE) "BEFORE" else "PAST"
-            val promiseFindDto = PromiseFindDto.from(promise, participant)
-            val dto = PromiseSplitedByPromiseTypeDto(promiseType, listOf(promiseFindDto))
-            promiseSplitByPromiseTypeDto += dto
+
+            when (promise?.promiseType) {
+                PromiseType.BEFORE, PromiseType.END -> {
+                    val promiseType = promise.promiseType
+                    val promiseFindDto = PromiseFindDto.from(promise, participant)
+
+                    promiseSplitByPromiseTypeDto.getOrPut(promiseType) { mutableListOf() }
+                        .add(promiseFindDto)
+                }
+
+                PromiseType.DELETED -> {
+                    // Do nothing for deleted promises.
+                }
+            }
         }
         return promiseSplitByPromiseTypeDto
     }
@@ -69,10 +86,9 @@ class PromiseReadUseCase(
     }
 
     private fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
-        return promiseUsers.mapNotNull { eachUser ->
-            val user = userRepository.findById(eachUser.userId).orElse(null)
-            user?.let { UserInfoVo.from(it) }
-        }
+        val userIds = promiseUsers.map { it.userId }
+        val users = userRepository.findAllById(userIds)
+        return users.mapNotNull { UserInfoVo.from(it) }
     }
 
     private fun isSameYearMonth(dateTime: LocalDateTime, yearMonth: String): Boolean {
