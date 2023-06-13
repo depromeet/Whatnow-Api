@@ -33,7 +33,7 @@ ncp:
     region: ${NCP_REGION}
     endpoint: ${NCP_ENDPOINT:https://kr.object.ncloudstorage.com}
 fcm:
-  certification: ${FCM_CERTIFICATION}
+  certification: ${FCM_CERTIFICATION:}
 #ncp:
 #  service-id: ${NCP_SERVICE_ID:}
 #  access-key: ${NCP_ACCESS_KEY:}

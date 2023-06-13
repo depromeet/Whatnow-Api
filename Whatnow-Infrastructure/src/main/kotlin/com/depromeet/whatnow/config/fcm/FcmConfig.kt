@@ -31,7 +31,6 @@ class FcmConfig(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            throw RuntimeException(e)
         }
     }
 }
