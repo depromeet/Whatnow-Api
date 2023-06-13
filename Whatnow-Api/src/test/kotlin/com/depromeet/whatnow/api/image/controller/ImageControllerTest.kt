@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(ImageController::class)
 @ContextConfiguration(classes = [ImageController::class])
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class ImageControllerTest {
     @MockBean
     lateinit var getPresignedUrlUseCase: GetPresignedUrlUseCase
@@ -25,7 +25,6 @@ class ImageControllerTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    @WithMockUser(username = "test", roles = ["USER"])
     fun `presignedUrl 요청에 성공하면 200을 응답한다`() {
         // given
         val promiseId = 1L
@@ -35,7 +34,6 @@ class ImageControllerTest {
         mockMvc.perform(
             get("/v1/promises/{promiseId}/images", promiseId)
                 .param("fileExtension", fileExtension)
-                .with(user("test").roles("USER")),
         )
             .andExpect(status().isOk)
             .andDo { print(it) }

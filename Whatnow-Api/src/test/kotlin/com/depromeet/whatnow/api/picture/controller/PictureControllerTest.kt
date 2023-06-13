@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -16,7 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(PictureController::class)
 @ContextConfiguration(classes = [PictureController::class])
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class PictureControllerTest {
     @MockBean
     lateinit var successUseCase: PictureUploadSuccessUseCase
@@ -25,7 +23,6 @@ class PictureControllerTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    @WithMockUser(username = "test", roles = ["USER"])
     fun `이미지 업로드 성공 요청에 정상적으로 200을 반환한다`() {
         // given
         val promiseId = 1
@@ -35,8 +32,7 @@ class PictureControllerTest {
         // when, then
         mockMvc.perform(
             post("/v1/promises/{promiseId}/images/success/{imageKey}", promiseId, imageKey)
-                .param("pictureCommentType", pictureCommentType.name)
-                .with(user("test").roles("USER")),
+                .param("pictureCommentType", pictureCommentType.name),
         )
             .andExpect(status().isOk)
             .andDo { print(it) }
