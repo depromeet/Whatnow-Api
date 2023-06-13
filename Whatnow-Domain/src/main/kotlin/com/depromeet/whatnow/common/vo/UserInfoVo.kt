@@ -3,7 +3,6 @@ package com.depromeet.whatnow.common.vo
 import com.depromeet.whatnow.domains.user.domain.User
 import javax.persistence.Embeddable
 
-@Embeddable
 class UserInfoVo(
     var profileImg: String?,
     var nickname: String,
