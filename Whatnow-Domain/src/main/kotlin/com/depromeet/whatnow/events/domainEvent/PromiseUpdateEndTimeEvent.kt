@@ -1,7 +1,9 @@
 package com.depromeet.whatnow.events.domainEvent
 
 import com.depromeet.whatnow.common.aop.event.DomainEvent
+import java.time.LocalDateTime
 
-data class PromiseUpdateEvent(
-    val promiseUserId: Long,
+class PromiseUpdateEndTimeEvent(
+    val promiseId: Long,
+    val endTime: LocalDateTime,
 ) : DomainEvent()

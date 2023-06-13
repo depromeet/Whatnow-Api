@@ -71,12 +71,28 @@ class PromiseDomainService(
 
     // 약속 취소 처리
     @Transactional
-    fun deletePromise(promiseId: Long) {
-        val promise = promiseAdaptor.queryPromise(promiseId)
+    fun deletePromise(promise: Promise) {
         promise.deletePromise()
     }
 
     fun findByPromiseId(promiseId: Long): Promise {
         return promiseAdaptor.queryPromise(promiseId)
+    }
+
+    @Transactional
+    fun updateMeetPlace(promise: Promise, meetPlace: PlaceVo): Promise {
+        promise.updateMeetPlace(meetPlace)
+        return promise
+    }
+
+    @Transactional
+    fun save(promise: Promise): Promise {
+        return promiseAdaptor.save(promise)
+    }
+
+    @Transactional
+    fun updateEndTime(promise: Promise, endTime: LocalDateTime): Promise {
+        promise.updateEndTime(endTime)
+        return promise
     }
 }
