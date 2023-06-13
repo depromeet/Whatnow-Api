@@ -3,7 +3,6 @@ package com.depromeet.whatnow.api.promise.controller
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
-import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.api.promise.usecase.PromiseReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseRegisterUseCase
 import com.depromeet.whatnow.common.vo.PlaceVo
@@ -33,7 +32,7 @@ class PromiseController(
     //    나의 약속 전부 조회
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     @GetMapping("/promises/users")
-    fun findByPromiseByUser(): Map<PromiseType,MutableList<PromiseFindDto>> {
+    fun findByPromiseByUser(): Map<PromiseType, MutableList<PromiseFindDto>> {
         return promiseReadUseCase.findPromiseByUserIdSeparatedType()
     }
 

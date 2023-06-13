@@ -2,7 +2,6 @@ package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
-import com.depromeet.whatnow.api.promise.dto.PromiseSplitedByPromiseTypeDto
 import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
@@ -25,17 +24,17 @@ class PromiseReadUseCase(
      * @param userId: 유저 아이디
      * @return List<PromiseSplitByPromiseTypeDto>: 약속 종류에 따라 분리된 약속들
      */
-    fun findPromiseByUserIdSeparatedType(): Map<PromiseType,MutableList<PromiseFindDto>> {
+    fun findPromiseByUserIdSeparatedType(): Map<PromiseType, MutableList<PromiseFindDto>> {
         val userId: Long = SecurityUtils.currentUserId
 
         // 내가 참여한 약속들(약속유저)
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
         val promiseIds = promiseUsers.map { it.promiseId }
         //  내가 참여한 약속들
-            val promises = promiseAdaptor.queryPromises(promiseIds).associateBy { it.id }
-            // 내가 참여한 약속들에 참여한 친구들
-            val promiseUsersByPromiseId = promiseUserAdaptor.findByPromiseIds(promiseIds).groupBy { it.promiseId }
-            val promiseSplitByPromiseTypeDto = mutableMapOf<PromiseType, MutableList<PromiseFindDto>>()
+        val promises = promiseAdaptor.queryPromises(promiseIds).associateBy { it.id }
+        // 내가 참여한 약속들에 참여한 친구들
+        val promiseUsersByPromiseId = promiseUserAdaptor.findByPromiseIds(promiseIds).groupBy { it.promiseId }
+        val promiseSplitByPromiseTypeDto = mutableMapOf<PromiseType, MutableList<PromiseFindDto>>()
 
         for (promiseUser in promiseUsers) {
             // 약속 하나씩
