@@ -46,7 +46,7 @@ class Promise(
 ) : BaseTimeEntity() {
     @PostPersist
     fun createPromiseEvent() {
-        Events.raise(PromiseRegisterEvent(this.id!!))
+        Events.raise(PromiseRegisterEvent(this.id!!, this.mainUserId))
     }
     fun updateTitle(title: String) {
         this.title = title
