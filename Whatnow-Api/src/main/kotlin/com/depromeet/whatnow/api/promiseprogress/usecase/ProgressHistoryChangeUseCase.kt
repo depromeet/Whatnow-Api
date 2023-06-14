@@ -16,6 +16,6 @@ class ProgressHistoryChangeUseCase(
         val userId = SecurityUtils.currentUserId
         val user = userAdapter.queryUser(userId)
         val currentHistory = promiseHistoryDomainService.change(promiseId, userId, progress)
-        return UserProgressResponse(user, currentHistory.currentPromiseProgress, currentHistory.prePromiseProgress)
+        return UserProgressResponse(user.toUserInfoVo(), currentHistory.currentPromiseProgress, currentHistory.prePromiseProgress)
     }
 }

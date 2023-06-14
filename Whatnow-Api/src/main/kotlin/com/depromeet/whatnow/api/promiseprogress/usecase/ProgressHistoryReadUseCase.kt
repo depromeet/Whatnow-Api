@@ -17,6 +17,6 @@ class ProgressHistoryReadUseCase(
         // 이부분은 나중에 깔쌈하게 누가 aop로 만들면 참 좋을듯
         promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         val history = progressHistoryAdapter.findByPromiseIdAndUserId(promiseId, userId)
-        return UserProgressResponse(userAdapter.queryUser(userId), history.currentPromiseProgress, history.prePromiseProgress)
+        return UserProgressResponse(userAdapter.queryUser(userId).toUserInfoVo(), history.currentPromiseProgress, history.prePromiseProgress)
     }
 }

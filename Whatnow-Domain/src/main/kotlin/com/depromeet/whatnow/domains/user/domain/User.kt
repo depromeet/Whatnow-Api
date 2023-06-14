@@ -2,6 +2,8 @@ package com.depromeet.whatnow.domains.user.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
+import com.depromeet.whatnow.common.vo.UserDetailVo
+import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.domains.user.exception.AlreadyDeletedUserException
 import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
 import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
@@ -87,5 +89,13 @@ class User(
 
     fun updateFcmToken(fcmToken: String) {
         fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
+    }
+
+    fun toUserInfoVo(): UserInfoVo {
+        return UserInfoVo.from(this)
+    }
+
+    fun toUserDetailVo(): UserDetailVo {
+        return UserDetailVo.from(this)
     }
 }
