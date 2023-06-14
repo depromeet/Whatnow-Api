@@ -9,6 +9,9 @@ dependencies{
     api ("org.redisson:redisson:3.19.0")
     api ("com.amazonaws:aws-java-sdk-s3:1.12.476")
     api ("com.google.firebase:firebase-admin:9.1.1")
+    // slack
+    api ("com.slack.api:slack-api-client:1.27.2")
+
 
     implementation(project(":Whatnow-Common"))
 
