@@ -88,4 +88,9 @@ class User(
     fun updateFcmToken(fcmToken: String) {
         fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
     }
+
+    fun updateProfile(profileImage: String, username: String) {
+        profileImg = profileImage
+        nickname = username
+    }
 }

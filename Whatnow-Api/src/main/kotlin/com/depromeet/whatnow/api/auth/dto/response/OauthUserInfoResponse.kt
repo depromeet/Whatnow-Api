@@ -6,7 +6,7 @@ data class OauthUserInfoResponse(
     val email: String?,
     val profileImage: String,
     val isDefaultImage: Boolean,
-    val username: String,
+    val nickname: String,
 ) {
 
     companion object {

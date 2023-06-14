@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.user.controller
 
 import com.depromeet.whatnow.api.user.dto.request.UpdateFcmTokenRequest
+import com.depromeet.whatnow.api.user.dto.request.UpdateProfileRequest
 import com.depromeet.whatnow.api.user.usecase.ReadUserUseCase
 import com.depromeet.whatnow.api.user.usecase.UpdateUserUseCase
 import com.depromeet.whatnow.domains.user.domain.User
@@ -38,5 +39,13 @@ class UserController(
         updateFcmTokenRequest: UpdateFcmTokenRequest,
     ): User {
         return updateUserUseCase.updateFcmToken(updateFcmTokenRequest)
+    }
+
+    @PatchMapping("/fcm-token")
+    fun updateProfile(
+        @Valid @RequestBody
+        updateProfileRequest: UpdateProfileRequest,
+    ): User {
+        return updateUserUseCase.updateProfile(updateProfileRequest)
     }
 }

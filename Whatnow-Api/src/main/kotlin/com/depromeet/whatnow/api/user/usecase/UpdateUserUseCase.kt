@@ -2,6 +2,7 @@ package com.depromeet.whatnow.api.user.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.user.dto.request.UpdateFcmTokenRequest
+import com.depromeet.whatnow.api.user.dto.request.UpdateProfileRequest
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.service.UserDomainService
@@ -18,5 +19,10 @@ class UpdateUserUseCase(
     fun updateFcmToken(updateTokenRequest: UpdateFcmTokenRequest): User {
         val currentUserId: Long = SecurityUtils.currentUserId
         return userDomainService.updateFcmToken(currentUserId, updateTokenRequest.fcmToken)
+    }
+
+    fun updateProfile(updateProfileRequest: UpdateProfileRequest): User {
+        val currentUserId: Long = SecurityUtils.currentUserId
+        return userDomainService.updateProfile(currentUserId,updateProfileRequest.profileImage,updateProfileRequest.username)
     }
 }
