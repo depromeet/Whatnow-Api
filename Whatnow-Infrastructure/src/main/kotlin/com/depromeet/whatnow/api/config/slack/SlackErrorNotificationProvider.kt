@@ -15,7 +15,7 @@ class SlackErrorNotificationProvider(
     @Value("\${slack.channel.id}")
     private val CHANNEL_ID: String? = null
 
-    fun getErrorText(throwable: Throwable): String {
+    fun getErrorStack(throwable: Throwable): String {
         val exceptionAsStrings = Arrays.toString(throwable.stackTrace)
         val cutLength = Math.min(exceptionAsStrings.length, MAX_LENGTH)
         return exceptionAsStrings.substring(0, cutLength)
