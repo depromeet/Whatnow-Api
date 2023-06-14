@@ -5,7 +5,6 @@ import com.depromeet.whatnow.api.user.usecase.ReadUserUseCase
 import com.depromeet.whatnow.api.user.usecase.UpdateUserUseCase
 import com.depromeet.whatnow.common.vo.UserDetailVo
 import com.depromeet.whatnow.common.vo.UserInfoVo
-import com.depromeet.whatnow.domains.user.domain.User
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -34,7 +33,7 @@ class UserController(
 
     @GetMapping("/{userId}")
     @Operation(summary = "다른 사람의 유저 정보를 가져옵니다.")
-    fun getOtherUserInfo(@PathVariable userId : Long): UserInfoVo {
+    fun getOtherUserInfo(@PathVariable userId: Long): UserInfoVo {
         return readUserUseCase.findUserById(userId)
     }
 

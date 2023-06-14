@@ -1,7 +1,6 @@
 package com.depromeet.whatnow.api.auth.dto.response
 
 import com.depromeet.whatnow.common.vo.UserDetailVo
-import com.depromeet.whatnow.domains.user.domain.User
 
 data class TokenAndUserResponse(
     val accessToken: String,

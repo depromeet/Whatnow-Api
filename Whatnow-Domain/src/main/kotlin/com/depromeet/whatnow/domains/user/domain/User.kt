@@ -91,11 +91,11 @@ class User(
         fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
     }
 
-    fun toUserInfoVo() : UserInfoVo {
+    fun toUserInfoVo(): UserInfoVo {
         return UserInfoVo.from(this)
     }
 
-    fun toUserDetailVo() : UserDetailVo {
+    fun toUserDetailVo(): UserDetailVo {
         return UserDetailVo.from(this)
     }
 }
