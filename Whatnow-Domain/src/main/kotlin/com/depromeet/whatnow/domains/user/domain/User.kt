@@ -91,6 +91,13 @@ class User(
         fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
     }
 
+    fun updateProfile(profileImage: String, username: String) {
+        if (profileImage != profileImg) {
+            isDefaultImg = false
+        }
+        profileImg = profileImage
+        nickname = username
+    }
     fun toUserInfoVo(): UserInfoVo {
         return UserInfoVo.from(this)
     }
