@@ -26,6 +26,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses
 import io.swagger.v3.oas.models.security.SecurityScheme
 import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.customizers.OperationCustomizer
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -37,7 +38,10 @@ import kotlin.reflect.full.findAnnotation
 
 /** Swagger 사용 환경을 위한 설정 파일  */
 @Configuration
-class SwaggerConfig {
+class SwaggerConfig(
+    @Value("\${swagger.version}")
+    private val version: String,
+) {
     private val applicationContext: ApplicationContext? = null
 
     @Bean
@@ -56,7 +60,7 @@ class SwaggerConfig {
         license.url = "https://github.com/depromeet/Whatnow-Api"
         license.name = "Whatnow"
         return Info()
-            .version("v0.0.1")
+            .version("v$version")
             .title("\"Whatnow 서버 API문서\"")
             .description("Whatnow 서버의 API 문서 입니다.")
             .license(license)

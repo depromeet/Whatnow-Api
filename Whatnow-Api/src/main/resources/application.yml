@@ -17,6 +17,7 @@ auth:
 swagger:
   user: ${SWAGGER_USER:user}
   password: ${SWAGGER_PASSWORD:password}
+  version: ${WHATNOW_VERSION:0.0.1-SNAPSHOT}
 ---
 spring:
   config:
