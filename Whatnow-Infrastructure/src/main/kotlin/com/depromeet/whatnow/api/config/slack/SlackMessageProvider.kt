@@ -8,12 +8,13 @@ import java.lang.RuntimeException
 import java.net.UnknownHostException
 
 @Service
-class SlackMessageProvider {
+class SlackMessageProvider(
     @Value("\${slack.webhook.username}")
-    private val username: String? = null
+    val username: String,
 
     @Value("\${slack.webhook.icon-url}")
-    private val iconUrl: String? = null
+    val iconUrl: String,
+) {
 
     private fun send(url: String, text: String) {
         val slack = Slack.getInstance()

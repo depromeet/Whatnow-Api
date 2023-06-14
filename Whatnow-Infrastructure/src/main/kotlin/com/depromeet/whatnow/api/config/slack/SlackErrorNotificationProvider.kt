@@ -9,11 +9,10 @@ import java.util.Arrays
 @Component
 class SlackErrorNotificationProvider(
     val slackHelper: SlackHelper,
+    @Value("\${slack.channel.id}")
+    private val CHANNEL_ID: String,
 ) {
     val MAX_LENGTH = 500
-
-    @Value("\${slack.channel.id}")
-    private val CHANNEL_ID: String? = null
 
     fun getErrorStack(throwable: Throwable): String {
         val exceptionAsStrings = Arrays.toString(throwable.stackTrace)
