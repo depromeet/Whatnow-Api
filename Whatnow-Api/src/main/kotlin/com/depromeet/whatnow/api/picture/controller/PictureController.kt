@@ -21,7 +21,13 @@ class PictureController(
 
     @Operation(summary = "약속 관련 이미지 업로드 성공 요청")
     @PostMapping("/promises/{promiseId}/images/success/{imageKey}")
-    fun successUploadImage(@PathVariable promiseId: Long, @PathVariable imageKey: String, @RequestParam pictureCommentType: PictureCommentType) {
-        successUseCase.successUploadImage(promiseId, imageKey, pictureCommentType)
+    fun promiseUploadImageSuccess(@PathVariable promiseId: Long, @PathVariable imageKey: String, @RequestParam pictureCommentType: PictureCommentType) {
+        successUseCase.promiseUploadImageSuccess(promiseId, imageKey, pictureCommentType)
+    }
+
+    @Operation(summary = "유저 프로필 이미지 업로드 성공 요청")
+    @PostMapping("/users/me/images/success/{imageKey}")
+    fun userUploadImageSuccess(@PathVariable imageKey: String) {
+        successUseCase.userUploadImageSuccess(imageKey)
     }
 }
