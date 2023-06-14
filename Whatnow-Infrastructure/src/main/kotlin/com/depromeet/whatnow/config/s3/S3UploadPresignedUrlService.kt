@@ -25,8 +25,22 @@ class S3UploadPresignedUrlService(
         return ImageUrlDto(generatePresignedUrl.toString(), uuid)
     }
 
+    fun forUser(userId: Long, fileExtension: ImageFileExtension): ImageUrlDto {
+        val uuid = UUID.randomUUID().toString()
+        var fileName = getForUserFimeName(uuid, userId, fileExtension)
+        val generatePresignedUrlRequest =
+            getGeneratePreSignedUrlRequest(s3Secret.bucket, fileName, fileExtension.uploadExtension)
+
+        val generatePresignedUrl = amazonS3.generatePresignedUrl(generatePresignedUrlRequest)
+        return ImageUrlDto(generatePresignedUrl.toString(), uuid)
+    }
+
     private fun getForPromiseFimeName(uuid: String, promiseId: Long, fileExtension: ImageFileExtension): String {
         return "promise/" + promiseId + "/" + uuid + "." + fileExtension.uploadExtension
+    }
+
+    private fun getForUserFimeName(uuid: String, userId: Long, fileExtension: ImageFileExtension): String {
+        return "user/" + userId + "/" + uuid + "." + fileExtension.uploadExtension
     }
 
     private fun getGeneratePreSignedUrlRequest(
