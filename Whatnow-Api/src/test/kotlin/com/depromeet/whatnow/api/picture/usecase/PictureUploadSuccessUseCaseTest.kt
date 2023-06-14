@@ -30,14 +30,26 @@ class PictureUploadSuccessUseCaseTest {
     }
 
     @Test
-    fun `이미지 업로드 성공 요청시 정상적이라면 에러가 발생하지 않는다`() {
+    fun `약속 이미지 업로드 성공 요청시 정상적이라면 에러가 발생하지 않는다`() {
         // given
 
         // when
 
         // then
         assertThatCode {
-            pictureUploadSuccessUseCase.successUploadImage(1, "1", PictureCommentType.SORRY_LATE)
+            pictureUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", PictureCommentType.SORRY_LATE)
+        }.doesNotThrowAnyException()
+    }
+
+    @Test
+    fun `유저 프로필 업로드 성공 요청시 정상적이라면 에러가 발생하지 않는다`() {
+        // given
+
+        // when
+
+        // then
+        assertThatCode {
+            pictureUploadSuccessUseCase.userUploadImageSuccess("imageKey")
         }.doesNotThrowAnyException()
     }
 }

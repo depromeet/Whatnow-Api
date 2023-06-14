@@ -33,7 +33,7 @@ class PictureRegisterEventHandlerTest {
         given(promiseUserAdaptor.findByPromiseIdAndUserId(1, 1)).willReturn(promiseUser)
 
         // when
-        pictureDomainService.successUploadImage(1, 1, "imageKey", PictureCommentType.RUNNING)
+        pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.RUNNING)
 
         // then
         then(pictureRegisterEventHandler).should(Mockito.times(1)).handleRegisterPictureEvent(any())
