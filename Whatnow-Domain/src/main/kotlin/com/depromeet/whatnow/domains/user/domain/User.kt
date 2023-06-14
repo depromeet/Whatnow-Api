@@ -92,6 +92,9 @@ class User(
     }
 
     fun updateProfile(profileImage: String, username: String) {
+        if (profileImage != profileImg) {
+            isDefaultImg = false
+        }
         profileImg = profileImage
         nickname = username
     }
