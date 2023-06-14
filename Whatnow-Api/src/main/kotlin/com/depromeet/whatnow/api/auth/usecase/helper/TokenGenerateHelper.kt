@@ -27,6 +27,6 @@ class TokenGenerateHelper(
         val newRefreshTokenEntity = RefreshTokenRedisEntity(user.id!!, newRefreshToken, jwtTokenHelper.refreshExpireIn)
         refreshTokenAdapter.save(newRefreshTokenEntity)
 
-        return TokenAndUserResponse(newAccessToken, newRefreshToken, user, jwtTokenHelper.accessExpireIn, jwtTokenHelper.refreshExpireIn)
+        return TokenAndUserResponse(newAccessToken, newRefreshToken, user.toUserDetailVo(), jwtTokenHelper.accessExpireIn, jwtTokenHelper.refreshExpireIn)
     }
 }
