@@ -8,7 +8,7 @@ import com.depromeet.whatnow.config.security.SecurityUtils
 
 @UseCase
 class GetPresignedUrlUseCase(
-    val presignedUrlService: S3UploadPresignedUrlService
+    val presignedUrlService: S3UploadPresignedUrlService,
 ) {
     fun forPromise(promiseId: Long, fileExtension: ImageFileExtension): ImageUrlResponse {
         return ImageUrlResponse.from(presignedUrlService.forPromise(promiseId, fileExtension))

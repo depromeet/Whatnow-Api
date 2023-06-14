@@ -6,13 +6,11 @@ import com.depromeet.whatnow.domains.picture.domain.PictureType
 import com.depromeet.whatnow.domains.picture.repository.PictureRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.ArgumentCaptor
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.given
-import org.mockito.kotlin.then
 import kotlin.test.assertEquals
 
 @ExtendWith(MockitoExtension::class)

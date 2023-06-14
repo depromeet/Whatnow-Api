@@ -45,7 +45,7 @@ class PictureControllerTest {
 
         // when, then
         mockMvc.perform(
-            post("/v1/users/me/images/success/{imageKey}", imageKey)
+            post("/v1/users/me/images/success/{imageKey}", imageKey),
         )
             .andExpect(status().isOk)
             .andDo { print(it) }

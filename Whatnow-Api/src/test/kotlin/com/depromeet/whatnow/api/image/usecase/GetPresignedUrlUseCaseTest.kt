@@ -3,7 +3,6 @@ package com.depromeet.whatnow.api.image.usecase
 import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.config.s3.ImageUrlDto
 import com.depromeet.whatnow.config.s3.S3UploadPresignedUrlService
-import com.depromeet.whatnow.config.security.SecurityUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
