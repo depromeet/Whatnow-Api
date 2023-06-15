@@ -13,6 +13,17 @@ spring:
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD:}
 
+slack:
+  webhook:
+    token: ${SLACK_WEBHOOK_TOKEN:}
+    username: ${SLACK_USERNAME:}
+    icon-url: ${SLACK_ICON_EMOJI:}
+
+  webhook-url: ${SLACK_WEBHOOK_URL:}
+  channel:
+    id: ${SLACK_CHANNEL:}
+
+
 oauth:
   kakao:
     base-url: ${KAKAO_BASE_URL}
