@@ -98,6 +98,14 @@ class User(
         profileImg = profileImage
         nickname = username
     }
+
+    fun updateProfileImg(imageUrl: String) {
+        if (profileImg != imageUrl) {
+            isDefaultImg = false
+        }
+        profileImg = imageUrl
+    }
+
     fun toUserInfoVo(): UserInfoVo {
         return UserInfoVo.from(this)
     }

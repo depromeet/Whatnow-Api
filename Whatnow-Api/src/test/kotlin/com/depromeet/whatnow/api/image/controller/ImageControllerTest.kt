@@ -23,7 +23,7 @@ class ImageControllerTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    fun `presignedUrl 요청에 성공하면 200을 응답한다`() {
+    fun `약속 이미지 presignedUrl 요청에 성공하면 200을 응답한다`() {
         // given
         val promiseId = 1L
         val fileExtension = ImageFileExtension.JPEG.name
@@ -31,6 +31,20 @@ class ImageControllerTest {
         // when, then
         mockMvc.perform(
             get("/v1/promises/{promiseId}/images", promiseId)
+                .param("fileExtension", fileExtension),
+        )
+            .andExpect(status().isOk)
+            .andDo { print(it) }
+    }
+
+    @Test
+    fun `유저 프로필 presignedUrl 요청에 성공하면 200을 응답한다`() {
+        // given
+        val fileExtension = ImageFileExtension.JPEG.name
+
+        // when, then
+        mockMvc.perform(
+            get("/v1/users/me/images")
                 .param("fileExtension", fileExtension),
         )
             .andExpect(status().isOk)
