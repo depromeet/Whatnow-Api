@@ -25,13 +25,40 @@ class Picture(
     var uuid: String,
 
     @Enumerated(EnumType.STRING)
-    var pictureCommentType: PictureCommentType,
+    var pictureType: PictureType,
+
+    @Enumerated(EnumType.STRING)
+    var pictureCommentType: PictureCommentType = PictureCommentType.NONE,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "picture_id")
     val id: Long? = null,
 ) : BaseTimeEntity() {
+    companion object {
+        fun createForPromise(userId: Long, promiseId: Long, url: String, uuid: String, pictureCommentType: PictureCommentType): Picture {
+            return Picture(
+                userId = userId,
+                promiseId = promiseId,
+                url = url,
+                uuid = uuid,
+                pictureType = PictureType.PROMISE,
+                pictureCommentType = pictureCommentType,
+            )
+        }
+
+        fun createForUser(userId: Long, url: String, uuid: String): Picture {
+            return Picture(
+                userId = userId,
+                promiseId = 0,
+                url = url,
+                uuid = uuid,
+                pictureType = PictureType.USER,
+                pictureCommentType = PictureCommentType.NONE,
+            )
+        }
+    }
+
     @PostPersist
     fun createPictureEvent() {
         Events.raise(PictureRegisterEvent(userId, promiseId))

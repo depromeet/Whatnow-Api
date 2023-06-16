@@ -37,7 +37,7 @@ class S3UploadPresignedUrlServiceTest {
     }
 
     @Test
-    fun `PresignedUrl을 생성한다`() {
+    fun `약속 이미지 PresignedUrl을 생성한다`() {
         // given
         val promiseId = 1L
         val imageFIleExtension = ImageFileExtension.JPG
@@ -47,6 +47,21 @@ class S3UploadPresignedUrlServiceTest {
 
         // then
         val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/promise/$promiseId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
+
+        assertContains(presignedUrl.url, resultUrl)
+    }
+
+    @Test
+    fun `유저 프로필 PresignedUrl을 생성한다`() {
+        // given
+        val userId = 1L
+        val imageFIleExtension = ImageFileExtension.JPG
+
+        // when
+        val presignedUrl = s3UploadPresignedUrlService.forUser(userId, imageFIleExtension)
+
+        // then
+        val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/user/$userId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
 
         assertContains(presignedUrl.url, resultUrl)
     }

@@ -8,6 +8,7 @@ import com.depromeet.whatnow.domains.picture.exception.InvalidCommentTypeExcepti
 import com.depromeet.whatnow.domains.picture.exception.UploadBeforeTrackingException
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
+import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,14 +16,22 @@ import org.springframework.transaction.annotation.Transactional
 class PictureDomainService(
     val pictureAdapter: PictureAdapter,
     val promiseUserAdapter: PromiseUserAdaptor,
+    val userAdapter: UserAdapter,
 ) {
     @Transactional
-    fun successUploadImage(userId: Long, promiseId: Long, imageKey: String, pictureCommentType: PictureCommentType) {
+    fun promiseUploadImageSuccess(userId: Long, promiseId: Long, imageKey: String, pictureCommentType: PictureCommentType) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         validatePromiseUserType(promiseUser.promiseUserType!!, pictureCommentType)
 
         val imageUrl = IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
-        pictureAdapter.save(userId, promiseId, imageUrl, imageKey, pictureCommentType)
+        pictureAdapter.saveForPromise(userId, promiseId, imageUrl, imageKey, pictureCommentType)
+    }
+
+    fun userUploadImageSuccess(userId: Long, imageKey: String) {
+        val user = userAdapter.queryUser(userId)
+        val imageUrl = IMAGE_DOMAIN + "user/$userId/$imageKey"
+        pictureAdapter.saveForUser(userId, imageUrl, imageKey)
+        user.updateProfileImg(imageUrl)
     }
 
     private fun validatePromiseUserType(promiseUserType: PromiseUserType, pictureCommentType: PictureCommentType) {

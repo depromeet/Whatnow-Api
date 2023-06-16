@@ -9,8 +9,13 @@ import com.depromeet.whatnow.domains.picture.service.PictureDomainService
 class PictureUploadSuccessUseCase(
     val pictureDomainService: PictureDomainService,
 ) {
-    fun successUploadImage(promiseId: Long, imageKey: String, pictureCommentType: PictureCommentType) {
+    fun promiseUploadImageSuccess(promiseId: Long, imageKey: String, pictureCommentType: PictureCommentType) {
         val currentUserId: Long = SecurityUtils.currentUserId
-        pictureDomainService.successUploadImage(currentUserId, promiseId, imageKey, pictureCommentType)
+        pictureDomainService.promiseUploadImageSuccess(currentUserId, promiseId, imageKey, pictureCommentType)
+    }
+
+    fun userUploadImageSuccess(imageKey: String) {
+        val currentUserId: Long = SecurityUtils.currentUserId
+        pictureDomainService.userUploadImageSuccess(currentUserId, imageKey)
     }
 }

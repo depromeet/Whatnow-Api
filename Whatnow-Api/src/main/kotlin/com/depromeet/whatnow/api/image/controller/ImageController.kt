@@ -27,4 +27,12 @@ class ImageController(
     ): ImageUrlResponse {
         return getPresignedUrlUseCase.forPromise(promiseId, fileExtension)
     }
+
+    @Operation(summary = "유저 프로필 이미지 업로드 Presigned URL 발급")
+    @GetMapping("/users/me/images")
+    fun getPresignedUrlOfUser(
+        @RequestParam fileExtension: ImageFileExtension,
+    ): ImageUrlResponse {
+        return getPresignedUrlUseCase.forUser(fileExtension)
+    }
 }
