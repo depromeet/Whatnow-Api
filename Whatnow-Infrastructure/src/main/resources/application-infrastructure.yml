@@ -15,10 +15,10 @@ spring:
 
 slack:
   webhook:
-    token: ${WEBHOOK_WEBHOOK_TOKEN}
-    url: ${WEBHOOK_WEBHOOK_URL}
-    channel-id: ${WEBHOOK_CHANNEL}
-    username: ${WEBHOOK_USERNAME}
+    token: ${SLACK_WEBHOOK_TOKEN:}
+    url: ${SLACK_WEBHOOK_URL:}
+    channel-id: ${SLACK_CHANNEL:}
+    username: ${SLACK_USERNAME:default}
 
 oauth:
   kakao:

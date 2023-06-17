@@ -1,18 +1,16 @@
 package com.depromeet.whatnow.config.slack
 
 import com.slack.api.model.block.LayoutBlock
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
 class SlackServiceNotificationProvider(
     val slackHelper: SlackHelper,
-
-    @Value("\${slack.channel-id}")
-    val id: String? = null,
+    val slackProperties: SlackProperties,
 ) {
+    var slackWebHook: SlackProperties.SlackSecret = slackProperties.webhook
 
     fun sendNotification(layoutBlocks: MutableList<LayoutBlock>) {
-        slackHelper.sendNotification(id!!, layoutBlocks)
+        slackHelper.sendNotification(slackWebHook.channelId, layoutBlocks)
     }
 }

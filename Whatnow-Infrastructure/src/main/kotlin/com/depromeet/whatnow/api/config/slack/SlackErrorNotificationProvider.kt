@@ -21,6 +21,6 @@ class SlackErrorNotificationProvider(
 
     @Async
     fun sendNotification(layoutBlocks: List<LayoutBlock>) {
-        slackHelper.sendNotification(slackWebHook.channelId!!, layoutBlocks)
+        slackHelper.sendNotification(slackWebHook.channelId, layoutBlocks)
     }
 }

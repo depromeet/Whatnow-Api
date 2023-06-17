@@ -13,6 +13,12 @@ auth:
     secret-key: ${JWT_SECRET_KEY:testkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkey}
     access-exp: ${JWT_ACCESS_EXP:3600}
     refresh-exp: ${JWT_REFRESH_EXP:3600}
+throttle:
+  greedyRefill: ${THROTTLE_GREEDY_REFILL:1}
+  overdraft: ${THROTTLE_OVERDRAFT:1}
+
+acl:
+  whiteList: ${ACL_WHITE_LIST:localhost}
 swagger:
   user: ${SWAGGER_USER:user}
   password: ${SWAGGER_PASSWORD:password}

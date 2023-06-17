@@ -11,15 +11,16 @@ import java.time.Duration
 import java.util.function.Supplier
 
 @Component
-class UserRateLimiter {
-    // autowiring dependencies
-    private val buckets: ProxyManager<String>? = null
-
+class UserRateLimiter(
     @Value("\${throttle.overdraft}")
-    private val overdraft: Long = 0
+    private val overdraft: Long,
 
     @Value("\${throttle.greedyRefill}")
-    private val greedyRefill: Long = 0
+    private val greedyRefill: Long,
+) {
+    private val buckets: ProxyManager<String>? = null
+
+    // autowiring dependencies
     fun resolveBucket(key: String): Bucket {
         val configSupplier = configSupplierForUser
         return buckets!!.builder().build(key, configSupplier)
