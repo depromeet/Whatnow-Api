@@ -15,14 +15,10 @@ spring:
 
 slack:
   webhook:
-    token: ${SLACK_WEBHOOK_TOKEN:}
-    username: ${SLACK_USERNAME:}
-    icon-url: ${SLACK_ICON_EMOJI:}
-
-  webhook-url: ${SLACK_WEBHOOK_URL:}
-  channel:
-    id: ${SLACK_CHANNEL:}
-
+    token-value: ${WEBHOOK_WEBHOOK_TOKEN}
+    webhook-url: ${WEBHOOK_WEBHOOK_URL}
+    channel-id: ${WEBHOOK_CHANNEL}
+    user-name: ${WEBHOOK_USERNAME}
 
 oauth:
   kakao:
@@ -31,7 +27,8 @@ oauth:
     client-secret: ${KAKAO_SECRET}
     redirect-url: ${KAKAO_REDIRECT}
     app-id: ${KAKAO_APP_ID:default}
-    admin-key: ${KAKAO_ADMIN_KEY:}
+    admin-key: ${KAKAO_ADMIN_KEY}
+
 feign:
   kakao:
     info : https://kapi.kakao.com
@@ -59,7 +56,6 @@ spring:
 logging:
   level:
     com.depromeet.whatnow.api.* : debug
-
 ---
 spring:
   config:

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component
 class SlackServiceNotificationProvider(
     val slackHelper: SlackHelper,
 
-    @Value("\${slack.channel.id}")
-    private val CHANNEL_ID: String,
+    @Value("\${slack.channel-id}")
+    val id: String? = null,
 ) {
 
     fun sendNotification(layoutBlocks: MutableList<LayoutBlock>) {
-        slackHelper.sendNotification(CHANNEL_ID!!, layoutBlocks)
+        slackHelper.sendNotification(id!!, layoutBlocks)
     }
 }

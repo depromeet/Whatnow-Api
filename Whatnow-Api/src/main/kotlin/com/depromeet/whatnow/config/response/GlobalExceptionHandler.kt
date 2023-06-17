@@ -1,12 +1,15 @@
 package com.depromeet.whatnow.config.response
 
+import com.depromeet.whatnow.api.config.slack.SlackAsyncErrorSender
+import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.consts.BAD_REQUEST
 import com.depromeet.whatnow.dto.ErrorReason
 import com.depromeet.whatnow.dto.ErrorResponse
-import com.depromeet.whatnow.exception.GlobalErrorCode
+import com.depromeet.whatnow.exception.GlobalErrorCode.INTERNAL_SERVER_ERROR
 import com.depromeet.whatnow.exception.WhatNowDynamicException
 import com.depromeet.whatnow.exception.WhatnowCodeException
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,12 +20,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.UriComponentsBuilder
 import javax.servlet.http.HttpServletRequest
 import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
+    @Autowired
+    lateinit var slackProvider: SlackAsyncErrorSender
 
     /**요청 url을 resource로 담아 상위 객체에 처리를 위임한다.*/
     override fun handleExceptionInternal(
@@ -127,25 +133,20 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         request: HttpServletRequest?,
     ): ResponseEntity<ErrorResponse?> {
 //        val cachingRequest = request as ContentCachingRequestWrapper?
-        val url = UriComponentsBuilder.fromHttpRequest(
-            ServletServerHttpRequest(
-                request!!,
-            ),
-        )
+        val cachingRequest = request as ContentCachingRequestWrapper
+        val userId: Long = SecurityUtils.currentUserId
+        val url = UriComponentsBuilder.fromHttpRequest(ServletServerHttpRequest(request))
             .build()
             .toUriString()
 
-        // ** 예시 ErrorCode입니다. 차후 수정 예정 */
-        val internalServerError: GlobalErrorCode = GlobalErrorCode.INTERNAL_SERVER_ERROR
-
+        val internalServerError = INTERNAL_SERVER_ERROR
         val errorResponse = ErrorResponse(
-            status = internalServerError.status,
-            code = internalServerError.code,
-            reason = internalServerError.reason,
-            path = url,
+            internalServerError.status,
+            internalServerError.code,
+            internalServerError.reason,
+            url,
         )
-        logger.error(e.message)
-        logger.error(e.stackTrace)
+        slackProvider.execute(cachingRequest, e, userId)
         return ResponseEntity.status(HttpStatus.valueOf(internalServerError.status))
             .body<ErrorResponse>(errorResponse)
     }
