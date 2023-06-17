@@ -16,6 +16,6 @@ class SlackApiConfig(
     val client: MethodsClient
         get() {
             val slackClient = Slack.getInstance()
-            return slackClient.methods(slackWebHook.tokenValue)
+            return slackClient.methods(slackWebHook.token)
         }
 }
