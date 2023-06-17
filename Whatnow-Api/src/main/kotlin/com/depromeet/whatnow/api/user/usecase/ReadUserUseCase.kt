@@ -16,7 +16,6 @@ class ReadUserUseCase(
     }
 
     fun findUserById(userId: Long): UserInfoVo {
-        val currentUserId: Long = SecurityUtils.currentUserId
-        return userAdapter.queryUser(currentUserId).toUserInfoVo()
+        return userAdapter.queryUser(userId).toUserInfoVo()
     }
 }
