@@ -17,10 +17,10 @@ class UserRateLimiter(
 
     @Value("\${throttle.greedyRefill}")
     private val greedyRefill: Long,
-) {
-    private val buckets: ProxyManager<String>? = null
 
-    // autowiring dependencies
+    val buckets: ProxyManager<String>,
+) {
+
     fun resolveBucket(key: String): Bucket {
         val configSupplier = configSupplierForUser
         return buckets!!.builder().build(key, configSupplier)

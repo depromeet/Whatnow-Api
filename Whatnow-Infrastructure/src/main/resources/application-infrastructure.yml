@@ -19,6 +19,11 @@ slack:
     url: ${SLACK_WEBHOOK_URL:}
     channel-id: ${SLACK_CHANNEL:}
     username: ${SLACK_USERNAME:default}
+cache:
+  caffeine:
+    policy:
+      maximum-size: 300
+      expire-after-write: 300
 
 oauth:
   kakao:

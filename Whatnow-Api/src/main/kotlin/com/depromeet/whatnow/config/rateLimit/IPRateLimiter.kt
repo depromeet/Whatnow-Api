@@ -1,4 +1,4 @@
-package band.gosrock.api.config.rateLimit
+package com.depromeet.whatnow.config.rateLimit
 
 import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.Bucket

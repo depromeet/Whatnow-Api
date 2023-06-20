@@ -6,9 +6,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Component
 class ThrottlingWebConfigure(
-    val throttlingInterceptor: ThrottlingInterceptor? = null,
+    val throttlingInterceptor: ThrottlingInterceptor,
 ) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(throttlingInterceptor!!)
+        registry.addInterceptor(throttlingInterceptor)
     }
 }

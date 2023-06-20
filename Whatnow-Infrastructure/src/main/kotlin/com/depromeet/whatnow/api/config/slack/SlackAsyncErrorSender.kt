@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.api.config.slack
 
-import com.depromeet.whatnow.config.slack.SlackErrorNotificationProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.slack.api.model.block.Blocks
 import com.slack.api.model.block.Blocks.divider
@@ -22,7 +21,7 @@ class SlackAsyncErrorSender(
     fun execute(cachingRequest: ContentCachingRequestWrapper, userId: Long) {
         val url = cachingRequest.requestURL.toString()
         val method = cachingRequest.method
-        val body = objectMapper.readTree(cachingRequest.contentAsByteArray).toString()
+        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.contentToString())
         val errorUserIP = cachingRequest.remoteAddr
         val layoutBlocks: MutableList<LayoutBlock> = ArrayList()
         layoutBlocks.add(

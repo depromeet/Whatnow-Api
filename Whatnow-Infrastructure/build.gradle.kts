@@ -14,6 +14,7 @@ dependencies{
 
     // bucket
     api ("com.bucket4j:bucket4j-core:8.1.1")
+    api ("com.bucket4j:bucket4j-jcache:8.1.1")
 
     implementation(project(":Whatnow-Common"))
 
