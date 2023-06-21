@@ -1,6 +1,6 @@
 package com.depromeet.whatnow.api
 
-import com.depromeet.whatnow.api.config.KakaoKauthConfig
+import com.depromeet.whatnow.api.config.kakao.KakaoKauthConfig
 import com.depromeet.whatnow.api.dto.KakaoTokenResponse
 import com.depromeet.whatnow.api.dto.OIDCPublicKeysResponse
 import org.springframework.cache.annotation.Cacheable

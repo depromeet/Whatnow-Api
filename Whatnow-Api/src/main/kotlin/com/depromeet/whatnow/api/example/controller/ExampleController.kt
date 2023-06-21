@@ -1,7 +1,7 @@
 package com.depromeet.whatnow.api.example.controller
 
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
-import com.depromeet.whatnow.api.config.KakaoKauthErrorCode
+import com.depromeet.whatnow.api.config.kakao.KakaoKauthErrorCode
 import com.depromeet.whatnow.domains.picture.exception.PictureErrorCode
 import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErrorCode
 import com.depromeet.whatnow.domains.user.exception.UserErrorCode

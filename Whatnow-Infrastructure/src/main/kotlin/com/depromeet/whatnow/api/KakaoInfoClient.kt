@@ -1,6 +1,6 @@
 package com.depromeet.whatnow.api
 
-import com.depromeet.whatnow.api.config.KakaoInfoConfig
+import com.depromeet.whatnow.api.config.kakao.KakaoInfoConfig
 import com.depromeet.whatnow.api.dto.KakaoInformationResponse
 import com.depromeet.whatnow.api.dto.UnlinkKaKaoTarget
 import org.springframework.cloud.openfeign.FeignClient
