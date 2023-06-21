@@ -1,17 +1,18 @@
-package com.depromeet.whatnow.config.slack
+package com.depromeet.whatnow.api.config.slack
 
+import com.depromeet.whatnow.annotation.Helper
+import com.depromeet.whatnow.config.slack.SlackProperties
+import com.depromeet.whatnow.config.slack.SlackProperties.SlackSecret
 import com.slack.api.model.block.LayoutBlock
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Async
-import org.springframework.stereotype.Component
 import java.util.Arrays
 
-@Component
+@Helper
 class SlackErrorNotificationProvider(
     val slackHelper: SlackHelper,
-    @Value("\${slack.channel.id}")
-    private val CHANNEL_ID: String,
+    val slackProperties: SlackProperties,
 ) {
+    var slackWebHook: SlackSecret = slackProperties.webhook
     val MAX_LENGTH = 500
 
     fun getErrorStack(throwable: Throwable): String {
@@ -22,6 +23,6 @@ class SlackErrorNotificationProvider(
 
     @Async
     fun sendNotification(layoutBlocks: List<LayoutBlock>) {
-        slackHelper.sendNotification(CHANNEL_ID!!, layoutBlocks)
+        slackHelper.sendNotification(slackWebHook.channelId, layoutBlocks)
     }
 }

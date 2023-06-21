@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.config.slack
+package com.depromeet.whatnow.api.config.slack
 
 import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import com.slack.api.methods.MethodsClient
