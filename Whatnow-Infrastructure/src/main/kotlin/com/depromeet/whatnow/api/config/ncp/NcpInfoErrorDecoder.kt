@@ -1,32 +1,25 @@
 package com.depromeet.whatnow.api.config.ncp
 
-import com.depromeet.whatnow.api.config.kakao.KakaoKauthErrorCode
-import com.depromeet.whatnow.api.config.kakao.KakaoKauthErrorCode.KOE_INVALID_REQUEST
-import com.depromeet.whatnow.api.dto.KakaoKauthErrorResponse
-import com.depromeet.whatnow.dto.ErrorReason
-import com.depromeet.whatnow.exception.WhatNowDynamicException
+import com.depromeet.whatnow.exception.custom.OtherServerBadRequestException
+import com.depromeet.whatnow.exception.custom.OtherServerForbiddenException
+import com.depromeet.whatnow.exception.custom.OtherServerInternalSeverErrorException
+import com.depromeet.whatnow.exception.custom.OtherServerNotFoundException
+import com.depromeet.whatnow.exception.custom.OtherServerUnauthorizedException
+import feign.FeignException
 import feign.Response
 import feign.codec.ErrorDecoder
 
 class NcpInfoErrorDecoder : ErrorDecoder {
-    override fun decode(methodKey: String, response: Response): Exception {
-        val body: KakaoKauthErrorResponse = KakaoKauthErrorResponse.from(response)
-        try {
-            val ncpErrorCode = KakaoKauthErrorCode.valueOf(body.errorCode)
-            val errorReason: ErrorReason = ncpErrorCode.errorReason
-            throw WhatNowDynamicException(
-                errorReason.status,
-                errorReason.code,
-                errorReason.reason,
-            )
-        } catch (e: IllegalArgumentException) {
-            val koeInvalidRequest = KOE_INVALID_REQUEST
-            val errorReason: ErrorReason = koeInvalidRequest.errorReason
-            throw WhatNowDynamicException(
-                errorReason.status,
-                errorReason.code,
-                errorReason.reason,
-            )
+    override fun decode(methodKey: String?, response: Response): Exception? {
+        if (response.status() >= 400) {
+            when (response.status()) {
+                401 -> throw OtherServerUnauthorizedException.EXCEPTION
+                403 -> throw OtherServerForbiddenException.EXCEPTION
+                404 -> throw OtherServerNotFoundException.EXCEPTION
+                500 -> throw OtherServerInternalSeverErrorException.EXCEPTION
+                else -> throw OtherServerBadRequestException.EXCEPTION
+            }
         }
+        return FeignException.errorStatus(methodKey, response)
     }
 }
