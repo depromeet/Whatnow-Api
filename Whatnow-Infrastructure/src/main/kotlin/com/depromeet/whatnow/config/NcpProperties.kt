@@ -9,6 +9,7 @@ data class NcpProperties(
     val local: NcpSecret,
 ) {
     data class NcpSecret(
+        // access-key -> accessKey
         val accessKey: String,
         val secretKey: String,
         val searchUrl: String,

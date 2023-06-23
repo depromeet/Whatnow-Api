@@ -60,17 +60,17 @@ enum class NcpErrorCode(val status: Int, val errorCode: String, val error: Strin
         "not_found",
         "API 요청 URL이 잘못되었을 경우",
     ),
+    NCP403_2(
+        FORBIDDEN,
+        "NCP_403_2",
+        "external_server_error",
+        "API 호출은 정상적으로 했지만, API 서버 유지보수나 시스템 오류로 인한 에러가 발생하였을 경우",
+    ),
     NCP405_1(
         METHOD_NOT_ALLOWED,
         "NCP_405_1",
         "invalid_request",
         "HTTP 메서드를 잘못하여 호출하였을 경우 (POST인데 GET으로 호출)",
-    ),
-    NCP500_1(
-        INTERNAL_SERVER,
-        "NCP_500_1",
-        "external_server_error",
-        "API 호출은 정상적으로 했지만, API 서버 유지보수나 시스템 오류로 인한 에러가 발생하였을 경우",
     ),
     ;
     override val errorReason: ErrorReason

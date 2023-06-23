@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming
 
 @JsonNaming(SnakeCaseStrategy::class)
 class NcpMapInfoResponse(
-    val lastBuildDate: String? = null,
-    val total: Int? = null,
-    val start: Int? = null,
-    val display: Int? = null,
-    val items: List<NcpMapInfoItem>? = null,
+    val lastBuildDate: String ?= "",
+    val total: Int,
+    val start: Int,
+    val display: Int,
+    val items: List<NcpMapInfoItem>,
 )
