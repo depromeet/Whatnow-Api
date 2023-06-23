@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.config
+package com.depromeet.whatnow.api.config.kakao
 
 import com.depromeet.whatnow.exception.custom.OtherServerBadRequestException
 import com.depromeet.whatnow.exception.custom.OtherServerExpiredTokenException

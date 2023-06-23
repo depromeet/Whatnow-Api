@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.config
+package com.depromeet.whatnow.api.config.kakao
 
 import feign.codec.Encoder
 import feign.form.spring.SpringFormEncoder

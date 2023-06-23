@@ -38,6 +38,7 @@ feign:
   kakao:
     info : https://kapi.kakao.com
     oauth : https://kauth.kakao.com
+
 ncp:
   s3:
     access-key: ${NCP_ACCESS_KEY}
@@ -45,6 +46,12 @@ ncp:
     bucket: ${NCP_BUCKET}
     region: ${NCP_REGION}
     endpoint: ${NCP_ENDPOINT:https://kr.object.ncloudstorage.com}
+  local:
+    access-key: ${NCP_LOCAL_ACCESS_KEY}
+    secret-key: ${NCP_LOCAL_SECRET_KEY}
+    search-url: ${NCP_LOCAL_SEARCH_URL:https://openapi.naver.com/v1/search/local.json}
+
+
 fcm:
   certification: ${FCM_CERTIFICATION:}
 #ncp:

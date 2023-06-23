@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.config
+package com.depromeet.whatnow.api.config.kakao
 
 import com.depromeet.whatnow.annotation.ExplainError
 import com.depromeet.whatnow.consts.BAD_REQUEST
@@ -8,7 +8,7 @@ import java.util.*
 
 enum class KakaoKauthErrorCode(val status: Int, val errorCode: String, val error: String, val reason: String) : BaseErrorCode {
 
-    KOE101(BAD_REQUEST, "KAKAO_KOE101", "invalid_client", "잘못된 앱 키 타입을 사용하거나 앱 키에 오타가 있을 경우"),
+    KOE101(BAD_REQUEST, "KAKAO_101", "invalid_client", "잘못된 앱 키 타입을 사용하거나 앱 키에 오타가 있을 경우"),
     KOE009(BAD_REQUEST, "KAKAO_KOE009", "misconfigured", "등록되지 않은 플랫폼에서 액세스 토큰을 요청 하는 경우"),
     KOE010(
         BAD_REQUEST,
