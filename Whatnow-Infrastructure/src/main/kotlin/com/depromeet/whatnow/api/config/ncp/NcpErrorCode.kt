@@ -3,7 +3,6 @@ package com.depromeet.whatnow.api.config.ncp
 import com.depromeet.whatnow.annotation.ExplainError
 import com.depromeet.whatnow.consts.BAD_REQUEST
 import com.depromeet.whatnow.consts.FORBIDDEN
-import com.depromeet.whatnow.consts.INTERNAL_SERVER
 import com.depromeet.whatnow.consts.METHOD_NOT_ALLOWED
 import com.depromeet.whatnow.consts.NOT_FOUND
 import com.depromeet.whatnow.consts.UNAUTHORIZED
