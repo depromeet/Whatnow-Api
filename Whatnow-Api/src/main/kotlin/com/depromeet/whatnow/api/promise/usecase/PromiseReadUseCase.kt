@@ -84,7 +84,7 @@ class PromiseReadUseCase(
         return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }
     }
 
-    private fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
+    fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
         val userIds = promiseUsers.map { it.userId }
         val users = userRepository.findAllById(userIds)
         return users.mapNotNull { UserInfoVo.from(it) }
@@ -94,5 +94,23 @@ class PromiseReadUseCase(
         val pattern = DateTimeFormatter.ofPattern("yyyy.MM")
         val formattedDateTime = dateTime.format(pattern)
         return formattedDateTime == yearMonth
+    }
+
+    fun findPromiseWithStatus(status: String): List<PromiseFindDto> {
+        val userId: Long = SecurityUtils.currentUserId
+        // convert string status to PromiseType
+        val promiseType = PromiseType.valueOf(status)
+        val promises = promiseAdaptor.queryPromisesWithStatus(userId, promiseType)
+
+        val promiseUsersByPromiseId = promiseUserAdaptor.findByUniquePromiseIds(promises.map { it.id!! })
+            .groupBy { it.promiseId }
+
+        val promiseFindDtos = mutableListOf<PromiseFindDto>()
+
+        for (promise in promises) {
+            val participants = getParticipantUserInfo(promiseUsersByPromiseId[promise.id]!!)
+            promiseFindDtos.add(PromiseFindDto.of(promise, participants))
+        }
+        return promiseFindDtos
     }
 }

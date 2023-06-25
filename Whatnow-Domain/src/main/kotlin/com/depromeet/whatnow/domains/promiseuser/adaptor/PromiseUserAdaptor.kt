@@ -37,4 +37,8 @@ class PromiseUserAdaptor(
     fun findByPromiseIds(promiseIds: List<Long>): List<PromiseUser> {
         return promiseUserRepository.findByPromiseIdIn(promiseIds)
     }
+
+    fun findByUniquePromiseIds(promiseIds: List<Long>): Set<PromiseUser> {
+        return promiseUserRepository.findByUniquePromiseIdIn(promiseIds)
+    }
 }

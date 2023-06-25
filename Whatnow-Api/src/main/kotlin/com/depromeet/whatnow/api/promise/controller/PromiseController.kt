@@ -35,14 +35,20 @@ class PromiseController(
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     // view 방식에 따라 구분하게 기능 추가 예정
     @GetMapping("/promises/users/separated")
-    fun findByPromiseByUser(): Map<PromiseType, MutableList<PromiseFindDto>> {
+    fun findPromiseByUser(): Map<PromiseType, MutableList<PromiseFindDto>> {
         return promiseReadUseCase.findPromiseByUserIdSeparatedType()
     }
 
     @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
     @GetMapping("/promises/users")
-    fun findByPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: String): List<PromiseFindDto> {
+    fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: String): List<PromiseFindDto> {
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
+    }
+
+    @Operation(summary = "상태기반 약속 조회", description = "예정된(BEFORE), 지난(AFTER) 약속 조회")
+    @GetMapping("/promises/users/status/{status}")
+    fun findPromiseByStatus(@PathVariable(value = "statys") status: String): List<PromiseFindDto> {
+        return promiseReadUseCase.findPromiseWithStatus(status)
     }
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")
