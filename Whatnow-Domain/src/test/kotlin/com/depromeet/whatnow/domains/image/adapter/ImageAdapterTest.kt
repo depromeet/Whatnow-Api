@@ -24,34 +24,34 @@ class ImageAdapterTest {
     @Test
     fun `약속 이미지 Picture 저장 시 정상적으로 저장된다`() {
         given(imageRepository.save(Mockito.any(Image::class.java)))
-            .willReturn(Image.createForPromise(1, 1, "imageUrl", "imageKey", ImageCommentType.RUNNING))
+            .willReturn(Image.createForPromise(1, 1, "imageUri", "imageKey", ImageCommentType.RUNNING))
 
         // when
-        val picture = imageAdapter.saveForPromise(1, 1, "imageUrl", "imageKey", ImageCommentType.RUNNING)
+        val picture = imageAdapter.saveForPromise(1, 1, "imageUri", "imageKey", ImageCommentType.RUNNING)
 
         // then
         assertEquals(picture.userId, 1)
         assertEquals(picture.promiseId, 1)
-        assertEquals(picture.url, "imageUrl")
-        assertEquals(picture.uuid, "imageKey")
-        assertEquals(picture.pictureType, ImageType.PROMISE)
-        assertEquals(picture.pictureCommentType, ImageCommentType.RUNNING)
+        assertEquals(picture.uri, "imageUri")
+        assertEquals(picture.imageKey, "imageKey")
+        assertEquals(picture.imageType, ImageType.PROMISE)
+        assertEquals(picture.imageCommentType, ImageCommentType.RUNNING)
     }
 
     @Test
     fun `유저 프로필 Picture 저장 시 정상적으로 저장된다`() {
         given(imageRepository.save(Mockito.any(Image::class.java)))
-            .willReturn(Image.createForUser(1, "imageUrl", "imageKey"))
+            .willReturn(Image.createForUser(1, "imageUri", "imageKey"))
 
         // when
-        val picture = imageAdapter.saveForUser(1, "imageUrl", "imageKey")
+        val picture = imageAdapter.saveForUser(1, "imageUri", "imageKey")
 
         // then
         assertEquals(picture.userId, 1)
         assertEquals(picture.promiseId, 0)
-        assertEquals(picture.url, "imageUrl")
-        assertEquals(picture.uuid, "imageKey")
-        assertEquals(picture.pictureType, ImageType.USER)
-        assertEquals(picture.pictureCommentType, ImageCommentType.NONE)
+        assertEquals(picture.uri, "imageUri")
+        assertEquals(picture.imageKey, "imageKey")
+        assertEquals(picture.imageType, ImageType.USER)
+        assertEquals(picture.imageCommentType, ImageCommentType.NONE)
     }
 }

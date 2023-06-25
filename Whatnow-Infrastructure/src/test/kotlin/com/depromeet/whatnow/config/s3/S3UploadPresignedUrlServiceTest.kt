@@ -5,10 +5,14 @@ import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
+import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.core.env.Environment
 import kotlin.test.assertContains
 
 @ExtendWith(MockitoExtension::class)
@@ -31,9 +35,16 @@ class S3UploadPresignedUrlServiceTest {
             .withCredentials(AWSStaticCredentialsProvider(BasicAWSCredentials(s3Properties.s3.accessKey, s3Properties.s3.secretKey)))
             .build()
 
+    val springEnvironmentHelper: SpringEnvironmentHelper
+        get() {
+            val environment = mock(Environment::class.java)
+            `when`(environment.activeProfiles).thenReturn(arrayOf("local"))
+            return SpringEnvironmentHelper(environment)
+        }
+
     @BeforeEach
     fun setup() {
-        s3UploadPresignedUrlService = S3UploadPresignedUrlService(amazonS3, s3Properties)
+        s3UploadPresignedUrlService = S3UploadPresignedUrlService(amazonS3, s3Properties, springEnvironmentHelper)
     }
 
     @Test
@@ -46,7 +57,7 @@ class S3UploadPresignedUrlServiceTest {
         val presignedUrl = s3UploadPresignedUrlService.forPromise(promiseId, imageFIleExtension)
 
         // then
-        val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/promise/$promiseId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
+        val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/local/promise/$promiseId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
 
         assertContains(presignedUrl.url, resultUrl)
     }
@@ -61,7 +72,7 @@ class S3UploadPresignedUrlServiceTest {
         val presignedUrl = s3UploadPresignedUrlService.forUser(userId, imageFIleExtension)
 
         // then
-        val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/user/$userId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
+        val resultUrl = "https://${s3Properties.s3.bucket}.${s3Properties.s3.endpoint.replace("https://", "")}/local/user/$userId/${presignedUrl.key}.${imageFIleExtension.uploadExtension}"
 
         assertContains(presignedUrl.url, resultUrl)
     }

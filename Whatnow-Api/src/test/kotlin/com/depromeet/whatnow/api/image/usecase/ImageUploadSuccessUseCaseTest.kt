@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.picture.usecase
+package com.depromeet.whatnow.api.image.usecase
 
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
 import com.depromeet.whatnow.domains.image.domain.ImageCommentType

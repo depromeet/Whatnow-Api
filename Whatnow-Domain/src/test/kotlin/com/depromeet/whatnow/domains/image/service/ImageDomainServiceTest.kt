@@ -10,6 +10,7 @@ import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
+import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import com.depromeet.whatnow.helper.user_id_1_fixture
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -30,6 +31,9 @@ class ImageDomainServiceTest {
 
     @Mock
     lateinit var userAdapter: UserAdapter
+
+    @Mock
+    lateinit var springEnvironmentHelper: SpringEnvironmentHelper
 
     @InjectMocks
     lateinit var imageDomainService: ImageDomainService
