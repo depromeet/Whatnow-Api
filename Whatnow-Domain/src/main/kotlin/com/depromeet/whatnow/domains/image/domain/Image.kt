@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.picture.domain
+package com.depromeet.whatnow.domains.image.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
@@ -14,21 +14,21 @@ import javax.persistence.PostPersist
 import javax.persistence.Table
 
 @Entity
-@Table(name = "tbl_picture")
-class Picture(
+@Table(name = "tbl_image")
+class Image(
     var userId: Long,
 
     var promiseId: Long,
 
-    var url: String,
+    var uri: String,
 
-    var uuid: String,
-
-    @Enumerated(EnumType.STRING)
-    var pictureType: PictureType,
+    var imageKey: String,
 
     @Enumerated(EnumType.STRING)
-    var pictureCommentType: PictureCommentType = PictureCommentType.NONE,
+    var imageType: ImageType,
+
+    @Enumerated(EnumType.STRING)
+    var imageCommentType: ImageCommentType = ImageCommentType.NONE,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,25 +36,25 @@ class Picture(
     val id: Long? = null,
 ) : BaseTimeEntity() {
     companion object {
-        fun createForPromise(userId: Long, promiseId: Long, url: String, uuid: String, pictureCommentType: PictureCommentType): Picture {
-            return Picture(
+        fun createForPromise(userId: Long, promiseId: Long, uri: String, imageKey: String, imageCommentType: ImageCommentType): Image {
+            return Image(
                 userId = userId,
                 promiseId = promiseId,
-                url = url,
-                uuid = uuid,
-                pictureType = PictureType.PROMISE,
-                pictureCommentType = pictureCommentType,
+                uri = uri,
+                imageKey = imageKey,
+                imageType = ImageType.PROMISE,
+                imageCommentType = imageCommentType,
             )
         }
 
-        fun createForUser(userId: Long, url: String, uuid: String): Picture {
-            return Picture(
+        fun createForUser(userId: Long, uri: String, imageKey: String): Image {
+            return Image(
                 userId = userId,
                 promiseId = 0,
-                url = url,
-                uuid = uuid,
-                pictureType = PictureType.USER,
-                pictureCommentType = PictureCommentType.NONE,
+                uri = uri,
+                imageKey = imageKey,
+                imageType = ImageType.USER,
+                imageCommentType = ImageCommentType.NONE,
             )
         }
     }

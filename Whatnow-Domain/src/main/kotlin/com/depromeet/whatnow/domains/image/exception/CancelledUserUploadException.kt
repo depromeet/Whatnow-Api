@@ -1,9 +1,9 @@
-package com.depromeet.whatnow.domains.picture.exception
+package com.depromeet.whatnow.domains.image.exception
 
 import com.depromeet.whatnow.exception.WhatnowCodeException
 
 class CancelledUserUploadException : WhatnowCodeException(
-    PictureErrorCode.CANCELLED_USER_UPLOAD,
+    ImageErrorCode.CANCELLED_USER_UPLOAD,
 ) {
     companion object {
         val EXCEPTION: WhatnowCodeException = CancelledUserUploadException()

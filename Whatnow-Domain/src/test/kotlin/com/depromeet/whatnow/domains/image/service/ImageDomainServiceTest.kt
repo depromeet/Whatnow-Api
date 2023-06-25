@@ -1,11 +1,11 @@
-package com.depromeet.whatnow.domains.picture.service
+package com.depromeet.whatnow.domains.image.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
-import com.depromeet.whatnow.domains.picture.adapter.PictureAdapter
-import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
-import com.depromeet.whatnow.domains.picture.exception.CancelledUserUploadException
-import com.depromeet.whatnow.domains.picture.exception.InvalidCommentTypeException
-import com.depromeet.whatnow.domains.picture.exception.UploadBeforeTrackingException
+import com.depromeet.whatnow.domains.image.adapter.ImageAdapter
+import com.depromeet.whatnow.domains.image.domain.ImageCommentType
+import com.depromeet.whatnow.domains.image.exception.CancelledUserUploadException
+import com.depromeet.whatnow.domains.image.exception.InvalidCommentTypeException
+import com.depromeet.whatnow.domains.image.exception.UploadBeforeTrackingException
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
@@ -21,9 +21,9 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.given
 
 @ExtendWith(MockitoExtension::class)
-class PictureDomainServiceTest {
+class ImageDomainServiceTest {
     @Mock
-    lateinit var pictureAdapter: PictureAdapter
+    lateinit var imageAdapter: ImageAdapter
 
     @Mock
     lateinit var promiseUserAdapter: PromiseUserAdaptor
@@ -32,7 +32,7 @@ class PictureDomainServiceTest {
     lateinit var userAdapter: UserAdapter
 
     @InjectMocks
-    lateinit var pictureDomainService: PictureDomainService
+    lateinit var imageDomainService: ImageDomainService
 
     @Test
     fun `약속 이미지 업로드 성공 요청시 정상적이라면 에러를 반환하지 않는다`() {
@@ -48,7 +48,7 @@ class PictureDomainServiceTest {
 
         // when, then
         Assertions.assertThatCode {
-            pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.RUNNING)
+            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
         }.doesNotThrowAnyException()
     }
 
@@ -66,7 +66,7 @@ class PictureDomainServiceTest {
 
         // when, then
         Assertions.assertThatThrownBy {
-            pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.RUNNING)
+            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
         }.isInstanceOf(UploadBeforeTrackingException::class.java)
     }
 
@@ -84,7 +84,7 @@ class PictureDomainServiceTest {
 
         // when, then
         Assertions.assertThatThrownBy {
-            pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.RUNNING)
+            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
         }.isInstanceOf(CancelledUserUploadException::class.java)
     }
 
@@ -102,7 +102,7 @@ class PictureDomainServiceTest {
 
         // when, then
         Assertions.assertThatThrownBy {
-            pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.DID_YOU_COME)
+            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.DID_YOU_COME)
         }.isInstanceOf(InvalidCommentTypeException::class.java)
     }
 
@@ -120,7 +120,7 @@ class PictureDomainServiceTest {
 
         // when, then
         Assertions.assertThatThrownBy {
-            pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.WAIT_A_BIT)
+            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.WAIT_A_BIT)
         }.isInstanceOf(InvalidCommentTypeException::class.java)
     }
 
@@ -132,7 +132,7 @@ class PictureDomainServiceTest {
 
         // when, then
         Assertions.assertThatCode {
-            pictureDomainService.userUploadImageSuccess(1, "imageKey")
+            imageDomainService.userUploadImageSuccess(1, "imageKey")
         }.doesNotThrowAnyException()
     }
 }

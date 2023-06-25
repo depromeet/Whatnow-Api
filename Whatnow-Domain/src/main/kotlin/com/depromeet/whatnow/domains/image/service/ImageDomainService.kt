@@ -1,11 +1,11 @@
-package com.depromeet.whatnow.domains.picture.service
+package com.depromeet.whatnow.domains.image.service
 
 import com.depromeet.whatnow.consts.IMAGE_DOMAIN
-import com.depromeet.whatnow.domains.picture.adapter.PictureAdapter
-import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
-import com.depromeet.whatnow.domains.picture.exception.CancelledUserUploadException
-import com.depromeet.whatnow.domains.picture.exception.InvalidCommentTypeException
-import com.depromeet.whatnow.domains.picture.exception.UploadBeforeTrackingException
+import com.depromeet.whatnow.domains.image.adapter.ImageAdapter
+import com.depromeet.whatnow.domains.image.domain.ImageCommentType
+import com.depromeet.whatnow.domains.image.exception.CancelledUserUploadException
+import com.depromeet.whatnow.domains.image.exception.InvalidCommentTypeException
+import com.depromeet.whatnow.domains.image.exception.UploadBeforeTrackingException
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
@@ -13,33 +13,33 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class PictureDomainService(
-    val pictureAdapter: PictureAdapter,
+class ImageDomainService(
+    val imageAdapter: ImageAdapter,
     val promiseUserAdapter: PromiseUserAdaptor,
     val userAdapter: UserAdapter,
 ) {
     @Transactional
-    fun promiseUploadImageSuccess(userId: Long, promiseId: Long, imageKey: String, pictureCommentType: PictureCommentType) {
+    fun promiseUploadImageSuccess(userId: Long, promiseId: Long, imageKey: String, imageCommentType: ImageCommentType) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
-        validatePromiseUserType(promiseUser.promiseUserType!!, pictureCommentType)
+        validatePromiseUserType(promiseUser.promiseUserType!!, imageCommentType)
 
         val imageUrl = IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
-        pictureAdapter.saveForPromise(userId, promiseId, imageUrl, imageKey, pictureCommentType)
+        imageAdapter.saveForPromise(userId, promiseId, imageUrl, imageKey, imageCommentType)
     }
 
     fun userUploadImageSuccess(userId: Long, imageKey: String) {
         val user = userAdapter.queryUser(userId)
         val imageUrl = IMAGE_DOMAIN + "user/$userId/$imageKey"
-        pictureAdapter.saveForUser(userId, imageUrl, imageKey)
+        imageAdapter.saveForUser(userId, imageUrl, imageKey)
         user.updateProfileImg(imageUrl)
     }
 
-    private fun validatePromiseUserType(promiseUserType: PromiseUserType, pictureCommentType: PictureCommentType) {
+    private fun validatePromiseUserType(promiseUserType: PromiseUserType, imageCommentType: ImageCommentType) {
         when (promiseUserType) {
             PromiseUserType.READY -> throw UploadBeforeTrackingException.EXCEPTION
             PromiseUserType.CANCEL -> throw CancelledUserUploadException.EXCEPTION
             PromiseUserType.WAIT, PromiseUserType.LATE -> {
-                if (pictureCommentType.promiseUserType != promiseUserType) {
+                if (imageCommentType.promiseUserType != promiseUserType) {
                     throw InvalidCommentTypeException.EXCEPTION
                 }
             }

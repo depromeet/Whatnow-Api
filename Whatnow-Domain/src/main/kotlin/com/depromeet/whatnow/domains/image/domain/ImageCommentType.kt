@@ -1,8 +1,8 @@
-package com.depromeet.whatnow.domains.picture.domain
+package com.depromeet.whatnow.domains.image.domain
 
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 
-enum class PictureCommentType(val value: String, val promiseUserType: PromiseUserType?) {
+enum class ImageCommentType(val value: String, val promiseUserType: PromiseUserType?) {
     NONE("NONE", null),
 
     // Can LATE

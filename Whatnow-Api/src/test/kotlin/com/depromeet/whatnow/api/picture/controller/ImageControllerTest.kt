@@ -1,7 +1,7 @@
 package com.depromeet.whatnow.api.picture.controller
 
-import com.depromeet.whatnow.api.picture.usecase.PictureUploadSuccessUseCase
-import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
+import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
+import com.depromeet.whatnow.domains.image.domain.ImageCommentType
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @WebMvcTest(PictureController::class)
 @ContextConfiguration(classes = [PictureController::class])
 @AutoConfigureMockMvc(addFilters = false)
-class PictureControllerTest {
+class ImageControllerTest {
     @MockBean
-    lateinit var successUseCase: PictureUploadSuccessUseCase
+    lateinit var successUseCase: ImageUploadSuccessUseCase
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -27,12 +27,12 @@ class PictureControllerTest {
         // given
         val promiseId = 1
         val imageKey = "imageKey"
-        val pictureCommentType = PictureCommentType.SORRY_LATE
+        val imageCommentType = ImageCommentType.SORRY_LATE
 
         // when, then
         mockMvc.perform(
             post("/v1/promises/{promiseId}/images/success/{imageKey}", promiseId, imageKey)
-                .param("pictureCommentType", pictureCommentType.name),
+                .param("pictureCommentType", imageCommentType.name),
         )
             .andExpect(status().isOk)
             .andDo { print(it) }

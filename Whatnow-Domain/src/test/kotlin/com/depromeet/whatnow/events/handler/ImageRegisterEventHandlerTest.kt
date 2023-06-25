@@ -2,8 +2,8 @@ package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.DomainIntegrateSpringBootTest
-import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
-import com.depromeet.whatnow.domains.picture.service.PictureDomainService
+import com.depromeet.whatnow.domains.image.domain.ImageCommentType
+import com.depromeet.whatnow.domains.image.service.ImageDomainService
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
@@ -16,9 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 
 @DomainIntegrateSpringBootTest
-class PictureRegisterEventHandlerTest {
+class ImageRegisterEventHandlerTest {
     @Autowired
-    lateinit var pictureDomainService: PictureDomainService
+    lateinit var imageDomainService: ImageDomainService
 
     @MockBean
     lateinit var promiseUserAdaptor: PromiseUserAdaptor
@@ -33,7 +33,7 @@ class PictureRegisterEventHandlerTest {
         given(promiseUserAdaptor.findByPromiseIdAndUserId(1, 1)).willReturn(promiseUser)
 
         // when
-        pictureDomainService.promiseUploadImageSuccess(1, 1, "imageKey", PictureCommentType.RUNNING)
+        imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
 
         // then
         then(pictureRegisterEventHandler).should(Mockito.times(1)).handleRegisterPictureEvent(any())

@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.picture.exception
+package com.depromeet.whatnow.domains.image.exception
 
 import com.depromeet.whatnow.annotation.ExplainError
 import com.depromeet.whatnow.consts.BAD_REQUEST
@@ -6,7 +6,7 @@ import com.depromeet.whatnow.dto.ErrorReason
 import com.depromeet.whatnow.exception.BaseErrorCode
 import java.util.Objects
 
-enum class PictureErrorCode(val status: Int, val code: String, val reason: String) : BaseErrorCode {
+enum class ImageErrorCode(val status: Int, val code: String, val reason: String) : BaseErrorCode {
     @ExplainError("트래킹이 시작 전에 이미지를 업로드하는 경우")
     UPLOAD_BEFORE_TRACKING(BAD_REQUEST, "PICTURE_400_1", "트래킹 시작전에는 이미지를 업로드 할 수 없습니다."),
 

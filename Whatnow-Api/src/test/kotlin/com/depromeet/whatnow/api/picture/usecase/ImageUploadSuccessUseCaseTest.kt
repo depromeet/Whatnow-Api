@@ -1,7 +1,8 @@
 package com.depromeet.whatnow.api.picture.usecase
 
-import com.depromeet.whatnow.domains.picture.domain.PictureCommentType
-import com.depromeet.whatnow.domains.picture.service.PictureDomainService
+import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
+import com.depromeet.whatnow.domains.image.domain.ImageCommentType
+import com.depromeet.whatnow.domains.image.service.ImageDomainService
 import org.assertj.core.api.Assertions.assertThatCode
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,12 +15,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 
 @ExtendWith(MockitoExtension::class)
-class PictureUploadSuccessUseCaseTest {
+class ImageUploadSuccessUseCaseTest {
     @Mock
-    lateinit var pictureDomainService: PictureDomainService
+    lateinit var imageDomainService: ImageDomainService
 
     @InjectMocks
-    lateinit var pictureUploadSuccessUseCase: PictureUploadSuccessUseCase
+    lateinit var imageUploadSuccessUseCase: ImageUploadSuccessUseCase
 
     @BeforeEach
     fun setup() {
@@ -37,7 +38,7 @@ class PictureUploadSuccessUseCaseTest {
 
         // then
         assertThatCode {
-            pictureUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", PictureCommentType.SORRY_LATE)
+            imageUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", ImageCommentType.SORRY_LATE)
         }.doesNotThrowAnyException()
     }
 
@@ -49,7 +50,7 @@ class PictureUploadSuccessUseCaseTest {
 
         // then
         assertThatCode {
-            pictureUploadSuccessUseCase.userUploadImageSuccess("imageKey")
+            imageUploadSuccessUseCase.userUploadImageSuccess("imageKey")
         }.doesNotThrowAnyException()
     }
 }
