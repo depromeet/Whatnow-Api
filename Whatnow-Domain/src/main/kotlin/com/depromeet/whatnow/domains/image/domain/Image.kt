@@ -60,7 +60,10 @@ class Image(
     }
 
     @PostPersist
-    fun createPictureEvent() {
+    fun createImageEvent() {
+        if (this.imageType == ImageType.USER) {
+            return
+        }
         Events.raise(PictureRegisterEvent(userId, promiseId))
     }
 }
