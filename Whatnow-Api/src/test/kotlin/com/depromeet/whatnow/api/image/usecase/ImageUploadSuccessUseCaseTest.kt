@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.api.image.usecase
 
-import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
 import com.depromeet.whatnow.domains.image.domain.ImageCommentType
 import com.depromeet.whatnow.domains.image.service.ImageDomainService
 import org.assertj.core.api.Assertions.assertThatCode
