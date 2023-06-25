@@ -2,7 +2,7 @@ package com.depromeet.whatnow.domains.image.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
-import com.depromeet.whatnow.events.domainEvent.PictureRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.ImageRegisterEvent
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -64,6 +64,6 @@ class Image(
         if (this.imageType == ImageType.USER) {
             return
         }
-        Events.raise(PictureRegisterEvent(userId, promiseId))
+        Events.raise(ImageRegisterEvent(userId, promiseId))
     }
 }
