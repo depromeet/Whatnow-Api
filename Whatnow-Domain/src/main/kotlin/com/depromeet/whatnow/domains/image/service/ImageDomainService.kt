@@ -9,6 +9,7 @@ import com.depromeet.whatnow.domains.image.exception.UploadBeforeTrackingExcepti
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
+import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,19 +18,20 @@ class ImageDomainService(
     val imageAdapter: ImageAdapter,
     val promiseUserAdapter: PromiseUserAdaptor,
     val userAdapter: UserAdapter,
+    val springEnvironmentHelper: SpringEnvironmentHelper,
 ) {
     @Transactional
     fun promiseUploadImageSuccess(userId: Long, promiseId: Long, imageKey: String, imageCommentType: ImageCommentType) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         validatePromiseUserType(promiseUser.promiseUserType!!, imageCommentType)
 
-        val imageUrl = IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
+        val imageUrl = springEnvironmentHelper.getActiveProfile + "/" + IMAGE_DOMAIN + "promise/$promiseId/$imageKey"
         imageAdapter.saveForPromise(userId, promiseId, imageUrl, imageKey, imageCommentType)
     }
 
     fun userUploadImageSuccess(userId: Long, imageKey: String) {
         val user = userAdapter.queryUser(userId)
-        val imageUrl = IMAGE_DOMAIN + "user/$userId/$imageKey"
+        val imageUrl = springEnvironmentHelper.getActiveProfile + "/" + IMAGE_DOMAIN + "user/$userId/$imageKey"
         imageAdapter.saveForUser(userId, imageUrl, imageKey)
         user.updateProfileImg(imageUrl)
     }

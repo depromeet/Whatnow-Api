@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.Headers
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
+import com.depromeet.whatnow.helper.SpringEnvironmentHelper
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -12,6 +13,7 @@ import java.util.*
 class S3UploadPresignedUrlService(
     val amazonS3: AmazonS3,
     s3Properties: S3Properties,
+    val springEnvironmentHelper: SpringEnvironmentHelper,
 ) {
     val s3Secret: S3Properties.S3Secret = s3Properties.s3
 
@@ -36,11 +38,11 @@ class S3UploadPresignedUrlService(
     }
 
     private fun getForPromiseFimeName(uuid: String, promiseId: Long, fileExtension: ImageFileExtension): String {
-        return "promise/" + promiseId + "/" + uuid + "." + fileExtension.uploadExtension
+        return springEnvironmentHelper.getActiveProfile + "/promise/" + promiseId + "/" + uuid + "." + fileExtension.uploadExtension
     }
 
     private fun getForUserFimeName(uuid: String, userId: Long, fileExtension: ImageFileExtension): String {
-        return "user/" + userId + "/" + uuid + "." + fileExtension.uploadExtension
+        return springEnvironmentHelper.getActiveProfile + "/user/" + userId + "/" + uuid + "." + fileExtension.uploadExtension
     }
 
     private fun getGeneratePreSignedUrlRequest(
