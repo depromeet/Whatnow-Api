@@ -38,11 +38,11 @@ class S3UploadPresignedUrlService(
     }
 
     private fun getForPromiseFimeName(uuid: String, promiseId: Long, fileExtension: ImageFileExtension): String {
-        return springEnvironmentHelper.getActiveProfile + "/promise/" + promiseId + "/" + uuid + "." + fileExtension.uploadExtension
+        return springEnvironmentHelper.activeProfile + "/promise/" + promiseId + "/" + uuid + "." + fileExtension.uploadExtension
     }
 
     private fun getForUserFimeName(uuid: String, userId: Long, fileExtension: ImageFileExtension): String {
-        return springEnvironmentHelper.getActiveProfile + "/user/" + userId + "/" + uuid + "." + fileExtension.uploadExtension
+        return springEnvironmentHelper.activeProfile + "/user/" + userId + "/" + uuid + "." + fileExtension.uploadExtension
     }
 
     private fun getGeneratePreSignedUrlRequest(

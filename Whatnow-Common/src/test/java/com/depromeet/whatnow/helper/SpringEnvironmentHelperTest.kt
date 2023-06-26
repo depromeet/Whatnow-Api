@@ -136,7 +136,7 @@ class SpringEnvironmentHelperTest {
         // when
 
         // then
-        assertEquals("prod", springEnvironmentHelper.getActiveProfile)
+        assertEquals("prod", springEnvironmentHelper.activeProfile)
     }
 
     @Test
@@ -148,7 +148,7 @@ class SpringEnvironmentHelperTest {
         // when
 
         // then
-        assertEquals("dev", springEnvironmentHelper.getActiveProfile)
+        assertEquals("dev", springEnvironmentHelper.activeProfile)
     }
 
     @Test
@@ -160,6 +160,6 @@ class SpringEnvironmentHelperTest {
         // when
 
         // then
-        assertEquals("local", springEnvironmentHelper.getActiveProfile)
+        assertEquals("local", springEnvironmentHelper.activeProfile)
     }
 }

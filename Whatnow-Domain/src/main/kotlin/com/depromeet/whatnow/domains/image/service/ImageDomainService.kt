@@ -25,13 +25,13 @@ class ImageDomainService(
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         validatePromiseUserType(promiseUser.promiseUserType!!, imageCommentType)
 
-        val imageUrl = IMAGE_DOMAIN + springEnvironmentHelper.getActiveProfile + "/" + "promise/$promiseId/$imageKey"
+        val imageUrl = IMAGE_DOMAIN + springEnvironmentHelper.activeProfile + "/" + "promise/$promiseId/$imageKey"
         imageAdapter.saveForPromise(userId, promiseId, imageUrl, imageKey, imageCommentType)
     }
 
     fun userUploadImageSuccess(userId: Long, imageKey: String) {
         val user = userAdapter.queryUser(userId)
-        val imageUrl = IMAGE_DOMAIN + springEnvironmentHelper.getActiveProfile + "/" + "user/$userId/$imageKey"
+        val imageUrl = IMAGE_DOMAIN + springEnvironmentHelper.activeProfile + "/" + "user/$userId/$imageKey"
         imageAdapter.saveForUser(userId, imageUrl, imageKey)
         user.updateProfileImg(imageUrl)
     }

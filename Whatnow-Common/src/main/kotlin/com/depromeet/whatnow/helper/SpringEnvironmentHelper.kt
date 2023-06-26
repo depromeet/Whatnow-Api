@@ -31,7 +31,7 @@ class SpringEnvironmentHelper(
             val activeProfiles = environment.activeProfiles.toList()
             return CollectionUtils.containsAny(PROD_AND_DEV, activeProfiles)
         }
-    val getActiveProfile: String
+    val activeProfile: String
         get() {
             if (isProdProfile) return PROD
             if (isDevProfile) return DEV
