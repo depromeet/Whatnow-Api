@@ -11,6 +11,7 @@ import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import java.time.LocalDateTime
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @UseCase
@@ -63,10 +64,11 @@ class PromiseReadUseCase(
      * method name: findPromiseByUserIdSeparatedWithYearMonth
      * description: 유저가 참여한 약속들 중 특정 년월에 해당하는 약속들을 조회한다
      */
-    fun findPromiseByUserIdYearMonth(yearMonth: String): List<PromiseFindDto> {
+    fun findPromiseByUserIdYearMonth(yearMonth: YearMonth): List<PromiseFindDto> {
         val userId: Long = SecurityUtils.currentUserId
         return findPromisesByUserId(userId)
-            .filter { isSameYearMonth(it.endTime, yearMonth) }
+            .filter{ it.endTime.year == yearMonth.year && it.endTime.month == yearMonth.month}
+//            .filter { isSameYearMonth(it.endTime, yearMonth) }
             .map { promise ->
                 // 약속에 참여한 유저들
                 val participants = getParticipantUserInfo(promiseUserAdaptor.findByPromiseId(promise.id!!))
@@ -96,10 +98,8 @@ class PromiseReadUseCase(
         return formattedDateTime == yearMonth
     }
 
-    fun findPromiseWithStatus(status: String): List<PromiseFindDto> {
+    fun findPromiseWithStatus(promiseType: PromiseType): List<PromiseFindDto> {
         val userId: Long = SecurityUtils.currentUserId
-        // convert string status to PromiseType
-        val promiseType = PromiseType.valueOf(status)
         val promises = promiseAdaptor.queryPromisesWithStatus(userId, promiseType)
 
         val promiseUsersByPromiseId = promiseUserAdaptor.findByUniquePromiseIds(promises.map { it.id!! })
@@ -108,9 +108,10 @@ class PromiseReadUseCase(
         val promiseFindDtos = mutableListOf<PromiseFindDto>()
 
         for (promise in promises) {
-            val participants = getParticipantUserInfo(promiseUsersByPromiseId[promise.id]!!)
-            promiseFindDtos.add(PromiseFindDto.of(promise, participants))
+            val participants = promiseUsersByPromiseId[promise.id]?.let { getParticipantUserInfo(it) }
+            promiseFindDtos.add(PromiseFindDto.of(promise, participants!!))
         }
+
         return promiseFindDtos
     }
 }

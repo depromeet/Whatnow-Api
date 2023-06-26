@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
+import java.time.YearMonth
 
 @RestController
 @RequestMapping("/v1")
@@ -41,13 +42,13 @@ class PromiseController(
 
     @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
     @GetMapping("/promises/users")
-    fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: String): List<PromiseFindDto> {
+    fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: YearMonth): List<PromiseFindDto> {
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
     }
 
     @Operation(summary = "상태기반 약속 조회", description = "예정된(BEFORE), 지난(AFTER) 약속 조회")
     @GetMapping("/promises/users/status/{status}")
-    fun findPromiseByStatus(@PathVariable(value = "statys") status: String): List<PromiseFindDto> {
+    fun findPromiseByStatus(@PathVariable(value = "status") status: PromiseType): List<PromiseFindDto> {
         return promiseReadUseCase.findPromiseWithStatus(status)
     }
 
