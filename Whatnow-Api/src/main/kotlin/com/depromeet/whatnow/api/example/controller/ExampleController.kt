@@ -2,7 +2,7 @@ package com.depromeet.whatnow.api.example.controller
 
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
 import com.depromeet.whatnow.api.config.kakao.KakaoKauthErrorCode
-import com.depromeet.whatnow.domains.picture.exception.PictureErrorCode
+import com.depromeet.whatnow.domains.image.exception.ImageErrorCode
 import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErrorCode
 import com.depromeet.whatnow.domains.user.exception.UserErrorCode
 import com.depromeet.whatnow.exception.GlobalErrorCode
@@ -43,6 +43,6 @@ class ExampleController() {
 
     @GetMapping("/images")
     @Operation(summary = "이미지 업로드 관련 에러코드 나열")
-    @ApiErrorCodeExample(PictureErrorCode::class)
+    @ApiErrorCodeExample(ImageErrorCode::class)
     fun imageErrorCode() {}
 }
