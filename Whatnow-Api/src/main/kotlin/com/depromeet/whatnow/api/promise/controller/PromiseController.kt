@@ -33,6 +33,7 @@ class PromiseController(
     val promiseReadUseCase: PromiseReadUseCase,
 ) {
     //    나의 약속 전부 조회
+    @Deprecated("나의 약속 전부 조회", replaceWith = ReplaceWith("findPromiseByStatus"))
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     // view 방식에 따라 구분하게 기능 추가 예정
     @GetMapping("/promises/users/separated")

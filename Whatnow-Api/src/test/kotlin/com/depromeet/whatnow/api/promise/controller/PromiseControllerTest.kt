@@ -35,4 +35,16 @@ class PromiseControllerTest {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andDo { print(it) }
     }
+
+//    /promises/users
+    @Test
+    fun `문자열이 LocalDateTime-YearMonth객체로 변환된다`() {
+        val request = MockMvcRequestBuilders
+            .get("/v1/promises/users")
+            .param("year-month", "2021-10")
+        mockMvc
+            .perform(request)
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andDo { print(it) }
+    }
 }
