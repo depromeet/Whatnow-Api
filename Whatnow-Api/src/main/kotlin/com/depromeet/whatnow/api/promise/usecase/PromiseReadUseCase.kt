@@ -67,7 +67,7 @@ class PromiseReadUseCase(
     fun findPromiseByUserIdYearMonth(yearMonth: YearMonth): List<PromiseFindDto> {
         val userId: Long = SecurityUtils.currentUserId
         return findPromisesByUserId(userId)
-            .filter{ it.endTime.year == yearMonth.year && it.endTime.month == yearMonth.month}
+            .filter { it.endTime.year == yearMonth.year && it.endTime.month == yearMonth.month }
 //            .filter { isSameYearMonth(it.endTime, yearMonth) }
             .map { promise ->
                 // 약속에 참여한 유저들
