@@ -41,7 +41,7 @@ class PromiseController(
         return promiseReadUseCase.findPromiseByUserIdSeparatedType()
     }
 
-    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
+    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회), year-month 파라미터는 2021-01 이 형식입니다.")
     @GetMapping("/promises/users")
     fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: YearMonth): List<PromiseFindDto> {
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)

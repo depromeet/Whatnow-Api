@@ -10,9 +10,7 @@ import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.user.repository.UserRepository
-import java.time.LocalDateTime
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 @UseCase
 class PromiseReadUseCase(
@@ -68,7 +66,6 @@ class PromiseReadUseCase(
         val userId: Long = SecurityUtils.currentUserId
         return findPromisesByUserId(userId)
             .filter { it.endTime.year == yearMonth.year && it.endTime.month == yearMonth.month }
-//            .filter { isSameYearMonth(it.endTime, yearMonth) }
             .map { promise ->
                 // 약속에 참여한 유저들
                 val participants = getParticipantUserInfo(promiseUserAdaptor.findByPromiseId(promise.id!!))
@@ -92,12 +89,6 @@ class PromiseReadUseCase(
         return users.mapNotNull { UserInfoVo.from(it) }
     }
 
-    private fun isSameYearMonth(dateTime: LocalDateTime, yearMonth: String): Boolean {
-        val pattern = DateTimeFormatter.ofPattern("yyyy.MM")
-        val formattedDateTime = dateTime.format(pattern)
-        return formattedDateTime == yearMonth
-    }
-
     fun findPromiseWithStatus(promiseType: PromiseType): List<PromiseFindDto> {
         val userId: Long = SecurityUtils.currentUserId
         val promises = promiseAdaptor.queryPromisesWithStatus(userId, promiseType)
@@ -107,6 +98,7 @@ class PromiseReadUseCase(
 
         val promiseFindDtos = mutableListOf<PromiseFindDto>()
 
+//        약속한
         for (promise in promises) {
             val participants = promiseUsersByPromiseId[promise.id]?.let { getParticipantUserInfo(it) }
             promiseFindDtos.add(PromiseFindDto.of(promise, participants!!))
