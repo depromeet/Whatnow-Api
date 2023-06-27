@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
+import java.time.YearMonth
 
 @RestController
 @RequestMapping("/v1")
@@ -32,17 +33,24 @@ class PromiseController(
     val promiseReadUseCase: PromiseReadUseCase,
 ) {
     //    나의 약속 전부 조회
+    @Deprecated("나의 약속 전부 조회", replaceWith = ReplaceWith("findPromiseByStatus"))
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     // view 방식에 따라 구분하게 기능 추가 예정
     @GetMapping("/promises/users/separated")
-    fun findByPromiseByUser(): Map<PromiseType, MutableList<PromiseFindDto>> {
+    fun findPromiseByUser(): Map<PromiseType, MutableList<PromiseFindDto>> {
         return promiseReadUseCase.findPromiseByUserIdSeparatedType()
     }
 
-    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회)")
+    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회), year-month 파라미터는 2021-01 이 형식입니다.")
     @GetMapping("/promises/users")
-    fun findByPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: String): List<PromiseFindDto> {
+    fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: YearMonth): List<PromiseFindDto> {
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
+    }
+
+    @Operation(summary = "상태기반 약속 조회", description = "예정된(BEFORE), 지난(AFTER) 약속 조회")
+    @GetMapping("/promises/users/status/{status}")
+    fun findPromiseByStatus(@PathVariable(value = "status") status: PromiseType): List<PromiseFindDto> {
+        return promiseReadUseCase.findPromiseWithStatus(status)
     }
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")

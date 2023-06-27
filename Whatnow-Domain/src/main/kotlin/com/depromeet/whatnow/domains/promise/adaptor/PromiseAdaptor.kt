@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.domains.promise.adaptor
 
 import com.depromeet.whatnow.domains.promise.domain.Promise
+import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import com.depromeet.whatnow.domains.promise.exception.PromiseNotFoundException
 import com.depromeet.whatnow.domains.promise.repository.PromiseRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -30,5 +31,9 @@ class PromiseAdaptor(
 
     fun delete(promiseId: Long) {
         return promiseRepository.deleteById(promiseId)
+    }
+
+    fun queryPromisesWithStatus(userId: Long, promiseType: PromiseType): List<Promise> {
+        return promiseRepository.findByUserIdAndStatus(userId, promiseType)
     }
 }
