@@ -94,24 +94,6 @@ class PromiseReadUseCase(
         return users.mapNotNull { UserInfoVo.from(it) }
     }
 
-    fun findPromiseWithStatus(promiseType: PromiseType): List<PromiseFindDto> {
-        val userId: Long = SecurityUtils.currentUserId
-        val promises = promiseAdaptor.queryPromisesWithStatus(userId, promiseType)
-
-        val promiseUsersByPromiseId = promiseUserAdaptor.findByUniquePromiseIds(promises.map { it.id!! })
-            .groupBy { it.promiseId }
-
-        val promiseFindDtos = mutableListOf<PromiseFindDto>()
-
-//        약속한
-        for (promise in promises) {
-            val participants = promiseUsersByPromiseId[promise.id]?.let { getParticipantUserInfo(it) }
-            promiseFindDtos.add(PromiseFindDto.of(promise, participants!!))
-        }
-
-        return promiseFindDtos
-    }
-
     fun findPromiseDetailByStatus(promiseType: PromiseType): List<PromiseDetailDto> {
         val userId: Long = SecurityUtils.currentUserId
         val promiseUsersByPromiseId = promiseUserAdaptor.findByUserId(userId)

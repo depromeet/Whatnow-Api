@@ -48,15 +48,8 @@ class PromiseController(
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
     }
 
-    @Deprecated("상태기반 약속 조회", replaceWith = ReplaceWith("findPromiseDetailByStatus"))
-    @Operation(summary = "상태기반 약속 조회", description = "예정된(BEFORE), 지난(AFTER) 약속 조회")
-    @GetMapping("/promises/users/status/{status}")
-    fun findPromiseByStatus(@PathVariable(value = "status") status: PromiseType): List<PromiseFindDto> {
-        return promiseReadUseCase.findPromiseWithStatus(status)
-    }
-
     @Operation(summary = "약속 모음집 상세", description = "D3. 지난(AFTER) 약속 상세 조회 (날짜(월,일), 약속 사진 url, 타임오버 캡쳐, 만난 사람(프로필 tkwls Url,  이름, wait/late 여부, interaction 종륲별 카운트), 하이라이트 기록 최대 3개")
-    @GetMapping("/promises/users/status/{status}/detail")
+    @GetMapping("/promises/users/status/{status}")
     fun findPromiseDetailByStatus(@PathVariable(value = "status") status: PromiseType): List<PromiseDetailDto> {
         return promiseReadUseCase.findPromiseDetailByStatus(status)
     }
