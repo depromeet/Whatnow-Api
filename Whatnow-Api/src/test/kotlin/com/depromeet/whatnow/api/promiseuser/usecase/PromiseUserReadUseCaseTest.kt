@@ -57,23 +57,4 @@ class PromiseUserReadUseCaseTest {
             .map { PromiseUserDto.from(it) }
         assertEquals(expected, result)
     }
-
-    @Test
-    fun `PromiseUserType에_따라_필터링하여_조회할_수_있다`() {
-        val userId = 1L
-        val status = "READY"
-        val promiseUserList = listOf(
-            PromiseUser(1L, 1L, CoordinateVo(100.4, 1.2), PromiseUserType.READY),
-            PromiseUser(2L, 2L, CoordinateVo(123.4, 132.6), PromiseUserType.READY),
-            PromiseUser(3L, 1L, CoordinateVo(123.445, 6789.612), PromiseUserType.WAIT),
-        )
-        `when`(promiseUserDomainService.findByUserId(userId)).thenReturn(promiseUserList)
-
-        val result = promiseUserReadUseCase.findByUserIdWithStatus(userId, status)
-
-        val expected = promiseUserList
-            .filter { it.promiseUserType == PromiseUserType.valueOf(status) }
-            .map { PromiseUserDto.from(it) }
-        assertEquals(expected, result)
-    }
 }

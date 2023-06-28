@@ -6,7 +6,7 @@ import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 
 data class PromiseUserDto(
     val promiseId: Long,
-    val userId: Long,
+    val mainUserId: Long,
     val userLocation: CoordinateVo?,
     val promiseUserType: PromiseUserType,
 ) {

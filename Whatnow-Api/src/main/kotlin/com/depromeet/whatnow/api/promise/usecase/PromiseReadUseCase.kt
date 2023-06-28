@@ -1,7 +1,10 @@
 package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
+import com.depromeet.whatnow.api.promise.dto.LocationCapture
+import com.depromeet.whatnow.api.promise.dto.PromiseDetailDto
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
+import com.depromeet.whatnow.api.promise.dto.PromiseUserInfoVo
 import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
@@ -9,6 +12,7 @@ import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
+import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import java.time.YearMonth
 
@@ -16,6 +20,7 @@ import java.time.YearMonth
 class PromiseReadUseCase(
     val promiseAdaptor: PromiseAdaptor,
     val promiseUserAdaptor: PromiseUserAdaptor,
+    val userAdapter: UserAdapter,
     val userRepository: UserRepository,
 ) {
     /**
@@ -105,5 +110,40 @@ class PromiseReadUseCase(
         }
 
         return promiseFindDtos
+    }
+
+    fun findPromiseDetailByStatus(promiseType: PromiseType): List<PromiseDetailDto> {
+        val userId: Long = SecurityUtils.currentUserId
+        val promiseUsersByPromiseId = promiseUserAdaptor.findByUserId(userId)
+        val promiseIds = promiseUsersByPromiseId.map { it.promiseId }
+        val promises = promiseAdaptor.queryPromises(promiseIds)
+        val uniqueUsers = promiseUsersByPromiseId.distinctBy { it.userId }
+        val users = userAdapter.queryUsers(uniqueUsers.map { it.userId })
+        val result = mutableListOf<PromiseDetailDto>()
+
+        for (promise in promises) {
+            val promiseUsers = promiseUsersByPromiseId.filter { it.promiseId == promise.id }
+            val promiseUserInfoVos = promiseUsers.mapNotNull { promiseUser ->
+                val user = users.find { it.id == promiseUser.userId }
+                user?.let { PromiseUserInfoVo.of(it, promiseUser.promiseUserType!!) }
+            }
+
+            val timeOverLocations = promiseUsers.mapNotNull { promiseUser ->
+                promiseUser.userLocation?.let { location ->
+                    LocationCapture(userId = promiseUser.userId, coordinateVo = location)
+                }
+            }
+
+            result.add(
+                PromiseDetailDto(
+                    title = promise.title,
+                    date = promise.endTime,
+                    promiseUsers = promiseUserInfoVos,
+                    promiseImageUrls = null,
+                    timeOverLocations = timeOverLocations,
+                ),
+            )
+        }
+        return result
     }
 }

@@ -5,6 +5,7 @@ import com.depromeet.whatnow.common.vo.UserDetailVo
 import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
+import com.depromeet.whatnow.domains.user.domain.User
 
 @UseCase
 class ReadUserUseCase(
@@ -17,5 +18,9 @@ class ReadUserUseCase(
 
     fun findUserById(userId: Long): UserInfoVo {
         return userAdapter.queryUser(userId).toUserInfoVo()
+    }
+
+    fun findUserByIds(userIds: List<Long>): List<User> {
+        return userAdapter.queryUsers(userIds)
     }
 }
