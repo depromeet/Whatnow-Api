@@ -37,7 +37,7 @@ class InteractionController(
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(Unit)
     }
 
-    @GetMapping("/users/me/promises/{promiseId}/interactions")
+    @GetMapping("/promises/{promiseId}/interactions")
     @Operation(summary = "자신의 인터렉션 정보를 가져옵니다.")
     fun getMyInteraction(
         @PathVariable promiseId: Long,
@@ -45,7 +45,7 @@ class InteractionController(
         return interactionReadUseCase.findMyInteraction(promiseId)
     }
 
-    @GetMapping("/users/me/promises/{promiseId}/interactions/{interactionType}")
+    @GetMapping("/promises/{promiseId}/interactions/{interactionType}")
     @Operation(summary = "자신의 인터렉션 상세 정보를 가져옵니다.")
     fun getMyInteractionDetail(
         @PathVariable promiseId: Long,
