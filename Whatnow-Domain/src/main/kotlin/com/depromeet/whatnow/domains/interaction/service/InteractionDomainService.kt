@@ -28,6 +28,7 @@ class InteractionDomainService(
         interaction.increment()
     }
 
+    @CheckUserParticipation
     fun queryAllInteraction(promiseId: Long, userId: Long): List<Interaction> {
         return interactionAdapter.queryAllInteraction(promiseId, userId)
     }

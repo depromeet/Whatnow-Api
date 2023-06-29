@@ -16,4 +16,8 @@ class InteractionAdapter(
     fun queryInteraction(promiseId: Long, userId: Long, interactionType: InteractionType): Interaction {
         return interactionRepository.findByPromiseIdAndUserIdAndInteractionType(promiseId, userId, interactionType)
     }
+
+    fun queryAllInteraction(promiseId: Long, userId: Long): List<Interaction> {
+        return interactionRepository.findAllByPromiseIdAndUserId(promiseId, userId)
+    }
 }
