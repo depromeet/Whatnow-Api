@@ -23,7 +23,6 @@ class InteractionDomainService(
         lockName = "인터렉션",
         identifier = "userId",
     )
-    @Transactional
     @CheckUserParticipation
     fun increment(promiseId: Long, userId: Long, interactionType: InteractionType) {
         val interaction = interactionAdapter.queryInteraction(promiseId, userId, interactionType)
