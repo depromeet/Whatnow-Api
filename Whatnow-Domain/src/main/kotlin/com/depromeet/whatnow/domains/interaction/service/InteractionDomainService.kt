@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.domains.interaction.service
 
 import com.depromeet.whatnow.common.aop.lock.RedissonLock
+import com.depromeet.whatnow.common.aop.verify.CheckUserParticipation
 import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
 import com.depromeet.whatnow.domains.interaction.domain.Interaction
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
@@ -25,5 +26,9 @@ class InteractionDomainService(
     fun increment(promiseId: Long, userId: Long, interactionType: InteractionType) {
         val interaction = interactionAdapter.queryInteraction(promiseId, userId, interactionType)
         interaction.increment()
+    }
+
+    fun queryAllInteraction(promiseId: Long, userId: Long): List<Interaction> {
+        return interactionAdapter.queryAllInteraction(promiseId, userId)
     }
 }

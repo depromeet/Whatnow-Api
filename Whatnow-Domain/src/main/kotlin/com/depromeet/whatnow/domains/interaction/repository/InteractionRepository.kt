@@ -10,4 +10,6 @@ interface InteractionRepository : JpaRepository<Interaction, Long> {
         userId: Long,
         interactionType: InteractionType,
     ): Interaction
+
+    fun findAllByPromiseIdAndUserId(promiseId: Long, userId: Long): List<Interaction>
 }
