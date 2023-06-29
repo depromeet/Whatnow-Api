@@ -6,7 +6,6 @@ import com.depromeet.whatnow.domains.interaction.domain.Interaction
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
 import com.depromeet.whatnow.helper.CunCurrencyExecutorHelper
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.TestPropertySource
@@ -27,8 +26,8 @@ class InteractionDomainServiceTest {
 
         // when
         CunCurrencyExecutorHelper.execute(
-            { interactionDomainService.increment(1L, 1L, InteractionType.HEART ) },
-            successCount
+            { interactionDomainService.increment(1L, 1L, InteractionType.HEART) },
+            successCount,
         )
 
         // then
