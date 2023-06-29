@@ -16,6 +16,10 @@ class UserAdapter(
         return userRepository.findByIdOrNull(userId) ?: run { throw UserNotFoundException.EXCEPTION }
     }
 
+    fun queryUsers(userIds: List<Long>): List<User> {
+        return userRepository.findAllById(userIds)
+    }
+
     fun queryByOauthInfo(oauthInfo: OauthInfo): User {
         return userRepository.findByOauthInfo(oauthInfo) ?: run { throw UserNotFoundException.EXCEPTION }
     }
