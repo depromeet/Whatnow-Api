@@ -19,7 +19,7 @@ import java.lang.NumberFormatException
 @Component
 @ConditionalOnExpression("\${ableCheckUserParticipation:true}")
 class CheckUserParticipationAop(
-    val promiseUserAdaptor: PromiseUserAdaptor
+    val promiseUserAdaptor: PromiseUserAdaptor,
 ) {
     @Around("@annotation(com.depromeet.whatnow.common.aop.verify.CheckUserParticipation)")
     fun verify(joinPoint: ProceedingJoinPoint): Any? {
@@ -34,7 +34,7 @@ class CheckUserParticipationAop(
         throw NotParticipatedInPromiseException.EXCEPTION
     }
 
-    private fun findUserIdArg(methodParameterNames: Array<String>,args: Array<Any>): Long {
+    private fun findUserIdArg(methodParameterNames: Array<String>, args: Array<Any>): Long {
         for (i in methodParameterNames.indices) {
             if ((methodParameterNames[i] == "userId")) {
                 val arg = args[i]
@@ -54,7 +54,7 @@ class CheckUserParticipationAop(
         throw UserIdParameterNotFoundException.EXCEPTION
     }
 
-    private fun findPromiseIdArg(methodParameterNames: Array<String>,args: Array<Any>): Long {
+    private fun findPromiseIdArg(methodParameterNames: Array<String>, args: Array<Any>): Long {
         for (i in methodParameterNames.indices) {
             if ((methodParameterNames[i] == "promiseId")) {
                 val arg = args[i]
