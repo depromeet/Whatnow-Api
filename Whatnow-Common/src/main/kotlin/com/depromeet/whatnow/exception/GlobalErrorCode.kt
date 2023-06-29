@@ -82,6 +82,22 @@ enum class GlobalErrorCode(val status: Int, val code: String, val reason: String
     OTHER_SERVER_INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "OTHER_SERVER_500_1", "다른 서버에서 알 수 없는 서버 오류가 발생했습니다."),
 
     SECURITY_CONTEXT_NOT_FOUND(INTERNAL_SERVER, "GLOBAL_500_2", "security context not found"),
+
+    @ExplainError("해당 약속에 유저가 참여하지 않을때 발생하는 오류입니다.")
+    USER_NOT_PARTICIPATE(BAD_REQUEST, "GLOBAL_400_2", "해당 약속에 유저가 참여하지 않습니다."),
+
+    @ExplainError("userId를 Long으로 변환시 발생하는 오류입니다.")
+    USER_ID_NOT_LONG(INTERNAL_SERVER, "GLOBAL_500_5", "userId를 Long으로 변환시 발생하는 오류입니다."),
+
+    @ExplainError("promiseId를 Long으로 변환시 발생하는 오류입니다.")
+    PROMISE_ID_NOT_LONG(INTERNAL_SERVER, "GLOBAL_500_6", "promiseId를 Long으로 변환시 발생하는 오류입니다."),
+
+    @ExplainError("userId가 파라미터에 없을 때 발생하는 오류입니다.")
+    USER_ID_PARAMETER_NOT_FOUND(BAD_REQUEST, "GLOBAL_400_3", "userId가 파라미터에 없습니다."),
+
+    @ExplainError("promiseId가 파라미터에 없을 때 발생하는 오류입니다.")
+    PROMISE_ID_PARAMETER_NOT_FOUND(BAD_REQUEST, "GLOBAL_400_4", "promiseId가 파라미터에 없습니다."),
+
     ;
 
     override val errorReason: ErrorReason

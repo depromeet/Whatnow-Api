@@ -16,12 +16,24 @@ class Interaction(
     @Enumerated(EnumType.STRING)
     var interactionType: InteractionType,
 
-    var message: String,
+    var userId: Long,
 
-    var img: String,
+    var promiseId: Long,
+
+    var count: Long,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "interaction_id")
     val id: Long? = null,
-) : BaseTimeEntity()
+) : BaseTimeEntity() {
+    fun increment() {
+        count += 1
+    }
+
+    companion object {
+        fun of(promiseId: Long, userId: Long, interactionType: InteractionType): Interaction {
+            return Interaction(interactionType, userId, promiseId, 0)
+        }
+    }
+}
