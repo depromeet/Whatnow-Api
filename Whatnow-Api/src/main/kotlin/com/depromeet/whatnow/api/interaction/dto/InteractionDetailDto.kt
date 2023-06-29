@@ -8,13 +8,4 @@ data class InteractionDetailDto(
     val senderUser: UserInfoVo,
     val count: Long,
     val interactionType: InteractionType,
-) {
-    companion object {
-        fun from(it: InteractionHistory) {
-            TODO("Not yet implemented")
-        }
-//        fun from(interaction: Interaction): InteractionDetailDto {
-//            return InteractionDetailDto(interaction.promiseId, interaction.userId, interaction.interactionType, interaction.count)
-//        }
-    }
-}
+)
