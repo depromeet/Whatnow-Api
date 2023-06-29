@@ -37,17 +37,16 @@ class CheckUserParticipationAop(
     private fun findUserIdArg(methodParameterNames: Array<String>, args: Array<Any>): Long {
         for (i in methodParameterNames.indices) {
             if ((methodParameterNames[i] == "userId")) {
-                val arg = args[i]
-                if (arg is Long) {
-                    return arg
-                } else if (arg is String) {
-                    try {
-                        return arg.toLong()
-                    } catch (e: NumberFormatException) {
-                        throw UserIdConversionException.EXCEPTION
+                when (val arg = args[i]) {
+                    is Long -> return arg
+                    is String -> {
+                        try {
+                            return arg.toLong()
+                        } catch (e: NumberFormatException) {
+                            throw UserIdConversionException.EXCEPTION
+                        }
                     }
-                } else {
-                    UserIdParameterNotFoundException.EXCEPTION
+                    else -> UserIdParameterNotFoundException.EXCEPTION
                 }
             }
         }
@@ -57,17 +56,16 @@ class CheckUserParticipationAop(
     private fun findPromiseIdArg(methodParameterNames: Array<String>, args: Array<Any>): Long {
         for (i in methodParameterNames.indices) {
             if ((methodParameterNames[i] == "promiseId")) {
-                val arg = args[i]
-                if (arg is Long) {
-                    return arg
-                } else if (arg is String) {
-                    try {
-                        return arg.toLong()
-                    } catch (e: NumberFormatException) {
-                        throw PromiseIdConversionException.EXCEPTION
+                when (val arg = args[i]) {
+                    is Long -> return arg
+                    is String -> {
+                        try {
+                            return arg.toLong()
+                        } catch (e: NumberFormatException) {
+                            throw PromiseIdConversionException.EXCEPTION
+                        }
                     }
-                } else {
-                    PromiseIdParameterNotFoundException.EXCEPTION
+                    else -> PromiseIdParameterNotFoundException.EXCEPTION
                 }
             }
         }
