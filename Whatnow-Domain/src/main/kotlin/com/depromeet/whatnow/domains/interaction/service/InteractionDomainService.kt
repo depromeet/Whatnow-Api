@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class InteractionDomainService(
     val interactionAdapter: InteractionAdapter,
 ) {
+    @Transactional
     fun initInteraction(promiseId: Long, userId: Long) {
         InteractionType.values().forEach { interactionType ->
             interactionAdapter.save(Interaction.of(promiseId, userId, interactionType))
@@ -30,6 +31,7 @@ class InteractionDomainService(
     }
 
     @CheckUserParticipation
+    @Transactional(readOnly = true)
     fun queryAllInteraction(promiseId: Long, userId: Long): List<Interaction> {
         return interactionAdapter.queryAllInteraction(promiseId, userId)
     }
