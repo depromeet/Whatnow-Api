@@ -27,7 +27,7 @@ class IPRateLimiter(
     }
 
     private val configSupplierForUser: Supplier<BucketConfiguration>
-        private get() {
+        get() {
             val refill: Refill = Refill.greedy(greedyRefill, Duration.ofMinutes(1))
             val limit: Bandwidth = Bandwidth.classic(overdraft, refill)
             return Supplier {

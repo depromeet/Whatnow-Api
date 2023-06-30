@@ -56,7 +56,14 @@ class PromiseReadUseCase(
                 }
 
                 PromiseType.DELETED -> {
+                    // TODO
                     // Do nothing for deleted promises.
+                }
+                null -> {
+                    // TODO
+                }
+                else -> {
+                    // TODO
                 }
             }
         }
