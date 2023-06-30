@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.api.district.usecase
+package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.domains.district.repository.DistrictRepository
@@ -14,6 +14,4 @@ class GetDistrictUseCase(
             districtRepository.findByLocationIntersects(Point(Position(coordinateX, coordinateY)))
         return intersects.properties.adm_nm
     }
-
-
 }
