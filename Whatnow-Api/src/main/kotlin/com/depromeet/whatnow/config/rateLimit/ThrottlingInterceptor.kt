@@ -37,6 +37,10 @@ class ThrottlingInterceptor(
         response: HttpServletResponse,
         handler: Any,
     ): Boolean {
+        // 헬스체크 무시
+        if (request.requestURI.contains("/v1/example/health")) {
+            return true
+        }
         val userId: Long = SecurityUtils.currentUserId
         val remoteAddr = request.remoteAddr
         log.info("remoteAddr : $remoteAddr")

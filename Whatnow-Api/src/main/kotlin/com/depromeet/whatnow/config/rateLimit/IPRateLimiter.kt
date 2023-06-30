@@ -16,10 +16,10 @@ class IPRateLimiter(
     val buckets: ProxyManager<String>? = null,
 
     @Value("\${throttle.overdraft}")
-    val overdraft: Long = 0,
+    val overdraft: Long,
 
     @Value("\${throttle.greedyRefill}")
-    private val greedyRefill: Long = 0,
+    private val greedyRefill: Long,
 ) {
     fun resolveBucket(key: String?): Bucket {
         val configSupplier: Supplier<BucketConfiguration> = configSupplierForUser
