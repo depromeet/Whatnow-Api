@@ -7,7 +7,7 @@ import com.mongodb.client.model.geojson.Position
 
 @UseCase
 class GetDistrictUseCase(
-    val districtRepository: DistrictRepository
+    val districtRepository: DistrictRepository,
 ) {
     fun execute(coordinateX: Double, coordinateY: Double): String {
         val intersects =

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface DistrictRepository : MongoRepository<District, String>{
+interface DistrictRepository : MongoRepository<District, String> {
     @Query("{\$geoIntersects: {\$geometry: {type: 'Point', coordinates: ?0}}}")
     fun findByLocationIntersects(coordinates: Point?): District
 }

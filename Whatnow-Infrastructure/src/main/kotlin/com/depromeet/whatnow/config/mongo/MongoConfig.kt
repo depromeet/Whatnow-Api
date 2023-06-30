@@ -21,6 +21,7 @@ class MongoConfig(
     override fun reactiveMongoClient(): com.mongodb.reactivestreams.client.MongoClient {
         return MongoClients.create(mongoProperties.url)
     }
+
     @Bean("mongoTemplate")
     override fun reactiveMongoTemplate(databaseFactory: ReactiveMongoDatabaseFactory, mongoConverter: MappingMongoConverter): ReactiveMongoTemplate {
         return ReactiveMongoTemplate(reactiveMongoClient(), databaseName)
