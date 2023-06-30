@@ -5,6 +5,6 @@ import com.depromeet.whatnow.config.slack.SlackProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
-@EnableConfigurationProperties(NcpProperties::class, SlackProperties::class, OauthProperties::class, S3Properties::class)
+@EnableConfigurationProperties(MongoDBProperties::class, NcpProperties::class, SlackProperties::class, OauthProperties::class, S3Properties::class)
 @Configuration
 class EnableConfigProperties
