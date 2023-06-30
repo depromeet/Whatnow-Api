@@ -11,6 +11,9 @@ spring:
       maximum-pool-size: 10
     password: ${MYSQL_PASSWORD}
     username: ${MYSQL_USERNAME}
+  data:
+    mongodb:
+      url: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}/${MONGO_DATABASE}?retryWrites=true&w=majority
   jpa:
     show-sql: ${SHOW_SQL:true}
     properties:
