@@ -23,11 +23,11 @@ class UserRateLimiter(
 
     fun resolveBucket(key: String): Bucket {
         val configSupplier = configSupplierForUser
-        return buckets!!.builder().build(key, configSupplier)
+        return buckets.builder().build(key, configSupplier)
     }
 
     private val configSupplierForUser: Supplier<BucketConfiguration>
-        private get() {
+        get() {
             val refill = Refill.greedy(greedyRefill, Duration.ofMinutes(1))
             val limit = Bandwidth.classic(overdraft, refill)
             return Supplier {
