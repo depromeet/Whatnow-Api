@@ -14,6 +14,7 @@ import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.repository.UserRepository
+import java.time.LocalDateTime
 import java.time.YearMonth
 
 @UseCase
@@ -134,5 +135,13 @@ class PromiseReadUseCase(
             )
         }
         return result
+    }
+
+    fun findPromiseActive(promiseId: Long): Boolean {
+        val promise = promiseAdaptor.queryPromise(promiseId)
+        // 현재 시간이 endTime 의1시간 전과 30분 이후 사이에 있으면 true
+        val now = LocalDateTime.now()
+        val endTime = promise.endTime
+        return now.isAfter(endTime.minusHours(1)) && now.isBefore(endTime.plusMinutes(30))
     }
 }
