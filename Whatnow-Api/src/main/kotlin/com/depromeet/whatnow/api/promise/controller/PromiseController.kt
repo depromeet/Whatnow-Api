@@ -53,6 +53,7 @@ class PromiseController(
     fun findPromiseDetailByStatus(@PathVariable(value = "status") status: PromiseType): List<PromiseDetailDto> {
         return promiseReadUseCase.findPromiseDetailByStatus(status)
     }
+
     @Operation(summary = "현재 약속이 활성화 상태인지 비활성화 상태인지 조회", description = "현재 약속이 활성화 상태인지 비활성화 상태인지 조회한다.")
     @GetMapping("/promises/{promise-id}/active")
     fun findPromiseActive(@PathVariable(value = "promise-id") promiseId: Long): Boolean {
