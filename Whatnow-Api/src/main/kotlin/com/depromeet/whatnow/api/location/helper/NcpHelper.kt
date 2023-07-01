@@ -14,9 +14,8 @@ class NcpHelper(
 
     // 검색 키워드 조회
     fun getLocalSearch(keyword: String): NcpMapInfoResponse {
-        println("ncpPropertie.accessKey: ${ncpPropertie.accessKey}")
-        println("ncpPropertie.secretKey: ${ncpPropertie.secretKey}")
-
-        return ncpClient.searchByKeyword(ncpPropertie.accessKey, ncpPropertie.secretKey, keyword)
+        val searchByKeyword = ncpClient.searchByKeyword(ncpPropertie.accessKey, ncpPropertie.secretKey, keyword)
+        // 좌표계 변환
+        return NcpMapInfoResponse.from(searchByKeyword)
     }
 }
