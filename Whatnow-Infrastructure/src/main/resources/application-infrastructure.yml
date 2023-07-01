@@ -6,7 +6,13 @@
 #    bucket: ${AWS_S3_BUCKET:bucket}
 #    private-bucket : ${AWS_S3_BUCKET_PRIVATE:bucket-private}
 #    base-url: ${AWS_S3_BASE_URL:base-url}
-
+data:
+  mongodb:
+    url: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST:cluster0.aybkvg3.mongodb.net}/${MONGO_DATABASE}?retryWrites=true&w=majority
+    host: ${MONGO_HOST:cluster0.aybkvg3.mongodb.net}
+    database: ${MONGO_DATABASE:reversegeo}
+    username: ${MONGO_USERNAME}
+    password: ${MONGO_PASSWORD}
 spring:
   redis:
     host: ${REDIS_HOST:localhost}

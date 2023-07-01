@@ -65,7 +65,7 @@ class SlackAsyncErrorSender(
 
         val url = cachingRequest.requestURL.toString()
         val method = cachingRequest.method
-        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.toString())
+        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.contentToString())
 
         val errorMessage = e.message
         val errorStack = slackProvider.getErrorStack(e)
