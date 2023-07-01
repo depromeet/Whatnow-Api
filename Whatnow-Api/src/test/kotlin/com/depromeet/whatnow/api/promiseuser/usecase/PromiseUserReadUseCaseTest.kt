@@ -2,6 +2,11 @@ package com.depromeet.whatnow.api.promiseuser.usecase
 
 import com.depromeet.whatnow.api.promiseuser.dto.PromiseUserDto
 import com.depromeet.whatnow.common.vo.CoordinateVo
+import com.depromeet.whatnow.domains.progresshistory.adapter.ProgressHistoryAdapter
+import com.depromeet.whatnow.domains.progresshistory.domain.ProgressHistory
+import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress
+import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress.DEFAULT
+import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
@@ -16,45 +21,41 @@ class PromiseUserReadUseCaseTest {
     @Mock
     private lateinit var promiseUserDomainService: PromiseUserDomainService
 
+    @Mock
+    private lateinit var progressHistoryAdapter: ProgressHistoryAdapter
+
+    @Mock
+    private lateinit var promiseUserAdaptor: PromiseUserAdaptor
+
     private lateinit var promiseUserReadUseCase: PromiseUserReadUseCase
 
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        promiseUserReadUseCase = PromiseUserReadUseCase(promiseUserDomainService)
+        promiseUserReadUseCase = PromiseUserReadUseCase(promiseUserDomainService, progressHistoryAdapter, promiseUserAdaptor)
     }
 
     @Test
-    fun `PromiseId로_1개의_회원을_조회할_수_있다`() {
+    fun `PromiseId로_회원을_조회할_수_있다`() {
         val promiseId = 1L
+        val location1 = CoordinateVo(100.4, 1.2)
+        val location2 = CoordinateVo(123.4, 132.6)
         val promiseUserList = listOf(
-            PromiseUser(1L, 1L, CoordinateVo(100.4, 1.2), PromiseUserType.READY),
-            PromiseUser(2L, 2L, CoordinateVo(123.4, 132.6), PromiseUserType.LATE),
-            PromiseUser(3L, 1L, CoordinateVo(123.445, 6789.612), PromiseUserType.WAIT),
+            PromiseUser(1L, 1L, location1, PromiseUserType.READY),
+            PromiseUser(1L, 2L, location2, PromiseUserType.LATE),
+        )
+        val progressHistoryList = listOf(
+            ProgressHistory(1L, 1L, PromiseProgress.DEFAULT, PromiseProgress.DEFAULT),
+            ProgressHistory(1L, 2L, PromiseProgress.BED, PromiseProgress.DEFAULT),
+        )
+        val expected = listOf(
+            PromiseUserDto(1L, 1L, location1, PromiseUserType.READY, PromiseProgress.DEFAULT),
+            PromiseUserDto(1L, 2L, location2, PromiseUserType.LATE, PromiseProgress.BED),
         )
         `when`(promiseUserDomainService.findByPromiseId(promiseId)).thenReturn(promiseUserList)
-
+        `when`(progressHistoryAdapter.findByPromiseId(promiseId)).thenReturn(progressHistoryList)
         val result = promiseUserReadUseCase.findByPromiseId(promiseId)
 
-        val expected = promiseUserList.map { PromiseUserDto.from(it) }
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `userId로_PromiseUser_Type이_READY인_PromiseUser를_조회할_수_있다`() {
-        val userId = 2L
-        val promiseUserList = listOf(
-            PromiseUser(1L, 1L, CoordinateVo(100.4, 1.2), PromiseUserType.READY),
-            PromiseUser(2L, 2L, CoordinateVo(123.4, 132.6), PromiseUserType.LATE),
-            PromiseUser(3L, 1L, CoordinateVo(123.445, 6789.612), PromiseUserType.WAIT),
-        )
-        `when`(promiseUserDomainService.findByUserId(userId)).thenReturn(promiseUserList)
-
-        val result = promiseUserReadUseCase.findByUserIdOnReady(userId)
-
-        val expected = promiseUserList
-            .filter { it.promiseUserType == PromiseUserType.READY }
-            .map { PromiseUserDto.from(it) }
         assertEquals(expected, result)
     }
 }
