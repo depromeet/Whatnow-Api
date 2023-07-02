@@ -3,6 +3,10 @@ spring:
     include:
       - infrastructure
       - domain
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration
 springdoc:
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
