@@ -2,6 +2,7 @@ package com.depromeet.whatnow.domains.promiseuser.service
 
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
+import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -24,9 +25,9 @@ class PromiseUserDomainService(
     }
 
     @Transactional
-    fun updatePromiseUserType(promiseId: Long, userId: Long, status: String): PromiseUser {
+    fun updatePromiseUserType(promiseId: Long, userId: Long, promiseUserType: PromiseUserType): PromiseUser {
         val promiseUser = promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
-        promiseUser.updatePromiseUserType(status)
+        promiseUser.updatePromiseUserType(promiseUserType)
         return promiseUser
     }
 

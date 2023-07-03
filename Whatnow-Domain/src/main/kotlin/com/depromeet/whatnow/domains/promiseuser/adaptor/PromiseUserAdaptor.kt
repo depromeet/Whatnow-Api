@@ -24,10 +24,10 @@ class PromiseUserAdaptor(
     }
 
     fun findByPromiseId(promiseId: Long): List<PromiseUser> {
-        return promiseUserRepository.findByPromiseId(promiseId)
+        return promiseUserRepository.findByPromiseId(promiseId) ?: run { throw PromiseUserNotFoundException.EXCEPTION }
     }
     fun findByUserId(userId: Long): List<PromiseUser> {
-        return promiseUserRepository.findByUserId(userId)
+        return promiseUserRepository.findByUserId(userId) ?: run { throw PromiseUserNotFoundException.EXCEPTION }
     }
 
     fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
@@ -35,7 +35,7 @@ class PromiseUserAdaptor(
     }
 
     fun findByPromiseIds(promiseIds: List<Long>): List<PromiseUser> {
-        return promiseUserRepository.findByPromiseIdIn(promiseIds)
+        return promiseUserRepository.findByPromiseIdIn(promiseIds) ?: run { throw PromiseUserNotFoundException.EXCEPTION }
     }
 
     fun findByUniquePromiseIds(promiseIds: List<Long>): Set<PromiseUser> {
