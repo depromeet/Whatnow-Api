@@ -6,8 +6,18 @@
 #    bucket: ${AWS_S3_BUCKET:bucket}
 #    private-bucket : ${AWS_S3_BUCKET_PRIVATE:bucket-private}
 #    base-url: ${AWS_S3_BASE_URL:base-url}
-
+data:
+  mongodb:
+    url: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST:cluster0.aybkvg3.mongodb.net}/${MONGO_DATABASE}?retryWrites=true&w=majority
+    host: ${MONGO_HOST:cluster0.aybkvg3.mongodb.net}
+    database: ${MONGO_DATABASE:reversegeo}
+    username: ${MONGO_USERNAME}
+    password: ${MONGO_PASSWORD}
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
@@ -49,8 +59,8 @@ ncp:
   local:
     access-key: ${NCP_LOCAL_ACCESS_KEY}
     secret-key: ${NCP_LOCAL_SECRET_KEY}
-    search-url: ${NCP_LOCAL_SEARCH_URL:https://openapi.naver.com/v1/search/local.json}
-
+    search-url: ${NCP_LOCAL_SEARCH_URL:https://openapi.naver.com/v1/search}
+    certification: ${NCP_LOCAL_CERTIFICATION}
 
 fcm:
   certification: ${FCM_CERTIFICATION:}

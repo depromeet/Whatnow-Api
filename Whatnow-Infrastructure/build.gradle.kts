@@ -18,6 +18,8 @@ dependencies{
 
     implementation(project(":Whatnow-Common"))
 
+    // mongoDB
+    api ("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 
     testImplementation ("org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5")
     testImplementation ("org.springframework.cloud:spring-cloud-contract-wiremock:3.1.5")

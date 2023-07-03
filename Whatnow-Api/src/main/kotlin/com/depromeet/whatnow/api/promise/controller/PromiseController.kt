@@ -48,10 +48,16 @@ class PromiseController(
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
     }
 
-    @Operation(summary = "약속 모음집 상세", description = "D3. 지난(AFTER) 약속 상세 조회 (날짜(월,일), 약속 사진 url, 타임오버 캡쳐, 만난 사람(프로필 tkwls Url,  이름, wait/late 여부, interaction 종륲별 카운트), 하이라이트 기록 최대 3개")
+    @Operation(summary = "약속 모음집 상세", description = "D3. 지난(AFTER) 약속 상세 조회 (날짜(월,일), 약속 사진 url, 타임오버 캡쳐, 만난 사람(프로필 사진 Url,  이름, wait/late 여부, interaction 종륲별 카운트), 하이라이트 기록 최대 3개")
     @GetMapping("/promises/users/status/{status}")
     fun findPromiseDetailByStatus(@PathVariable(value = "status") status: PromiseType): List<PromiseDetailDto> {
         return promiseReadUseCase.findPromiseDetailByStatus(status)
+    }
+
+    @Operation(summary = "현재 약속이 활성화 상태인지 비활성화 상태인지 조회", description = "현재 약속이 활성화 상태인지 비활성화 상태인지 조회한다.")
+    @GetMapping("/promises/{promise-id}/active")
+    fun findPromiseActive(@PathVariable(value = "promise-id") promiseId: Long): Boolean {
+        return promiseReadUseCase.findPromiseActive(promiseId)
     }
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")

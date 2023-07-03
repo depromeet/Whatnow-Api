@@ -20,6 +20,11 @@ class ProgressHistoryAdapter(
     fun delete(progressHistory: ProgressHistory) {
         promiseHistoryRepository.delete(progressHistory)
     }
+
+    fun findByPromiseId(promiseId: Long): List<ProgressHistory> {
+        return promiseHistoryRepository.findByPromiseId(promiseId)
+    }
+
 //    fun findAll(): List<PromiseHistory> {
 //        return promiseHistoryRepository.findAll()
 //    }

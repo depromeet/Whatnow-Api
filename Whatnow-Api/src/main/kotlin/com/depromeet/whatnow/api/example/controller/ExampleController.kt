@@ -4,6 +4,8 @@ import com.depromeet.whatnow.annotation.ApiErrorCodeExample
 import com.depromeet.whatnow.api.config.kakao.KakaoKauthErrorCode
 import com.depromeet.whatnow.domains.image.exception.ImageErrorCode
 import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErrorCode
+import com.depromeet.whatnow.domains.promise.exception.PromiseErrorCode
+import com.depromeet.whatnow.domains.promiseuser.exception.PromiseUserErrorCode
 import com.depromeet.whatnow.domains.user.exception.UserErrorCode
 import com.depromeet.whatnow.exception.GlobalErrorCode
 import io.swagger.v3.oas.annotations.Operation
@@ -45,4 +47,14 @@ class ExampleController() {
     @Operation(summary = "이미지 업로드 관련 에러코드 나열")
     @ApiErrorCodeExample(ImageErrorCode::class)
     fun imageErrorCode() {}
+
+    @GetMapping("/promises")
+    @Operation(summary = "약속 관련 에러코드 나열")
+    @ApiErrorCodeExample(PromiseErrorCode::class)
+    fun promiseErrorCode() {}
+
+    @GetMapping("/promise-users")
+    @Operation(summary = "약속 참여 관련 에러코드 나열")
+    @ApiErrorCodeExample(PromiseUserErrorCode::class)
+    fun promiseUserErrorCode() {}
 }

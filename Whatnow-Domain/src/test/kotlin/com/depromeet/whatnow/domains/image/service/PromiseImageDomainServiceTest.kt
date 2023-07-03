@@ -1,8 +1,9 @@
 package com.depromeet.whatnow.domains.image.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
-import com.depromeet.whatnow.domains.image.adapter.ImageAdapter
-import com.depromeet.whatnow.domains.image.domain.ImageCommentType
+import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
+import com.depromeet.whatnow.domains.image.adapter.UserImageAdapter
+import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import com.depromeet.whatnow.domains.image.exception.CancelledUserUploadException
 import com.depromeet.whatnow.domains.image.exception.InvalidCommentTypeException
 import com.depromeet.whatnow.domains.image.exception.UploadBeforeTrackingException
@@ -11,7 +12,6 @@ import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.helper.SpringEnvironmentHelper
-import com.depromeet.whatnow.helper.user_id_1_fixture
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -22,12 +22,15 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.given
 
 @ExtendWith(MockitoExtension::class)
-class ImageDomainServiceTest {
+class PromiseImageDomainServiceTest {
     @Mock
-    lateinit var imageAdapter: ImageAdapter
+    lateinit var promiseImageAdapter: PromiseImageAdapter
 
     @Mock
     lateinit var promiseUserAdapter: PromiseUserAdaptor
+
+    @Mock
+    lateinit var userImageAdapter: UserImageAdapter
 
     @Mock
     lateinit var userAdapter: UserAdapter
@@ -47,12 +50,13 @@ class ImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.LATE,
         )
+        val userLocation = CoordinateVo(37.2, 128.05)
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatCode {
-            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING, userLocation)
         }.doesNotThrowAnyException()
     }
 
@@ -65,12 +69,13 @@ class ImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.READY,
         )
+        val userLocation = CoordinateVo(37.2, 128.05)
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING, userLocation)
         }.isInstanceOf(UploadBeforeTrackingException::class.java)
     }
 
@@ -83,12 +88,13 @@ class ImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.CANCEL,
         )
+        val userLocation = CoordinateVo(37.2, 128.05)
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.RUNNING)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING, userLocation)
         }.isInstanceOf(CancelledUserUploadException::class.java)
     }
 
@@ -101,12 +107,13 @@ class ImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.LATE,
         )
+        val userLocation = CoordinateVo(37.2, 128.05)
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.DID_YOU_COME)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.DID_YOU_COME, userLocation)
         }.isInstanceOf(InvalidCommentTypeException::class.java)
     }
 
@@ -119,24 +126,13 @@ class ImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.WAIT,
         )
+        val userLocation = CoordinateVo(37.2, 128.05)
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseUploadImageSuccess(1, 1, "imageKey", ImageCommentType.WAIT_A_BIT)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.WAIT_A_BIT, userLocation)
         }.isInstanceOf(InvalidCommentTypeException::class.java)
-    }
-
-    @Test
-    fun `유저 프로필 업로드 성공 요청시 정상적이라면 에러를 반환하지 않는다`() {
-        // given
-        given(userAdapter.queryUser(anyLong()))
-            .willReturn(user_id_1_fixture())
-
-        // when, then
-        Assertions.assertThatCode {
-            imageDomainService.userUploadImageSuccess(1, "imageKey")
-        }.doesNotThrowAnyException()
     }
 }
