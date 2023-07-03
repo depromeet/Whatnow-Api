@@ -14,6 +14,10 @@ data:
     username: ${MONGO_USERNAME}
     password: ${MONGO_PASSWORD}
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
