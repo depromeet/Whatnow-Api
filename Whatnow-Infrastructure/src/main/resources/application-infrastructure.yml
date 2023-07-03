@@ -59,8 +59,8 @@ ncp:
   local:
     access-key: ${NCP_LOCAL_ACCESS_KEY}
     secret-key: ${NCP_LOCAL_SECRET_KEY}
-    search-url: ${NCP_LOCAL_SEARCH_URL:https://openapi.naver.com/v1/search/local.json}
-
+    search-url: ${NCP_LOCAL_SEARCH_URL:https://openapi.naver.com/v1/search}
+    certification: ${NCP_LOCAL_CERTIFICATION}
 
 fcm:
   certification: ${FCM_CERTIFICATION:}
