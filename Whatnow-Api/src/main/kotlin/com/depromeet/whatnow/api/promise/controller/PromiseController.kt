@@ -54,6 +54,12 @@ class PromiseController(
         return promiseReadUseCase.findPromiseDetailByStatus(status)
     }
 
+    @Operation(summary = "현재 약속이 활성화 상태인지 비활성화 상태인지 조회", description = "현재 약속이 활성화 상태인지 비활성화 상태인지 조회한다.")
+    @GetMapping("/promises/{promise-id}/active")
+    fun findPromiseActive(@PathVariable(value = "promise-id") promiseId: Long): Boolean {
+        return promiseReadUseCase.findPromiseActive(promiseId)
+    }
+
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")
     @PostMapping("/promises")
     fun createPromise(@RequestBody promiseRequest: PromiseRequest): PromiseDto {
