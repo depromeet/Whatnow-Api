@@ -2,9 +2,7 @@ package com.depromeet.whatnow.domains.image.domain
 
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 
-enum class ImageCommentType(val value: String, val promiseUserType: PromiseUserType?) {
-    NONE("NONE", null),
-
+enum class PromiseImageCommentType(val value: String, val promiseUserType: PromiseUserType?) {
     // Can LATE
     RUNNING("달려가는 중️", PromiseUserType.LATE),
     GASPING("헐레벌떡", PromiseUserType.LATE),

@@ -2,7 +2,7 @@ package com.depromeet.whatnow.events.domainEvent
 
 import com.depromeet.whatnow.common.aop.event.DomainEvent
 
-class ImageRegisterEvent(
+class PromiseImageRegisterEvent(
     val userId: Long,
     val promiseId: Long,
 ) : DomainEvent()
