@@ -8,7 +8,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.listener.PatternTopic
 import org.springframework.data.redis.listener.RedisMessageListenerContainer
 
-
 @Configuration
 class RedisMessageListenerConfig {
     @Bean
