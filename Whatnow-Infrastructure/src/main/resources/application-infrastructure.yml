@@ -63,7 +63,7 @@ ncp:
     certification: ${NCP_LOCAL_CERTIFICATION}
 
 fcm:
-  certification: ${FCM_CERTIFICATION:}
+  certification: ${FCM_CERTIFICATION:\{\"key\"\:\"value\"\}}
 #ncp:
 #  service-id: ${NCP_SERVICE_ID:}
 #  access-key: ${NCP_ACCESS_KEY:}
