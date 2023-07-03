@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 @FeignClient(name = "NcpLocalSearchClient", url = "\${ncp.local.search-url}", configuration = [NcpConfig::class])
 interface NcpLocalSearchClient {
-    @GetMapping("/search")
+    @GetMapping("/local.json")
     fun searchByKeyword(
         @RequestHeader("X-Naver-Client-Id") accessKey: String,
         @RequestHeader("X-Naver-Client-Secret") secretKey: String,

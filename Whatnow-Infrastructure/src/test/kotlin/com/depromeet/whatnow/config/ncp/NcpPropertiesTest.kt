@@ -13,6 +13,6 @@ class NcpPropertiesTest {
 
     @Test
     fun `ncp 프로퍼티가 제대로 init 되어야한다`() {
-        Assertions.assertEquals(ncpProperties.local.searchUrl, "https://openapi.naver.com/v1/search/local.json")
+        Assertions.assertEquals(ncpProperties.local.searchUrl, "https://openapi.naver.com/v1/search")
     }
 }

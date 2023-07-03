@@ -27,20 +27,21 @@ import org.springframework.util.ResourceUtils
 @ActiveProfiles(resolver = InfraIntegrateProfileResolver::class)
 @TestPropertySource(properties = ["ncp.local.search-url=http://localhost:\${wiremock.server.port}"])
 @ContextConfiguration(classes = [FeignClientsConfiguration::class, NcpConfig::class])
-class NcpLocalSearchClientTest {
+class NcpLocalSearchClientTest() {
     @Autowired lateinit var client: NcpLocalSearchClient
 
     @Test
     fun `testSearchByKeyword`() {
-        val file = ResourceUtils.getFile("classpath:payload/ncp-local-search-response.json")
-        val responseJson = file.readText()
+//        application-
+        val file = ResourceUtils.getFile("classpath:payload/ncp-local-search-response.json").readText()
+        val responseJson = file
 
         val accessKey = "your-access-key"
         val secretKey = "your-secret-key"
         val query = "강남"
 
         WireMock.stubFor(
-            get(urlPathEqualTo("/search"))
+            get(urlPathEqualTo("/local.json"))
                 .withHeader("X-Naver-Client-Id", equalTo(accessKey))
                 .withHeader("X-Naver-Client-Secret", equalTo(secretKey))
                 .withQueryParam("query", equalTo(query))

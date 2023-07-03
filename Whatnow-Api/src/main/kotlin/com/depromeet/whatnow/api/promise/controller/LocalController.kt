@@ -4,15 +4,16 @@ import com.depromeet.whatnow.api.dto.NcpMapInfoResponse
 import com.depromeet.whatnow.api.location.helper.NcpHelper
 import com.depromeet.whatnow.api.promise.usecase.GetDistrictUseCase
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-// @SecurityRequirement(name = "access-token")
 @RestController
 @RequestMapping("/v1")
+@SecurityRequirement(name = "access-token")
 @Tag(name = "3.1 [약속-장소]")
 class LocalController(
     val getDistrictUseCase: GetDistrictUseCase,
