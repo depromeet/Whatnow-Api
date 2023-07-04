@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.image.controller
 
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
+import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.s3.ImageFileExtension
@@ -27,6 +28,9 @@ class PromiseImageControllerTest {
 
     @MockBean
     lateinit var successUseCase: ImageUploadSuccessUseCase
+
+    @MockBean
+    lateinit var imageCommentReadUseCase: ImageCommentReadUseCase
 
     @Autowired
     lateinit var mockMvc: MockMvc
