@@ -27,6 +27,7 @@ const val LOCAL = "local"
 const val WITHDRAW_PREFIX = "withdraw"
 
 const val IMAGE_DOMAIN = "https://image.whatnow.kr"
+const val REDIS_EXPIRE_EVENT_PATTERN = "__keyevent@*__:expired"
 
 val SWAGGER_PATTERNS = arrayOf(
     "/swagger-resources/**",
