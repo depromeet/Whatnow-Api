@@ -1,8 +1,5 @@
 package com.depromeet.whatnow.api.dto
 
-import com.depromeet.whatnow.api.utils.GeoTrans
-import com.depromeet.whatnow.api.utils.GeoTrans.convert
-import com.depromeet.whatnow.api.utils.GeoTransPoint
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 
@@ -20,8 +17,6 @@ class NcpMapInfoItem(
 ) {
     companion object {
         fun from(ncpMapInfoResponse: NcpMapInfoItem): NcpMapInfoItem {
-            val convertKATECtoGeo = convertKATECtoGeo(ncpMapInfoResponse.mapx, ncpMapInfoResponse.mapy)
-
             return NcpMapInfoItem(
                 title = ncpMapInfoResponse.title,
                 link = ncpMapInfoResponse.link,
@@ -30,14 +25,9 @@ class NcpMapInfoItem(
                 telephone = ncpMapInfoResponse.telephone,
                 address = ncpMapInfoResponse.address,
                 roadAddress = ncpMapInfoResponse.roadAddress,
-                mapx = convertKATECtoGeo.x,
-                mapy = convertKATECtoGeo.y,
+                mapx = ncpMapInfoResponse.mapx,
+                mapy = ncpMapInfoResponse.mapy
             )
-        }
-
-        private fun convertKATECtoGeo(coordinateX: Double, coordinateY: Double): GeoTransPoint {
-            val katecPt: GeoTransPoint = GeoTransPoint(coordinateX, coordinateY)
-            return convert(GeoTrans.KATEC, GeoTrans.GEO, katecPt)
         }
     }
 }
