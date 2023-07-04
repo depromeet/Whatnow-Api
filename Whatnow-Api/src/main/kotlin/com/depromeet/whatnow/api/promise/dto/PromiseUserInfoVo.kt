@@ -1,7 +1,6 @@
 package com.depromeet.whatnow.api.promise.dto
 
 import com.depromeet.whatnow.api.interaction.dto.InteractionDto
-import com.depromeet.whatnow.domains.interaction.domain.Interaction
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.user.domain.User
 
@@ -10,7 +9,7 @@ data class PromiseUserInfoVo(
     val nickname: String,
     val isDefaultImg: Boolean,
     val promiseUserType: PromiseUserType,
-     val interactions: List<InteractionDto>
+    val interactions: List<InteractionDto>,
 ) {
     companion object {
         fun of(user: User, promiseUserType: PromiseUserType, interactionDtoList: List<InteractionDto>): PromiseUserInfoVo {
