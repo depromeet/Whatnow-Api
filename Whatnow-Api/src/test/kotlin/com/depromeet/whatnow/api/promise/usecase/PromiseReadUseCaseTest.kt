@@ -1,5 +1,9 @@
 package com.depromeet.whatnow.api.promise.usecase
 
+import com.depromeet.whatnow.api.interaction.dto.InteractionDto
+import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
+import com.depromeet.whatnow.domains.interaction.domain.Interaction
+import com.depromeet.whatnow.domains.interaction.domain.InteractionType
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
@@ -41,6 +45,9 @@ class PromiseReadUseCaseTest {
     @Mock
     private lateinit var userRepository: UserRepository
 
+    @Mock
+    private lateinit var interactionAdapter: InteractionAdapter
+
     @InjectMocks
     private lateinit var promiseReadUseCase: PromiseReadUseCase
 
@@ -52,6 +59,7 @@ class PromiseReadUseCaseTest {
             promiseUserAdaptor = promiseUserAdaptor,
             promiseAdaptor = promiseAdaptor,
             userAdapter = userAdapter,
+            interactionAdapter = interactionAdapter,
         )
         val securityContext = SecurityContextHolder.createEmptyContext()
         val authentication = UsernamePasswordAuthenticationToken("1", null, setOf(SimpleGrantedAuthority("ROLE_USER")))
@@ -92,10 +100,17 @@ class PromiseReadUseCaseTest {
                 id = 2,
             ),
         )
+        val interactions = listOf(
+                Interaction(InteractionType.HEART, 1, 1, 242),
+                Interaction(InteractionType.MUSIC, 1, 1, 1234),
+                Interaction(InteractionType.POOP, 1, 1, 12),
+                Interaction(InteractionType.STEP, 1, 1, 2934)
+        )
 
         Mockito.`when`(promiseUserAdaptor.findByUserId(userId)).thenReturn(promiseUsers)
         Mockito.`when`(promiseAdaptor.queryPromises(listOf(1, 2))).thenReturn(promises)
         Mockito.`when`(userAdapter.queryUsers(listOf(1))).thenReturn(users)
+        Mockito.`when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactions)
 
         // When
         val result = promiseReadUseCase.findPromiseDetailByStatus(PromiseType.BEFORE)
@@ -110,5 +125,8 @@ class PromiseReadUseCaseTest {
         Assertions.assertEquals("Promise 2", result[1].title)
         Assertions.assertEquals(promiseTime2, result[1].date)
         Assertions.assertEquals(1, result[1].promiseUsers.size)
+
+        Assertions.assertEquals(2934, result[0].promiseUsers[0].interactions[0].count)
+        Assertions.assertEquals(1234, result[0].promiseUsers[0].interactions[1].count)
     }
 }
