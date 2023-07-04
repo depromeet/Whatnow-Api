@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.api.promise.usecase
 
-import com.depromeet.whatnow.api.interaction.dto.InteractionDto
 import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
 import com.depromeet.whatnow.domains.interaction.domain.Interaction
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
@@ -101,10 +100,10 @@ class PromiseReadUseCaseTest {
             ),
         )
         val interactions = listOf(
-                Interaction(InteractionType.HEART, 1, 1, 242),
-                Interaction(InteractionType.MUSIC, 1, 1, 1234),
-                Interaction(InteractionType.POOP, 1, 1, 12),
-                Interaction(InteractionType.STEP, 1, 1, 2934)
+            Interaction(InteractionType.HEART, 1, 1, 242),
+            Interaction(InteractionType.MUSIC, 1, 1, 1234),
+            Interaction(InteractionType.POOP, 1, 1, 12),
+            Interaction(InteractionType.STEP, 1, 1, 2934),
         )
 
         Mockito.`when`(promiseUserAdaptor.findByUserId(userId)).thenReturn(promiseUsers)
