@@ -26,7 +26,7 @@ class NcpMapInfoItem(
                 address = ncpMapInfoResponse.address,
                 roadAddress = ncpMapInfoResponse.roadAddress,
                 mapx = ncpMapInfoResponse.mapx,
-                mapy = ncpMapInfoResponse.mapy
+                mapy = ncpMapInfoResponse.mapy,
             )
         }
     }
