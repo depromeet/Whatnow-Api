@@ -18,23 +18,20 @@ class PromiseTimeEndEventHandler(
 ) {
     @Async
     @TransactionalEventListener(classes = [PromiseTimeEndEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterUserEvent(endTimePromiseEvent: PromiseUpdateEndTimeEvent) {
+    fun handleRegisterUserEvent(endTimePromiseEvent: PromiseTimeEndEvent) {
         val promiseId: Long = endTimePromiseEvent.promiseId
         val promise = promiseAdaptor.queryPromise(promiseId)
         val coordinate = promise.meetPlace?.coordinate
         val promiseUsers = promiseUserDomainService.findByPromiseId(promiseId)
-        for (promiseUser in promiseUsers) {
-            when (promiseUser.promiseUserType) {
-                // 만약 유저가 약속을 취소한 상태라면 update 하지 않는다.
-                CANCEL -> continue
 
+        promiseUsers.forEach { promiseUser ->
+            when (promiseUser.promiseUserType) {
+                CANCEL -> return@forEach // CANCEL 일 경우 넘어간다.
                 else -> {
-                    // 만약 유저가 위치가 약속 장소 도착이면 wait 로 상태 변경
-                    if (promiseUserDomainService.isArrived(promiseUser, coordinate!!)) {
+                    val isArrived = promiseUserDomainService.isArrived(promiseUser, coordinate!!)
+                    if (isArrived) {
                         promiseUser.updatePromiseUserTypeToWait()
-                    }
-                    // 만약 유저가 위치가 약속 장소 도착이 아니면 late 로 상태 변경
-                    else {
+                    } else {
                         promiseUser.updatePromiseUserTypeToLate()
                     }
                 }
