@@ -58,4 +58,8 @@ class PromiseUser(
     fun updatePromiseUserType(promiseUserType: PromiseUserType?) {
         this.promiseUserType = promiseUserType
     }
+
+    fun updatePromiseUserLocation(userLocation: CoordinateVo?) {
+        this.userLocation = userLocation
+    }
 }
