@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.domains.promiseuser.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
+import com.depromeet.whatnow.consts.RADIUS_WAIT_CONFIRM
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
@@ -49,6 +50,6 @@ class PromiseUserDomainService(
         val destination = S2LatLng.fromDegrees(coordinate.latitude, coordinate.longitude)
         val distanceInMeters = start.getDistance(destination).radians() * 6371000.0
 
-        return distanceInMeters < 1000
+        return distanceInMeters < RADIUS_WAIT_CONFIRM
     }
 }
