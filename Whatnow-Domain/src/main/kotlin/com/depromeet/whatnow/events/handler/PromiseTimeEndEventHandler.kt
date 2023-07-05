@@ -7,6 +7,8 @@ import com.depromeet.whatnow.events.domainEvent.MeetPromiseUserEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseTimeEndEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Propagation.REQUIRES_NEW
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
 
@@ -16,6 +18,7 @@ class PromiseTimeEndEventHandler(
     val promiseUserDomainService: PromiseUserDomainService,
 ) {
     @Async
+    @Transactional(propagation = REQUIRES_NEW)
     @TransactionalEventListener(classes = [PromiseTimeEndEvent::class], phase = TransactionPhase.AFTER_COMMIT)
     fun handleRegisterUserEvent(endTimePromiseEvent: PromiseTimeEndEvent) {
         val promiseId: Long = endTimePromiseEvent.promiseId
