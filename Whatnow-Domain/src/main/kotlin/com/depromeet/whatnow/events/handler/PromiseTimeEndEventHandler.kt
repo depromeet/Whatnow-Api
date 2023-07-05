@@ -5,7 +5,6 @@ import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.CANCEL
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
 import com.depromeet.whatnow.events.domainEvent.MeetPromiseUserEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseTimeEndEvent
-import com.depromeet.whatnow.events.domainEvent.PromiseUpdateEndTimeEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionPhase

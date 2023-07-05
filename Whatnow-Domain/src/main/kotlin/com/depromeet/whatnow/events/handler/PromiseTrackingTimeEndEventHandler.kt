@@ -2,7 +2,6 @@ package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
-import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
 import com.depromeet.whatnow.events.domainEvent.PromiseTrackingTimeEndEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
