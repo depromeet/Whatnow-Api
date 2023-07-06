@@ -53,6 +53,6 @@ class NcpLocalSearchClientTest() {
                 ),
         )
         val response = client.searchByKeyword(accessKey, secretKey, query)
-        assertEquals(response.items?.size, 1)
+        assertEquals(response.items.size, 1)
     }
 }
