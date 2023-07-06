@@ -86,4 +86,8 @@ class Promise(
         this.meetPlace = meetPlace
         Events.raise(PromiseUpdateMeetPlaceEvent(this.id!!, this.meetPlace!!))
     }
+
+    fun isActive(currentTime: LocalDateTime): Boolean {
+        return this.endTime.minusHours(1) < currentTime && currentTime < this.endTime.plusMinutes(30)
+    }
 }

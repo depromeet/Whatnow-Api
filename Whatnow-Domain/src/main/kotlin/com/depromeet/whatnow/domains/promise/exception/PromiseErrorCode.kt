@@ -27,10 +27,15 @@ enum class PromiseErrorCode(val status: Int, val code: String, val reason: Strin
 
     @ExplainError("이중약속을 잡은 경우")
     PROMISE_DOUBLE_PROMISE(BAD_REQUEST, "PROMISE_400_2", "이미 약속을 잡았습니다."),
+
+    @ExplainError("활성화(약속시간 1시간 전부터 30분 후까지)된 약속이 아닌 경우")
+    PROMISE_NOT_ACTIVATE(BAD_REQUEST, "PROMISE_400_3", "약속이 활성화 되지 않았습니다."),
     ;
 
     override val errorReason: ErrorReason
-        get() { return ErrorReason(status, code, reason) }
+        get() {
+            return ErrorReason(status, code, reason)
+        }
 
     override val explainError: String
         get() {

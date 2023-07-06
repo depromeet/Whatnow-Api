@@ -3,6 +3,7 @@ package com.depromeet.whatnow.api.promiseuser.usecase
 import com.depromeet.whatnow.annotation.UseCase
 import com.depromeet.whatnow.api.promiseuser.dto.PromiseLocationDto
 import com.depromeet.whatnow.api.promiseuser.dto.PromiseUserDto
+import com.depromeet.whatnow.common.aop.verify.ActivePromise
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.security.SecurityUtils
 import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress.DEFAULT
@@ -49,6 +50,7 @@ class PromiseUserRecordUseCase(
     }
 
     @Transactional
+    @ActivePromise
     fun updateLocation(promiseId: Long, userLocation: CoordinateVo): List<PromiseLocationDto> {
         val userId = SecurityUtils.currentUserId
         val promiseUser = promiseUserDomainService.findByUserId(userId)

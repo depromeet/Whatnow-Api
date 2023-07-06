@@ -18,6 +18,7 @@ class RequiresMainUserAspect(
         val userId = SecurityUtils.currentUserId
         val promiseId = joinPoint.args[0] as Long
         val promise = promiseAdaptor.queryPromise(promiseId)
+
         if (userId == promise.mainUserId) {
             return joinPoint.proceed()
         } else {
