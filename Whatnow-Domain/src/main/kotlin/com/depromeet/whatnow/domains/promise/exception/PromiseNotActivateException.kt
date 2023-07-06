@@ -6,6 +6,6 @@ class PromiseNotActivateException : WhatnowCodeException(
     PromiseErrorCode.PROMISE_NOT_ACTIVATE,
 ) {
     companion object {
-        val EXCEPTION: WhatnowCodeException = PromiseNotFoundException()
+        val EXCEPTION: WhatnowCodeException = PromiseNotActivateException()
     }
 }

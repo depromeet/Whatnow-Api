@@ -13,7 +13,6 @@ import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
 import org.springframework.transaction.annotation.Transactional
 
-@Suppress("NAME_SHADOWING")
 @UseCase
 class PromiseUserRecordUseCase(
     val promiseUserDomainService: PromiseUserDomainService,
@@ -32,12 +31,10 @@ class PromiseUserRecordUseCase(
         )
     }
 
-    @Transactional
     fun cancelPromise(promiseId: Long, userId: Long) {
         promiseUserDomainService.withDraw(promiseId, userId)
     }
 
-    @Transactional
     fun updatePromiseUserType(promiseId: Long, userId: Long, promiseUserType: PromiseUserType): PromiseUserDto {
         return PromiseUserDto.of(
             promiseUserDomainService.updatePromiseUserType(

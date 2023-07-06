@@ -7,6 +7,6 @@ class PromiseNotParticipateException : WhatnowCodeException(
     GlobalErrorCode.USER_NOT_PARTICIPATE,
 ) {
     companion object {
-        val EXCEPTION: WhatnowCodeException = PromiseNotFoundException()
+        val EXCEPTION: WhatnowCodeException = PromiseNotParticipateException()
     }
 }
