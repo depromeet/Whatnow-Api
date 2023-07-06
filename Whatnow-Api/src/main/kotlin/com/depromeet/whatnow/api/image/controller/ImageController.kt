@@ -1,7 +1,9 @@
 package com.depromeet.whatnow.api.image.controller
 
+import com.depromeet.whatnow.api.image.dto.ImageCommentElement
 import com.depromeet.whatnow.api.image.dto.ImageUrlResponse
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
+import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.s3.ImageFileExtension
@@ -25,6 +27,7 @@ import javax.validation.Valid
 class ImageController(
     val getPresignedUrlUseCase: GetPresignedUrlUseCase,
     val successUseCase: ImageUploadSuccessUseCase,
+    val imageCommentReadUseCase: ImageCommentReadUseCase,
 ) {
     @Operation(summary = "약속 이미지 업로드 Presigned URL 발급")
     @GetMapping("/images/promises/{promiseId}")
@@ -59,5 +62,11 @@ class ImageController(
     @PostMapping("/images/{imageKey}/users/me")
     fun userUploadImageSuccess(@PathVariable imageKey: String) {
         successUseCase.userUploadImageSuccess(imageKey)
+    }
+
+    @Operation(summary = "이미지 코멘트를 이넘으로 확인합니다. 주의!! 스웨거 이넘 예시 값과 실제 요청했을 때 값이 달라요 실제 요청값 기준으로 해주세요")
+    @GetMapping("/images/comments")
+    fun getImageCommentType(): List<ImageCommentElement> {
+        return imageCommentReadUseCase.execute()
     }
 }

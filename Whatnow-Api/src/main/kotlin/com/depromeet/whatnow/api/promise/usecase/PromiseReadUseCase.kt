@@ -1,12 +1,14 @@
 package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
+import com.depromeet.whatnow.api.interaction.dto.InteractionDto
 import com.depromeet.whatnow.api.promise.dto.LocationCapture
 import com.depromeet.whatnow.api.promise.dto.PromiseDetailDto
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseUserInfoVo
 import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.config.security.SecurityUtils
+import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.domain.PromiseType
@@ -23,6 +25,7 @@ class PromiseReadUseCase(
     val promiseUserAdaptor: PromiseUserAdaptor,
     val userAdapter: UserAdapter,
     val userRepository: UserRepository,
+    val interactionAdapter: InteractionAdapter,
 ) {
     /**
      * method desc: 유저가 참여한 약속들을 약속 종류(BEFORE, PAST)에 따라 분리해서 조회
@@ -115,7 +118,15 @@ class PromiseReadUseCase(
             val promiseUsers = promiseUsersByPromiseId.filter { it.promiseId == promise.id }
             val promiseUserInfoVos = promiseUsers.mapNotNull { promiseUser ->
                 val user = users.find { it.id == promiseUser.userId }
-                user?.let { PromiseUserInfoVo.of(it, promiseUser.promiseUserType!!) }
+
+                // 유저의 Interaction 정보를 조회 (인터렉션 개수 순으로 내림차순 정렬)
+                val interactions =
+                    interactionAdapter.queryAllInteraction(promiseUser.promiseId, promiseUser.userId)
+                        .map { InteractionDto.from(it) }
+                        .sortedByDescending { interactionDto -> interactionDto.count }
+                user?.let {
+                    PromiseUserInfoVo.of(it, promiseUser.promiseUserType!!, interactions)
+                }
             }
 
             val timeOverLocations = promiseUsers.mapNotNull { promiseUser ->
