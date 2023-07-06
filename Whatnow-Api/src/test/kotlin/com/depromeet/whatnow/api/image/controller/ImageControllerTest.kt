@@ -3,6 +3,7 @@ package com.depromeet.whatnow.api.image.controller
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
+import com.depromeet.whatnow.api.image.usecase.PromiseImageReadUseCase
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
@@ -22,7 +23,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @WebMvcTest(ImageController::class)
 @ContextConfiguration(classes = [ImageController::class])
 @AutoConfigureMockMvc(addFilters = false)
-class PromiseImageControllerTest {
+class ImageControllerTest {
     @MockBean
     lateinit var getPresignedUrlUseCase: GetPresignedUrlUseCase
 
@@ -31,6 +32,9 @@ class PromiseImageControllerTest {
 
     @MockBean
     lateinit var imageCommentReadUseCase: ImageCommentReadUseCase
+
+    @MockBean
+    lateinit var promiseImageReadUseCase: PromiseImageReadUseCase
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -46,7 +50,7 @@ class PromiseImageControllerTest {
 
         // when, then
         mockMvc.perform(
-            get("/v1/images/promises/{promiseId}", promiseId)
+            get("/v1/images/promises/{promiseId}/presigned-url", promiseId)
                 .param("fileExtension", fileExtension),
         )
             .andExpect(status().isOk)
@@ -60,7 +64,7 @@ class PromiseImageControllerTest {
 
         // when, then
         mockMvc.perform(
-            get("/v1/images/users/me")
+            get("/v1/images/users/me/presigned-url")
                 .param("fileExtension", fileExtension),
         )
             .andExpect(status().isOk)
