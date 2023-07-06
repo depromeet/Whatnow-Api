@@ -59,4 +59,13 @@ class ImageDomainService(
             }
         }
     }
+
+    @Transactional(readOnly = true)
+    fun getImagesByPromiseId(promiseId: Long): List<PromiseImage> {
+        return promiseImageAdapter.findAllByPromiseId(promiseId)
+    }
+
+    fun getImageByImageKey(imageKey: String): PromiseImage {
+        return promiseImageAdapter.findByImageKey(imageKey)
+    }
 }

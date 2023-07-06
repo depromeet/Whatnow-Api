@@ -46,4 +46,8 @@ class PromiseUserDomainService(
     fun findByUserId(userId: Long): List<PromiseUser> {
         return promiseUserAdaptor.findByUserId(userId)
     }
+
+    fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
+        return promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
+    }
 }

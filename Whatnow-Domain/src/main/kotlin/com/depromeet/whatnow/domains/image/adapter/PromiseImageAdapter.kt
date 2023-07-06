@@ -11,4 +11,12 @@ class PromiseImageAdapter(
     fun save(promiseImage: PromiseImage): PromiseImage {
         return promiseImageRepository.save(promiseImage)
     }
+
+    fun findAllByPromiseId(promiseId: Long): List<PromiseImage> {
+        return promiseImageRepository.findAllByPromiseId(promiseId)
+    }
+
+    fun findByImageKey(imageKey: String): PromiseImage {
+        return promiseImageRepository.findByImageKey(imageKey)
+    }
 }
