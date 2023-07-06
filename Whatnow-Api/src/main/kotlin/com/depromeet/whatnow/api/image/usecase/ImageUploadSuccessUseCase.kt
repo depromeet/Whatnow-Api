@@ -13,11 +13,10 @@ class ImageUploadSuccessUseCase(
     fun promiseUploadImageSuccess(
         promiseId: Long,
         imageKey: String,
-        promiseImageCommentType: PromiseImageCommentType,
-        userLocation: CoordinateVo,
+        promiseImageCommentType: PromiseImageCommentType
     ) {
         val currentUserId: Long = SecurityUtils.currentUserId
-        imageDomainService.promiseImageUploadSuccess(currentUserId, promiseId, imageKey, promiseImageCommentType, userLocation)
+        imageDomainService.promiseImageUploadSuccess(currentUserId, promiseId, imageKey, promiseImageCommentType)
     }
 
     fun userUploadImageSuccess(imageKey: String) {

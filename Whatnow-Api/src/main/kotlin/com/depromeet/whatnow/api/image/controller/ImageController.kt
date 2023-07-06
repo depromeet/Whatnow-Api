@@ -52,10 +52,8 @@ class ImageController(
         @PathVariable promiseId: Long,
         @PathVariable imageKey: String,
         @RequestParam promiseImageCommentType: PromiseImageCommentType,
-        @RequestBody @Valid
-        userLocation: CoordinateVo,
     ) {
-        successUseCase.promiseUploadImageSuccess(promiseId, imageKey, promiseImageCommentType, userLocation)
+        successUseCase.promiseUploadImageSuccess(promiseId, imageKey, promiseImageCommentType)
     }
 
     @Operation(summary = "유저 프로필 이미지 업로드 성공 요청")

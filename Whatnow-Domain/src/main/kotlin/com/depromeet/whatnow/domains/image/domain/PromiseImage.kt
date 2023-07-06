@@ -29,9 +29,6 @@ class PromiseImage(
     @Enumerated(EnumType.STRING)
     var promiseImageCommentType: PromiseImageCommentType,
 
-    @Embedded
-    var userLocation: CoordinateVo? = null,
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promise_image_id")
@@ -43,10 +40,9 @@ class PromiseImage(
             promiseId: Long,
             uri: String,
             imageKey: String,
-            promiseImageCommentType: PromiseImageCommentType,
-            userLocation: CoordinateVo,
+            promiseImageCommentType: PromiseImageCommentType
         ): PromiseImage {
-            return PromiseImage(userId, promiseId, uri, imageKey, promiseImageCommentType, userLocation)
+            return PromiseImage(userId, promiseId, uri, imageKey, promiseImageCommentType)
         }
     }
 
