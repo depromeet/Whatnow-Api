@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.api.image.usecase
 
-import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import com.depromeet.whatnow.domains.image.service.ImageDomainService
 import org.assertj.core.api.Assertions.assertThatCode
@@ -33,13 +32,11 @@ class PromiseImageUploadSuccessUseCaseTest {
     @Test
     fun `약속 이미지 업로드 성공 요청시 정상적이라면 에러가 발생하지 않는다`() {
         // given
-        val coordinateVo = CoordinateVo(1.0, 1.0)
-
         // when
 
         // then
         assertThatCode {
-            imageUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", PromiseImageCommentType.SORRY_LATE, coordinateVo)
+            imageUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", PromiseImageCommentType.SORRY_LATE)
         }.doesNotThrowAnyException()
     }
 
