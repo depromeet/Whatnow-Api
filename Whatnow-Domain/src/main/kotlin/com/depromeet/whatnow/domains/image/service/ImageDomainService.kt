@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.domains.image.service
 
-import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.consts.IMAGE_DOMAIN
 import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
 import com.depromeet.whatnow.domains.image.adapter.UserImageAdapter
@@ -30,7 +29,7 @@ class ImageDomainService(
         userId: Long,
         promiseId: Long,
         imageKey: String,
-        promiseImageCommentType: PromiseImageCommentType
+        promiseImageCommentType: PromiseImageCommentType,
     ) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         validatePromiseUserType(promiseUser.promiseUserType!!, promiseImageCommentType)
