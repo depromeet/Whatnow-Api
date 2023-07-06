@@ -3,7 +3,6 @@ package com.depromeet.whatnow.api.image.controller
 import com.depromeet.whatnow.api.image.dto.ImageCommentElement
 import com.depromeet.whatnow.api.image.dto.ImageUrlResponse
 import com.depromeet.whatnow.api.image.dto.PromiseImageDetailResponse
-import com.depromeet.whatnow.api.image.dto.PromiseImageDto
 import com.depromeet.whatnow.api.image.dto.PromiseImageResponse
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
@@ -68,13 +67,6 @@ class ImageController(
     @GetMapping("/promises/{promiseId}")
     fun getLateAndWaitImagesByPromiseId(@PathVariable promiseId: Long): PromiseImageResponse {
         return promiseImageReadUseCase.getLateAndWaitImagesByPromiseId(promiseId)
-    }
-
-    @Tag(name = "6-1 [약속 이미지]")
-    @Operation(summary = "약속 아이디를 통해 모든 이미지 가져옵니다.")
-    @GetMapping("/promises/{promiseId}/all")
-    fun getImagesByPromiseId(@PathVariable promiseId: Long): List<PromiseImageDto> {
-        return promiseImageReadUseCase.getImagesByPromiseId(promiseId)
     }
 
     @Tag(name = "6-1 [약속 이미지]")
