@@ -11,4 +11,8 @@ class UserImageAdapter(
     fun save(userImage: UserImage): UserImage {
         return userImageRepository.save(userImage)
     }
+
+    fun findAllByUserId(userId: Long): List<UserImage> {
+        return userImageRepository.findAllByUserId(userId)
+    }
 }

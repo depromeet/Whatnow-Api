@@ -1,11 +1,14 @@
 package com.depromeet.whatnow.domains.user.service
 
 import com.depromeet.whatnow.annotation.DomainService
+import com.depromeet.whatnow.common.aop.event.Events
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.domain.FcmNotificationVo
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.User
 import com.depromeet.whatnow.domains.user.exception.AlreadySignUpUserException
+import com.depromeet.whatnow.events.domainEvent.UserProfileImageUpdatedEvent
 import org.springframework.transaction.annotation.Transactional
 
 @DomainService
@@ -103,9 +106,13 @@ class UserDomainService(
     }
 
     @Transactional
-    fun updateProfile(currentUserId: Long, profileImage: String, username: String): User {
+    fun updateProfile(currentUserId: Long, profileImage: String, username: String, isDefaultImage: Boolean, imageKey: String, fileExtension: ImageFileExtension): User {
         val user = userAdapter.queryUser(currentUserId)
-        user.updateProfile(profileImage, username)
+        user.updateProfile(profileImage, username, isDefaultImage)
+
+        if (!isDefaultImage) {
+            Events.raise(UserProfileImageUpdatedEvent(currentUserId, imageKey, fileExtension))
+        }
         return user
     }
 }

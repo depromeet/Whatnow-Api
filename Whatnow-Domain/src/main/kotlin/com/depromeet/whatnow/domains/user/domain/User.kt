@@ -4,6 +4,7 @@ import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.UserDetailVo
 import com.depromeet.whatnow.common.vo.UserInfoVo
+import com.depromeet.whatnow.consts.USER_DEFAULT_PROFILE_IMAGE
 import com.depromeet.whatnow.domains.user.exception.AlreadyDeletedUserException
 import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
 import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
@@ -91,12 +92,14 @@ class User(
         fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
     }
 
-    fun updateProfile(profileImage: String, username: String) {
-        if (profileImage != profileImg) {
-            isDefaultImg = false
+    fun updateProfile(profileImage: String, username: String, isDefaultImage: Boolean) {
+        this.nickname = username
+        this.isDefaultImg = isDefaultImage
+        this.profileImg = if (isDefaultImage) {
+            USER_DEFAULT_PROFILE_IMAGE
+        } else {
+            profileImage
         }
-        profileImg = profileImage
-        nickname = username
     }
 
     fun toUserInfoVo(): UserInfoVo {
