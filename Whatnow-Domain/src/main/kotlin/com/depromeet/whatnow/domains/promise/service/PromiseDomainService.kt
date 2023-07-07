@@ -13,7 +13,6 @@ import javax.transaction.Transactional
 class PromiseDomainService(
     val promiseAdaptor: PromiseAdaptor,
 ) {
-
     fun registerPromise(
         endTime: LocalDateTime,
         title: String,
