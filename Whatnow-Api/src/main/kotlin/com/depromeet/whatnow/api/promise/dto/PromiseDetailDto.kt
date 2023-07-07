@@ -1,9 +1,13 @@
 package com.depromeet.whatnow.api.promise.dto
 
+import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import java.time.LocalDateTime
 
 data class PromiseDetailDto(
+    val promiseId: Long,
+    val address: String,
+    val coordinateVo: CoordinateVo,
     val title: String,
     val date: LocalDateTime,
     // 유저의 마지막 위치 리스트
@@ -22,6 +26,9 @@ data class PromiseDetailDto(
             timeOverLocations: List<LocationCapture>,
         ): PromiseDetailDto {
             return PromiseDetailDto(
+                promiseId = promise.id!!,
+                address = promise.meetPlace!!.address,
+                coordinateVo = promise.meetPlace!!.coordinate,
                 title = promise.title,
                 date = promise.endTime,
                 promiseUsers = promiseUsers,
