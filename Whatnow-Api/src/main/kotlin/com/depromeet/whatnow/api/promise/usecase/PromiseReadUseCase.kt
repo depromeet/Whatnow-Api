@@ -8,6 +8,7 @@ import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseUserInfoVo
 import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.config.security.SecurityUtils
+import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
 import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
@@ -27,6 +28,7 @@ class PromiseReadUseCase(
     val userAdapter: UserAdapter,
     val userRepository: UserRepository,
     val interactionAdapter: InteractionAdapter,
+    val promiseImageAdapter: PromiseImageAdapter,
 ) {
     /**
      * method desc: 유저가 참여한 약속들을 약속 종류(BEFORE, PAST)에 따라 분리해서 조회
@@ -116,6 +118,10 @@ class PromiseReadUseCase(
                 }
             }
 
+            val promiseImagesUrls = promiseImageAdapter.findAllByPromiseId(promise.id!!)
+                .sortedByDescending { it.createdAt }
+                .map { it.uri }
+
             val timeOverLocations = promiseUsers.mapNotNull { promiseUser ->
                 promiseUser.userLocation?.let { location ->
                     LocationCapture(userId = promiseUser.userId, coordinateVo = location)
@@ -127,7 +133,7 @@ class PromiseReadUseCase(
                     promise = promise,
                     promiseUsers = promiseUserInfoVos,
                     timeOverLocations = timeOverLocations,
-                    promiseImageUrls = mutableListOf(),
+                    promiseImageUrls = promiseImagesUrls,
                 ),
             )
         }
