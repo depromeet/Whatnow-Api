@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.domains.image.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
 import com.depromeet.whatnow.domains.image.adapter.UserImageAdapter
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
@@ -50,12 +51,13 @@ class PromiseImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.LATE,
         )
+        val fileExtension = ImageFileExtension.JPEG
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatCode {
-            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", fileExtension, PromiseImageCommentType.RUNNING)
         }.doesNotThrowAnyException()
     }
 
@@ -68,12 +70,13 @@ class PromiseImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.READY,
         )
+        val fileExtension = ImageFileExtension.JPEG
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", fileExtension, PromiseImageCommentType.RUNNING)
         }.isInstanceOf(UploadBeforeTrackingException::class.java)
     }
 
@@ -86,12 +89,13 @@ class PromiseImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.CANCEL,
         )
+        val fileExtension = ImageFileExtension.JPEG
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", fileExtension, PromiseImageCommentType.RUNNING)
         }.isInstanceOf(CancelledUserUploadException::class.java)
     }
 
@@ -104,12 +108,13 @@ class PromiseImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.LATE,
         )
+        val fileExtension = ImageFileExtension.JPEG
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.DID_YOU_COME)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", fileExtension, PromiseImageCommentType.DID_YOU_COME)
         }.isInstanceOf(InvalidCommentTypeException::class.java)
     }
 
@@ -122,12 +127,13 @@ class PromiseImageDomainServiceTest {
             userLocation = CoordinateVo(1.0, 1.0),
             promiseUserType = PromiseUserType.WAIT,
         )
+        val fileExtension = ImageFileExtension.JPEG
         given(promiseUserAdapter.findByPromiseIdAndUserId(anyLong(), anyLong()))
             .willReturn(promiseUser)
 
         // when, then
         Assertions.assertThatThrownBy {
-            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.WAIT_A_BIT)
+            imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", fileExtension, PromiseImageCommentType.WAIT_A_BIT)
         }.isInstanceOf(InvalidCommentTypeException::class.java)
     }
 }
