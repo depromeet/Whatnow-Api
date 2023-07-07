@@ -55,4 +55,8 @@ class PromiseUserDomainService(
 
         return distanceInMeters < RADIUS_WAIT_CONFIRM
     }
+
+    fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
+        return promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
+    }
 }
