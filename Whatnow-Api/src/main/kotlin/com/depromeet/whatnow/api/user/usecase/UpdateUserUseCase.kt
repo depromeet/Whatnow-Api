@@ -29,7 +29,6 @@ class UpdateUserUseCase(
             updateProfileRequest.username,
             updateProfileRequest.isDefaultImg,
             updateProfileRequest.imageKey,
-            updateProfileRequest.fileExtension,
         )
             .toUserDetailVo()
     }

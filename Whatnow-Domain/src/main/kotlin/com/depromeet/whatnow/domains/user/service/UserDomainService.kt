@@ -2,7 +2,6 @@ package com.depromeet.whatnow.domains.user.service
 
 import com.depromeet.whatnow.annotation.DomainService
 import com.depromeet.whatnow.common.aop.event.Events
-import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.domain.FcmNotificationVo
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
@@ -106,12 +105,12 @@ class UserDomainService(
     }
 
     @Transactional
-    fun updateProfile(currentUserId: Long, profileImage: String, username: String, isDefaultImage: Boolean, imageKey: String, fileExtension: ImageFileExtension): User {
+    fun updateProfile(currentUserId: Long, profileImage: String, username: String, isDefaultImage: Boolean, imageKey: String): User {
         val user = userAdapter.queryUser(currentUserId)
         user.updateProfile(profileImage, username, isDefaultImage)
 
         if (!isDefaultImage) {
-            Events.raise(UserProfileImageUpdatedEvent(currentUserId, imageKey, fileExtension))
+            Events.raise(UserProfileImageUpdatedEvent(currentUserId, imageKey))
         }
         return user
     }

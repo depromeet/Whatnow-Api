@@ -17,7 +17,6 @@ class UserProfileImageUpdatedEventHandler(
     fun handleRegisterUserEvent(userProfileImageUpdatedEvent: UserProfileImageUpdatedEvent) {
         val userId = userProfileImageUpdatedEvent.userId
         val imageKey = userProfileImageUpdatedEvent.imageKey
-        val fileExtension = userProfileImageUpdatedEvent.fileExtension
 
         // TODO [DPMBE-76] 사진 삭제기능 업데이트 시 주석 해제
         val userImages = userImageAdapter.findAllByUserId(userId)
