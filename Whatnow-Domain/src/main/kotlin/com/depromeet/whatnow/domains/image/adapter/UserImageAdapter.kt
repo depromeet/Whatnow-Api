@@ -13,6 +13,10 @@ class UserImageAdapter(
         return userImageRepository.save(userImage)
     }
 
+    fun findAllByUserId(userId: Long): List<UserImage> {
+        return userImageRepository.findAllByUserId(userId)
+    }
+
     fun findByUserIdAndImageKey(userId: Long, imageKey: String): UserImage {
         return userImageRepository.findByUserIdAndImageKey(userId, imageKey) ?: run { throw UserImageNotFoundException.EXCEPTION }
     }

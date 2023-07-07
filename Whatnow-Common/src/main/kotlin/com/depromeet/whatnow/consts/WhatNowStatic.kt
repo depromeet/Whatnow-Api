@@ -29,6 +29,7 @@ const val RADIUS_WAIT_CONFIRM = 200
 
 const val IMAGE_DOMAIN = "https://image.whatnow.kr"
 const val ASSERT_IMAGE_DOMAIN = "https://image.whatnow.kr/assert"
+const val USER_DEFAULT_PROFILE_IMAGE = "https://image.whatnow.kr/assert/users/default.svg"
 
 const val REDIS_EXPIRE_EVENT_PATTERN = "__keyevent@*__:expired"
 
