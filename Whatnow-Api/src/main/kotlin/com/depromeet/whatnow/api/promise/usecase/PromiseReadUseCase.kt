@@ -18,6 +18,7 @@ import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.domains.user.repository.UserRepository
 import java.time.LocalDateTime
 import java.time.YearMonth
+import kotlin.collections.Map.Entry
 
 @UseCase
 class PromiseReadUseCase(
@@ -34,18 +35,13 @@ class PromiseReadUseCase(
      */
     fun findPromiseByUserIdSeparatedType(): Map<PromiseType, MutableList<PromiseFindDto>> {
         val userId: Long = SecurityUtils.currentUserId
-
-        // 내가 참여한 약속들(약속유저)
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
         val promiseIds = promiseUsers.map { it.promiseId }
-        //  내가 참여한 약속들
         val promises = promiseAdaptor.queryPromises(promiseIds).associateBy { it.id }
-        // 내가 참여한 약속들에 참여한 친구들
         val promiseUsersByPromiseId = promiseUserAdaptor.findByPromiseIds(promiseIds).groupBy { it.promiseId }
         val promiseSplitByPromiseTypeDto = mutableMapOf<PromiseType, MutableList<PromiseFindDto>>()
 
-        for (promiseUser in promiseUsers) {
-            // 약속 하나씩
+        promiseUsers.forEach() { promiseUser ->
             val promise = promises[promiseUser.promiseId]
             val eachPromiseUsers = promiseUsersByPromiseId[promiseUser.promiseId] ?: emptyList()
             val participant = getParticipantUserInfo(eachPromiseUsers)
@@ -60,16 +56,20 @@ class PromiseReadUseCase(
                 }
 
                 PromiseType.DELETED -> {
-                    // TODO
-                    // Do nothing for deleted promises.
+                    return@forEach
                 }
                 null -> {
-                    // TODO
+                    return@forEach
                 }
                 else -> {
-                    // TODO
+                    return@forEach
                 }
             }
+
+            val action: (Entry<PromiseType, MutableList<PromiseFindDto>>) -> Unit = { (promiseType, promiseFindDtos) ->
+                promiseFindDtos.sortBy { it.endTime }
+            }
+            promiseSplitByPromiseTypeDto.forEach(action)
         }
         return promiseSplitByPromiseTypeDto
     }
@@ -85,24 +85,11 @@ class PromiseReadUseCase(
             .map { promise ->
                 // 약속에 참여한 유저들
                 val participants = getParticipantUserInfo(promiseUserAdaptor.findByPromiseId(promise.id!!))
-                PromiseFindDto(
-                    title = promise.title,
-                    address = promise.meetPlace!!.address,
-                    endTime = promise.endTime,
+                PromiseFindDto.of(
+                    promise = promise,
                     users = participants,
                 )
-            }
-    }
-
-    fun findPromisesByUserId(userId: Long): List<Promise> {
-        val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-        return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }
-    }
-
-    fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
-        val userIds = promiseUsers.map { it.userId }
-        val users = userRepository.findAllById(userIds)
-        return users.mapNotNull { UserInfoVo.from(it) }
+            }.sortedByDescending { it.endTime }
     }
 
     fun findPromiseDetailByStatus(promiseType: PromiseType): List<PromiseDetailDto> {
@@ -136,16 +123,16 @@ class PromiseReadUseCase(
             }
 
             result.add(
-                PromiseDetailDto(
-                    title = promise.title,
-                    date = promise.endTime,
+                PromiseDetailDto.of(
+                    promise = promise,
                     promiseUsers = promiseUserInfoVos,
-                    promiseImageUrls = null,
                     timeOverLocations = timeOverLocations,
+                    promiseImageUrls = mutableListOf(),
                 ),
             )
         }
-        return result
+
+        return result.sortedByDescending { it.endTime }
     }
 
     fun findPromiseActive(promiseId: Long): Boolean {
@@ -154,5 +141,22 @@ class PromiseReadUseCase(
         val now = LocalDateTime.now()
         val endTime = promise.endTime
         return now.isAfter(endTime.minusHours(1)) && now.isBefore(endTime.plusMinutes(30))
+    }
+    private fun getParticipantUserInfo(promiseUsers: List<PromiseUser>): List<UserInfoVo> {
+        val userIds = promiseUsers.map { it.userId }
+        val users = userRepository.findAllById(userIds)
+        return users.mapNotNull { UserInfoVo.from(it) }
+    }
+
+    private fun findPromisesByUserId(userId: Long): List<Promise> {
+        val promiseUsers = promiseUserAdaptor.findByUserId(userId)
+        return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }.sortedByDescending { it.endTime }
+    }
+
+    fun findByPromiseId(promiseId: Long): PromiseFindDto {
+        val promise = promiseAdaptor.queryPromise(promiseId)
+        val promiseUsers = promiseUserAdaptor.findByPromiseId(promiseId)
+        val participants = getParticipantUserInfo(promiseUsers)
+        return PromiseFindDto.of(promise, participants)
     }
 }
