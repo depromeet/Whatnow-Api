@@ -7,6 +7,7 @@ import com.depromeet.whatnow.common.vo.UserInfoVo
 import com.depromeet.whatnow.consts.USER_DEFAULT_PROFILE_IMAGE
 import com.depromeet.whatnow.domains.user.exception.AlreadyDeletedUserException
 import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
+import com.depromeet.whatnow.events.domainEvent.UserProfileImageUpdatedEvent
 import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -92,13 +93,13 @@ class User(
         fcmNotification = FcmNotificationVo.updateToken(fcmNotification, fcmToken)
     }
 
-    fun updateProfile(profileImage: String, username: String, isDefaultImage: Boolean) {
+    fun updateProfile(profileImage: String, username: String, isDefaultImage: Boolean, imageKey: String) {
         this.nickname = username
         this.isDefaultImg = isDefaultImage
-        this.profileImg = if (isDefaultImage) {
-            USER_DEFAULT_PROFILE_IMAGE
-        } else {
-            profileImage
+        this.profileImg = profileImage.takeIf { !isDefaultImage } ?: USER_DEFAULT_PROFILE_IMAGE
+
+        if (!isDefaultImage) {
+            Events.raise(UserProfileImageUpdatedEvent(this.id!!, imageKey))
         }
     }
 

@@ -107,11 +107,7 @@ class UserDomainService(
     @Transactional
     fun updateProfile(currentUserId: Long, profileImage: String, username: String, isDefaultImage: Boolean, imageKey: String): User {
         val user = userAdapter.queryUser(currentUserId)
-        user.updateProfile(profileImage, username, isDefaultImage)
-
-        if (!isDefaultImage) {
-            Events.raise(UserProfileImageUpdatedEvent(currentUserId, imageKey))
-        }
+        user.updateProfile(profileImage, username, isDefaultImage, imageKey)
         return user
     }
 }
