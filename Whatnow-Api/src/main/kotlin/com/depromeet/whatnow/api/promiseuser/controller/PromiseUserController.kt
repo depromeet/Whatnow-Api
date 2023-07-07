@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.promiseuser.controller
 
+import com.depromeet.whatnow.api.promiseuser.dto.PromiseLocationDto
 import com.depromeet.whatnow.api.promiseuser.dto.PromiseUserDto
 import com.depromeet.whatnow.api.promiseuser.usecase.PromiseUserReadUseCase
 import com.depromeet.whatnow.api.promiseuser.usecase.PromiseUserRecordUseCase
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -45,5 +47,11 @@ class PromiseUserController(
     @PutMapping("/promises/{promise-id}/users/{user-id}/status/{status}")
     fun cancelPromise(@PathVariable("promise-id") promiseId: Long, @PathVariable("user-id") userId: Long, @PathVariable("status") promiseUserType: PromiseUserType): PromiseUserDto {
         return promiseUserRecordUseCase.updatePromiseUserType(promiseId, userId, promiseUserType)
+    }
+
+    @Operation(summary = "내 위치 갱신하기", description = "내 위치를 갱신하고 최신화된 약속의 참여한 유저들의 위치를 반환합니다., (GRS84GEO(위경도) 단위로 요청하셔야 합니다")
+    @PutMapping("/promises/{promise-id}/users/location")
+    fun updateLocation(@PathVariable("promise-id") promiseId: Long, @RequestParam userLocation: CoordinateVo): List<PromiseLocationDto> {
+        return promiseUserRecordUseCase.updateLocation(promiseId, userLocation)
     }
 }
