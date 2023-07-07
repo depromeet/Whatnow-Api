@@ -5,7 +5,6 @@ import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
 import com.depromeet.whatnow.api.image.usecase.PromiseImageDeleteUseCase
 import com.depromeet.whatnow.api.image.usecase.PromiseImageReadUseCase
-import com.depromeet.whatnow.api.image.usecase.UserImageDeleteUseCase
 import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import org.junit.jupiter.api.Test

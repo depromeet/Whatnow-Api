@@ -9,7 +9,6 @@ import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
 import com.depromeet.whatnow.api.image.usecase.PromiseImageDeleteUseCase
 import com.depromeet.whatnow.api.image.usecase.PromiseImageReadUseCase
-import com.depromeet.whatnow.api.image.usecase.UserImageDeleteUseCase
 import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import io.swagger.v3.oas.annotations.Operation
@@ -31,7 +30,7 @@ class ImageController(
     val successUseCase: ImageUploadSuccessUseCase,
     val imageCommentReadUseCase: ImageCommentReadUseCase,
     val promiseImageReadUseCase: PromiseImageReadUseCase,
-    val promiseImageDeleteUseCase: PromiseImageDeleteUseCase
+    val promiseImageDeleteUseCase: PromiseImageDeleteUseCase,
 ) {
     @Tag(name = "6-1 [약속 이미지]")
     @Operation(summary = "약속 이미지 업로드 Presigned URL 발급")
