@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.domains.image.service
 
-import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.consts.IMAGE_DOMAIN
 import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
 import com.depromeet.whatnow.domains.image.adapter.UserImageAdapter
@@ -31,14 +30,13 @@ class ImageDomainService(
         promiseId: Long,
         imageKey: String,
         promiseImageCommentType: PromiseImageCommentType,
-        userLocation: CoordinateVo,
     ) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         validatePromiseUserType(promiseUser.promiseUserType!!, promiseImageCommentType)
 
         val imageUrl = IMAGE_DOMAIN + "/" + springEnvironmentHelper.activeProfile + "/" + "promise/$promiseId/$imageKey"
         promiseImageAdapter.save(
-            PromiseImage.of(promiseId, userId, imageUrl, imageKey, promiseImageCommentType, userLocation),
+            PromiseImage.of(promiseId, userId, imageUrl, imageKey, promiseImageCommentType),
         )
     }
 
