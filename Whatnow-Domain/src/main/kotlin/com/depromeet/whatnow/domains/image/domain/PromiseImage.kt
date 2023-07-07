@@ -2,10 +2,8 @@ package com.depromeet.whatnow.domains.image.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
-import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.events.domainEvent.PromiseImageRegisterEvent
 import javax.persistence.Column
-import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
@@ -29,9 +27,6 @@ class PromiseImage(
     @Enumerated(EnumType.STRING)
     var promiseImageCommentType: PromiseImageCommentType,
 
-    @Embedded
-    var userLocation: CoordinateVo? = null,
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promise_image_id")
@@ -44,9 +39,8 @@ class PromiseImage(
             uri: String,
             imageKey: String,
             promiseImageCommentType: PromiseImageCommentType,
-            userLocation: CoordinateVo,
         ): PromiseImage {
-            return PromiseImage(userId, promiseId, uri, imageKey, promiseImageCommentType, userLocation)
+            return PromiseImage(userId, promiseId, uri, imageKey, promiseImageCommentType)
         }
     }
 

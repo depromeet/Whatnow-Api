@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.promise.dto
 
+import com.depromeet.whatnow.api.interaction.dto.InteractionDto
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.user.domain.User
 
@@ -8,13 +9,12 @@ data class PromiseUserInfoVo(
     val nickname: String,
     val isDefaultImg: Boolean,
     val promiseUserType: PromiseUserType,
-    // TODO : Interaction 리스트 ( ex. POOP : 1, MUSIC : 2, ... )
-    // val interactions: List<Interaction>
+    val interactions: List<InteractionDto>,
 ) {
-    //    interaction 기능 추가시 함께 추가할게요.
     companion object {
-        fun of(user: User, promiseUserType: PromiseUserType): PromiseUserInfoVo {
-            return PromiseUserInfoVo(user.profileImg, user.nickname, user.isDefaultImg, promiseUserType)
+        fun of(user: User, promiseUserType: PromiseUserType, interactionDtoList: List<InteractionDto>): PromiseUserInfoVo {
+            val list = interactionDtoList.sortedByDescending { interactionDto -> interactionDto.count }
+            return PromiseUserInfoVo(user.profileImg, user.nickname, user.isDefaultImg, promiseUserType, list)
         }
     }
 }
