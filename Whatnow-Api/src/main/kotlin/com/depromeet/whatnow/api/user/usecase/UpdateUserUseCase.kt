@@ -23,7 +23,13 @@ class UpdateUserUseCase(
 
     fun updateProfile(updateProfileRequest: UpdateProfileRequest): UserDetailVo {
         val currentUserId: Long = SecurityUtils.currentUserId
-        return userDomainService.updateProfile(currentUserId, updateProfileRequest.profileImage, updateProfileRequest.username)
+        return userDomainService.updateProfile(
+            currentUserId,
+            updateProfileRequest.profileImage,
+            updateProfileRequest.username,
+            updateProfileRequest.isDefaultImg,
+            updateProfileRequest.imageKey,
+        )
             .toUserDetailVo()
     }
 }

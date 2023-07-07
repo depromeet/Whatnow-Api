@@ -45,11 +45,18 @@ class PromiseUserDomainService(
     fun findByPromiseId(promiseId: Long): List<PromiseUser> {
         return promiseUserAdaptor.findByPromiseId(promiseId)
     }
+    fun findByUserId(userId: Long): List<PromiseUser> {
+        return promiseUserAdaptor.findByUserId(userId)
+    }
     fun isArrived(promiseUser: PromiseUser, coordinate: CoordinateVo): Boolean {
         val start = S2LatLng.fromDegrees(promiseUser.userLocation!!.latitude, promiseUser.userLocation!!.longitude)
         val destination = S2LatLng.fromDegrees(coordinate.latitude, coordinate.longitude)
         val distanceInMeters = start.getDistance(destination).radians() * 6371000.0
 
         return distanceInMeters < RADIUS_WAIT_CONFIRM
+    }
+
+    fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
+        return promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
     }
 }

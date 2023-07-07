@@ -2,6 +2,7 @@ package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.DomainIntegrateSpringBootTest
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import com.depromeet.whatnow.domains.image.service.ImageDomainService
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 
 @DomainIntegrateSpringBootTest
-class PromisePromiseImageRegisterEventHandlerTest {
+class PromiseImageRegisterEventHandlerTest {
     @Autowired
     lateinit var imageDomainService: ImageDomainService
 
@@ -34,11 +35,10 @@ class PromisePromiseImageRegisterEventHandlerTest {
     fun `약속 이미지 등록 성공 시 이미지 등록 이벤트가 발행되어야한다`() {
         // given
         val promiseUser = PromiseUser(1, 1, CoordinateVo(1.0, 1.0), PromiseUserType.LATE)
-        val userLocation = CoordinateVo(37.2, 128.05)
         given(promiseUserAdaptor.findByPromiseIdAndUserId(1, 1)).willReturn(promiseUser)
 
         // when
-        imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", PromiseImageCommentType.RUNNING, userLocation)
+        imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", ImageFileExtension.JPEG, PromiseImageCommentType.RUNNING)
 
         // then
         then(imageRegisterEventHandler).should(Mockito.times(1)).handleRegisterPictureEvent(any())

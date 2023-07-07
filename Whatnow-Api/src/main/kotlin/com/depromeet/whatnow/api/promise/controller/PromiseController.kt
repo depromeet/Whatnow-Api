@@ -42,7 +42,10 @@ class PromiseController(
         return promiseReadUseCase.findPromiseByUserIdSeparatedType()
     }
 
-    @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회), year-month 파라미터는 2021-01 이 형식입니다.")
+    @Operation(
+        summary = "월단위 약속 조회",
+        description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회), year-month 파라미터는 2021-01 이 형식입니다.",
+    )
     @GetMapping("/promises/users")
     fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: YearMonth): List<PromiseFindDto> {
         return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
@@ -58,6 +61,12 @@ class PromiseController(
     @GetMapping("/promises/{promise-id}/active")
     fun findPromiseActive(@PathVariable(value = "promise-id") promiseId: Long): Boolean {
         return promiseReadUseCase.findPromiseActive(promiseId)
+    }
+
+    @Operation(summary = "promiseId 로 약속 조회", description = "promiseId 로 약속 조회")
+    @GetMapping("/promises/{promise-id}")
+    fun findByPromiseId(@PathVariable(value = "promise-id") promiseId: Long): PromiseFindDto {
+        return promiseReadUseCase.findByPromiseId(promiseId)
     }
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")

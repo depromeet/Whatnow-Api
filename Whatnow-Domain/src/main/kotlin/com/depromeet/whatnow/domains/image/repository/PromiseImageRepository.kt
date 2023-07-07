@@ -5,4 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PromiseImageRepository : JpaRepository<PromiseImage, Long>
+interface PromiseImageRepository : JpaRepository<PromiseImage, Long> {
+    fun findAllByPromiseId(promiseId: Long): List<PromiseImage>
+    fun findByImageKey(imageKey: String): PromiseImage?
+    fun findByPromiseIdAndImageKey(promiseId: Long, imageKey: String): PromiseImage?
+    fun deleteByPromiseIdAndImageKey(promiseId: Long, imageKey: String)
+}

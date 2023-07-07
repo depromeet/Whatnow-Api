@@ -1,6 +1,6 @@
 package com.depromeet.whatnow.domains.image.adapter
 
-import com.depromeet.whatnow.common.vo.CoordinateVo
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImage
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import com.depromeet.whatnow.domains.image.repository.PromiseImageRepository
@@ -23,8 +23,8 @@ class PromisePromiseImageAdapterTest {
 
     @Test
     fun `약속 이미지 저장 시 정상적으로 저장된다`() {
-        val userLocation = CoordinateVo(37.2, 128.05)
-        val promiseImage = PromiseImage.of(1, 1, "imageUri", "imageKey", PromiseImageCommentType.RUNNING, userLocation)
+        // given
+        val promiseImage = PromiseImage.of(1, 1, "imageUri", "imageKey", ImageFileExtension.JPEG, PromiseImageCommentType.RUNNING)
         given(promiseImageRepository.save(Mockito.any(PromiseImage::class.java)))
             .willReturn(promiseImage)
 
@@ -37,6 +37,5 @@ class PromisePromiseImageAdapterTest {
         assertEquals(savedPromiseImage.uri, "imageUri")
         assertEquals(savedPromiseImage.imageKey, "imageKey")
         assertEquals(savedPromiseImage.promiseImageCommentType, PromiseImageCommentType.RUNNING)
-        assertEquals(savedPromiseImage.userLocation, userLocation)
     }
 }
