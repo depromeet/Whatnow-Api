@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
@@ -80,10 +79,28 @@ class PromiseReadUseCaseTest {
             PromiseUser(userId = 1, promiseId = 2, promiseUserType = WAIT),
         )
         val promises = listOf(
-            Promise(id = 1, title = "Promise 1", endTime = promiseTime1, mainUserId = 1L, meetPlace = PlaceVo(
-                CoordinateVo(352.1,123.2), "서울시 강남구"), promiseType = PromiseType.BEFORE),
-            Promise(id = 2, title = "Promise 2", endTime = promiseTime2, mainUserId = 2L, meetPlace = PlaceVo(
-                CoordinateVo(352.1,123.2), "서울시 강남구"), promiseType = PromiseType.DELETED),
+            Promise(
+                id = 1,
+                title = "Promise 1",
+                endTime = promiseTime1,
+                mainUserId = 1L,
+                meetPlace = PlaceVo(
+                    CoordinateVo(352.1, 123.2),
+                    "서울시 강남구",
+                ),
+                promiseType = PromiseType.BEFORE,
+            ),
+            Promise(
+                id = 2,
+                title = "Promise 2",
+                endTime = promiseTime2,
+                mainUserId = 2L,
+                meetPlace = PlaceVo(
+                    CoordinateVo(352.1, 123.2),
+                    "서울시 강남구",
+                ),
+                promiseType = PromiseType.DELETED,
+            ),
         )
         val users = listOf(
             User(

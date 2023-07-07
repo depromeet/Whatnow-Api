@@ -46,8 +46,7 @@ class PromiseController(
     @GetMapping("/promises/users")
     fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: YearMonth): List<PromiseFindDto> {
         val result = promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
-        // endTime 최신순 정렬
-        return result.sortedBy { it.endTime }
+        return result
     }
 
     @Operation(summary = "약속 모음집 상세", description = "D3. 지난(AFTER) 약속 상세 조회 (날짜(월,일), 약속 사진 url, 타임오버 캡쳐, 만난 사람(프로필 사진 Url,  이름, wait/late 여부, interaction 종륲별 카운트), 하이라이트 기록 최대 3개")
@@ -60,6 +59,12 @@ class PromiseController(
     @GetMapping("/promises/{promise-id}/active")
     fun findPromiseActive(@PathVariable(value = "promise-id") promiseId: Long): Boolean {
         return promiseReadUseCase.findPromiseActive(promiseId)
+    }
+
+    @Operation(summary = "promiseId 로 약속 조회", description = "promiseId 로 약속 조회")
+    @GetMapping("/promises/{promise-id}")
+    fun findByPromiseId(@PathVariable(value = "promise-id") promiseId: Long): PromiseFindDto {
+        return promiseReadUseCase.findByPromiseId(promiseId)
     }
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")

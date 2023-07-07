@@ -152,4 +152,11 @@ class PromiseReadUseCase(
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
         return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }.sortedBy { it.endTime }
     }
+
+    fun findByPromiseId(promiseId: Long): PromiseFindDto {
+        val promise = promiseAdaptor.queryPromise(promiseId)
+        val promiseUsers = promiseUserAdaptor.findByPromiseId(promiseId)
+        val participants = getParticipantUserInfo(promiseUsers)
+        return PromiseFindDto.of(promise, participants)
+    }
 }
