@@ -38,9 +38,6 @@ class ImageControllerTest {
     @MockBean
     lateinit var promiseImageDeleteUseCase: PromiseImageDeleteUseCase
 
-    @MockBean
-    lateinit var userImageDeleteUseCase: UserImageDeleteUseCase
-
     @Autowired
     lateinit var mockMvc: MockMvc
 

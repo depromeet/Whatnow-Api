@@ -31,8 +31,7 @@ class ImageController(
     val successUseCase: ImageUploadSuccessUseCase,
     val imageCommentReadUseCase: ImageCommentReadUseCase,
     val promiseImageReadUseCase: PromiseImageReadUseCase,
-    val promiseImageDeleteUseCase: PromiseImageDeleteUseCase,
-    val userImageDeleteUseCase: UserImageDeleteUseCase,
+    val promiseImageDeleteUseCase: PromiseImageDeleteUseCase
 ) {
     @Tag(name = "6-1 [약속 이미지]")
     @Operation(summary = "약속 이미지 업로드 Presigned URL 발급")
@@ -98,12 +97,5 @@ class ImageController(
     @PostMapping("/{imageKey}/users/me")
     fun userUploadImageSuccess(@PathVariable imageKey: String, @RequestParam fileExtension: ImageFileExtension) {
         successUseCase.userUploadImageSuccess(imageKey, fileExtension)
-    }
-
-    @Tag(name = "6-2 [유저 이미지]")
-    @Operation(summary = "이미지 키를 통해 유저 이미지를 삭제합니다.")
-    @DeleteMapping("/{imageKey}/users/me")
-    fun deleteUserImage(@PathVariable imageKey: String) {
-        userImageDeleteUseCase.execute(imageKey)
     }
 }
