@@ -45,7 +45,9 @@ class PromiseController(
     @Operation(summary = "월단위 약속 조회", description = "유저의 월간 약속 조회 (단, 예정된 약속과 지난 약속을 구분없이 조회), year-month 파라미터는 2021-01 이 형식입니다.")
     @GetMapping("/promises/users")
     fun findPromiseByUserAndYearMonth(@RequestParam(value = "year-month") yearMonth: YearMonth): List<PromiseFindDto> {
-        return promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
+        val result = promiseReadUseCase.findPromiseByUserIdYearMonth(yearMonth)
+        // endTime 최신순 정렬
+        return result.sortedBy { it.endTime }
     }
 
     @Operation(summary = "약속 모음집 상세", description = "D3. 지난(AFTER) 약속 상세 조회 (날짜(월,일), 약속 사진 url, 타임오버 캡쳐, 만난 사람(프로필 사진 Url,  이름, wait/late 여부, interaction 종륲별 카운트), 하이라이트 기록 최대 3개")

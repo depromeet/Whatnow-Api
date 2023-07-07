@@ -1,5 +1,7 @@
 package com.depromeet.whatnow.api.promise.usecase
 
+import com.depromeet.whatnow.common.vo.CoordinateVo
+import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
 import com.depromeet.whatnow.domains.interaction.domain.Interaction
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
@@ -22,6 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -74,12 +77,13 @@ class PromiseReadUseCaseTest {
         val promiseTime2 = LocalDateTime.now()
         val promiseUsers = listOf(
             PromiseUser(userId = 1, promiseId = 1, promiseUserType = WAIT),
-//            PromiseUser(userId = 2, promiseId = 1, promiseUserType = LATE),
             PromiseUser(userId = 1, promiseId = 2, promiseUserType = WAIT),
         )
         val promises = listOf(
-            Promise(id = 1, title = "Promise 1", endTime = promiseTime1, mainUserId = 1),
-            Promise(id = 2, title = "Promise 2", endTime = promiseTime2, mainUserId = 2L),
+            Promise(id = 1, title = "Promise 1", endTime = promiseTime1, mainUserId = 1L, meetPlace = PlaceVo(
+                CoordinateVo(352.1,123.2), "서울시 강남구"), promiseType = PromiseType.BEFORE),
+            Promise(id = 2, title = "Promise 2", endTime = promiseTime2, mainUserId = 2L, meetPlace = PlaceVo(
+                CoordinateVo(352.1,123.2), "서울시 강남구"), promiseType = PromiseType.DELETED),
         )
         val users = listOf(
             User(
@@ -106,10 +110,10 @@ class PromiseReadUseCaseTest {
             Interaction(InteractionType.STEP, 1, 1, 2934),
         )
 
-        Mockito.`when`(promiseUserAdaptor.findByUserId(userId)).thenReturn(promiseUsers)
-        Mockito.`when`(promiseAdaptor.queryPromises(listOf(1, 2))).thenReturn(promises)
-        Mockito.`when`(userAdapter.queryUsers(listOf(1))).thenReturn(users)
-        Mockito.`when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactions)
+        `when`(promiseUserAdaptor.findByUserId(userId)).thenReturn(promiseUsers)
+        `when`(promiseAdaptor.queryPromises(listOf(1, 2))).thenReturn(promises)
+        `when`(userAdapter.queryUsers(listOf(1))).thenReturn(users)
+        `when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactions)
 
         // When
         val result = promiseReadUseCase.findPromiseDetailByStatus(PromiseType.BEFORE)
@@ -118,11 +122,11 @@ class PromiseReadUseCaseTest {
         Assertions.assertEquals(2, result.size)
 
         Assertions.assertEquals("Promise 1", result[0].title)
-        Assertions.assertEquals(promiseTime1, result[0].date)
+        Assertions.assertEquals(promiseTime1, result[0].endTime)
         Assertions.assertEquals(1, result[0].promiseUsers.size)
 
         Assertions.assertEquals("Promise 2", result[1].title)
-        Assertions.assertEquals(promiseTime2, result[1].date)
+        Assertions.assertEquals(promiseTime2, result[1].endTime)
         Assertions.assertEquals(1, result[1].promiseUsers.size)
 
         Assertions.assertEquals(2934, result[0].promiseUsers[0].interactions[0].count)

@@ -9,7 +9,7 @@ data class PromiseDetailDto(
     val address: String,
     val coordinateVo: CoordinateVo,
     val title: String,
-    val date: LocalDateTime,
+    val endTime: LocalDateTime,
     // 유저의 마지막 위치 리스트
     val promiseUsers: List<PromiseUserInfoVo>,
     // TODO : 약속 기록 사진 기능 추가시 함께 추가할게요.
@@ -30,7 +30,7 @@ data class PromiseDetailDto(
                 address = promise.meetPlace!!.address,
                 coordinateVo = promise.meetPlace!!.coordinate,
                 title = promise.title,
-                date = promise.endTime,
+                endTime = promise.endTime,
                 promiseUsers = promiseUsers,
                 promiseImageUrls = promiseImageUrls,
                 timeOverLocations = timeOverLocations,
