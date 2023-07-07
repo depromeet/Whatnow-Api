@@ -2,6 +2,7 @@ package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
 import com.depromeet.whatnow.domains.interaction.adapter.InteractionAdapter
 import com.depromeet.whatnow.domains.interaction.domain.Interaction
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
@@ -49,6 +50,9 @@ class PromiseReadUseCaseTest {
     @Mock
     private lateinit var interactionAdapter: InteractionAdapter
 
+    @Mock
+    private lateinit var promiseImageAdapter: PromiseImageAdapter
+
     @InjectMocks
     private lateinit var promiseReadUseCase: PromiseReadUseCase
 
@@ -61,6 +65,7 @@ class PromiseReadUseCaseTest {
             promiseAdaptor = promiseAdaptor,
             userAdapter = userAdapter,
             interactionAdapter = interactionAdapter,
+            promiseImageAdapter = promiseImageAdapter,
         )
         val securityContext = SecurityContextHolder.createEmptyContext()
         val authentication = UsernamePasswordAuthenticationToken("1", null, setOf(SimpleGrantedAuthority("ROLE_USER")))
