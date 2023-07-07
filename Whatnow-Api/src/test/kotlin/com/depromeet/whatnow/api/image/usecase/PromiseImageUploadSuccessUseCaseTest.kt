@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.image.usecase
 
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import com.depromeet.whatnow.domains.image.service.ImageDomainService
 import org.assertj.core.api.Assertions.assertThatCode
@@ -36,7 +37,7 @@ class PromiseImageUploadSuccessUseCaseTest {
 
         // then
         assertThatCode {
-            imageUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", PromiseImageCommentType.SORRY_LATE)
+            imageUploadSuccessUseCase.promiseUploadImageSuccess(1, "imageKey", ImageFileExtension.JPG, PromiseImageCommentType.SORRY_LATE)
         }.doesNotThrowAnyException()
     }
 
@@ -48,7 +49,7 @@ class PromiseImageUploadSuccessUseCaseTest {
 
         // then
         assertThatCode {
-            imageUploadSuccessUseCase.userUploadImageSuccess("imageKey")
+            imageUploadSuccessUseCase.userUploadImageSuccess("imageKey", ImageFileExtension.JPG)
         }.doesNotThrowAnyException()
     }
 }

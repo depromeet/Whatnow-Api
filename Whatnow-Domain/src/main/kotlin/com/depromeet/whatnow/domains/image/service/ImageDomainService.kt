@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.domains.image.service
 
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.consts.IMAGE_DOMAIN
 import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
 import com.depromeet.whatnow.domains.image.adapter.UserImageAdapter
@@ -29,6 +30,7 @@ class ImageDomainService(
         userId: Long,
         promiseId: Long,
         imageKey: String,
+        fileExtension: ImageFileExtension,
         promiseImageCommentType: PromiseImageCommentType,
     ) {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
@@ -36,14 +38,14 @@ class ImageDomainService(
 
         val imageUrl = IMAGE_DOMAIN + "/" + springEnvironmentHelper.activeProfile + "/" + "promise/$promiseId/$imageKey"
         promiseImageAdapter.save(
-            PromiseImage.of(promiseId, userId, imageUrl, imageKey, promiseImageCommentType),
+            PromiseImage.of(promiseId, userId, imageUrl, imageKey, fileExtension, promiseImageCommentType),
         )
     }
 
     @Transactional
-    fun userImageUploadSuccess(userId: Long, imageKey: String) {
+    fun userImageUploadSuccess(userId: Long, imageKey: String, fileExtension: ImageFileExtension) {
         val imageUrl = IMAGE_DOMAIN + "/" + springEnvironmentHelper.activeProfile + "/" + "user/$userId/$imageKey"
-        userImageAdapter.save(UserImage.of(userId, imageUrl, imageKey))
+        userImageAdapter.save(UserImage.of(userId, imageUrl, imageKey, fileExtension))
     }
 
     private fun validatePromiseUserType(promiseUserType: PromiseUserType, promiseImageCommentType: PromiseImageCommentType) {
@@ -65,5 +67,19 @@ class ImageDomainService(
 
     fun getImageByImageKey(imageKey: String): PromiseImage {
         return promiseImageAdapter.findByImageKey(imageKey)
+    }
+
+    @Transactional
+    fun deleteForPromise(userId: Long, promiseId: Long, imageKey: String) {
+        val promiseImage = promiseImageAdapter.findByPromiseIdAndImageKey(promiseId, imageKey)
+        promiseImage.validateOwnership(userId)
+        promiseImageAdapter.deleteByImageKeyAndPromiseId(imageKey, promiseId)
+    }
+
+    @Transactional
+    fun deleteForUser(userId: Long, imageKey: String) {
+        val userImage = userImageAdapter.findByUserIdAndImageKey(userId, imageKey)
+        userImage.validateOwnership(userId)
+        userImageAdapter.deleteByImageKeyAndUserId(imageKey, userId)
     }
 }

@@ -7,12 +7,14 @@ import com.depromeet.whatnow.api.image.dto.PromiseImageResponse
 import com.depromeet.whatnow.api.image.usecase.GetPresignedUrlUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageCommentReadUseCase
 import com.depromeet.whatnow.api.image.usecase.ImageUploadSuccessUseCase
+import com.depromeet.whatnow.api.image.usecase.PromiseImageDeleteUseCase
 import com.depromeet.whatnow.api.image.usecase.PromiseImageReadUseCase
 import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -28,6 +30,7 @@ class ImageController(
     val successUseCase: ImageUploadSuccessUseCase,
     val imageCommentReadUseCase: ImageCommentReadUseCase,
     val promiseImageReadUseCase: PromiseImageReadUseCase,
+    val promiseImageDeleteUseCase: PromiseImageDeleteUseCase,
 ) {
     @Tag(name = "6-1 [약속 이미지]")
     @Operation(summary = "약속 이미지 업로드 Presigned URL 발급")
@@ -45,9 +48,10 @@ class ImageController(
     fun promiseUploadImageSuccess(
         @PathVariable promiseId: Long,
         @PathVariable imageKey: String,
+        @RequestParam fileExtension: ImageFileExtension,
         @RequestParam promiseImageCommentType: PromiseImageCommentType,
     ) {
-        successUseCase.promiseUploadImageSuccess(promiseId, imageKey, promiseImageCommentType)
+        successUseCase.promiseUploadImageSuccess(promiseId, imageKey, fileExtension, promiseImageCommentType)
     }
 
     @Tag(name = "6-1 [약속 이미지]")
@@ -71,6 +75,13 @@ class ImageController(
         return promiseImageReadUseCase.getImageByImageKey(imageKey)
     }
 
+    @Tag(name = "6-1 [약속 이미지]")
+    @Operation(summary = "이미지 키를 통해 약속 이미지를 삭제합니다.")
+    @DeleteMapping("/{imageKey}/promises/{promiseId}")
+    fun deletePromiseImage(@PathVariable promiseId: Long, @PathVariable imageKey: String) {
+        promiseImageDeleteUseCase.execute(promiseId, imageKey)
+    }
+
     @Tag(name = "6-2 [유저 이미지]")
     @Operation(summary = "유저 프로필 이미지 업로드 Presigned URL 발급")
     @GetMapping("/users/me/presigned-url")
@@ -83,7 +94,7 @@ class ImageController(
     @Tag(name = "6-2 [유저 이미지]")
     @Operation(summary = "유저 프로필 이미지 업로드 성공 요청")
     @PostMapping("/{imageKey}/users/me")
-    fun userUploadImageSuccess(@PathVariable imageKey: String) {
-        successUseCase.userUploadImageSuccess(imageKey)
+    fun userUploadImageSuccess(@PathVariable imageKey: String, @RequestParam fileExtension: ImageFileExtension) {
+        successUseCase.userUploadImageSuccess(imageKey, fileExtension)
     }
 }

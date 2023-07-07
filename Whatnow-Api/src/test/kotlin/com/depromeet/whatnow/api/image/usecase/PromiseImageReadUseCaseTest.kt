@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.image.usecase
 
+import com.depromeet.whatnow.config.s3.ImageFileExtension
 import com.depromeet.whatnow.domains.image.domain.PromiseImage
 import com.depromeet.whatnow.domains.image.domain.PromiseImageCommentType
 import com.depromeet.whatnow.domains.image.service.ImageDomainService
@@ -46,6 +47,7 @@ class PromiseImageReadUseCaseTest {
             promiseId = 1,
             uri = "https://image/whatnow.kr/$imageKey1.jpg",
             imageKey = imageKey1,
+            fileExtension = ImageFileExtension.JPG,
             promiseImageCommentType = PromiseImageCommentType.DID_YOU_COME,
         )
         val imageKey2 = "7e74f27e-0252-23ds-a2f2-58s1b5cce9c3"
@@ -54,6 +56,7 @@ class PromiseImageReadUseCaseTest {
             promiseId = 1,
             uri = "https://image/whatnow.kr/$imageKey2.jpg",
             imageKey = imageKey2,
+            fileExtension = ImageFileExtension.JPG,
             promiseImageCommentType = PromiseImageCommentType.DID_YOU_COME,
         )
         val promiseUser1 = PromiseUser(
@@ -69,6 +72,7 @@ class PromiseImageReadUseCaseTest {
             promiseId = 1,
             uri = "https://image/whatnow.kr/$imageKey3.jpg",
             imageKey = imageKey3,
+            fileExtension = ImageFileExtension.JPG,
             promiseImageCommentType = PromiseImageCommentType.RUNNING,
         )
         val imageKey4 = "7e74f27e-0252-23ds-a2f2-o50s1b5cce9c3"
@@ -77,6 +81,7 @@ class PromiseImageReadUseCaseTest {
             promiseId = 1,
             uri = "https://image/whatnow.kr/$imageKey4.jpg",
             imageKey = imageKey4,
+            fileExtension = ImageFileExtension.JPG,
             promiseImageCommentType = PromiseImageCommentType.RUNNING,
         )
         val promiseUser2 = PromiseUser(
