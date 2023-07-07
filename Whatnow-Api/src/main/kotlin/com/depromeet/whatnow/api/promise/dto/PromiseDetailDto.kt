@@ -12,7 +12,7 @@ data class PromiseDetailDto(
     val promiseImageUrls: List<String>?,
     val timeOverLocations: List<LocationCapture>,
     // TODO : highlight 기능 추가시 함께 추가할게요. ( 최대 3개 제한 )
-//    val highlights: List<NotificationDto>,
+// x   val highlights: List<NotificationDto>,
 ) {
     companion object {
         fun of(

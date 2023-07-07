@@ -85,10 +85,8 @@ class PromiseReadUseCase(
             .map { promise ->
                 // 약속에 참여한 유저들
                 val participants = getParticipantUserInfo(promiseUserAdaptor.findByPromiseId(promise.id!!))
-                PromiseFindDto(
-                    title = promise.title,
-                    address = promise.meetPlace!!.address,
-                    endTime = promise.endTime,
+                PromiseFindDto.of(
+                    promise = promise,
                     users = participants,
                 )
             }
