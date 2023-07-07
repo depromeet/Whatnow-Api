@@ -85,7 +85,7 @@ class PromiseReadUseCaseTest {
                 endTime = promiseTime1,
                 mainUserId = 1L,
                 meetPlace = PlaceVo(
-                    CoordinateVo(352.1, 123.2),
+                    CoordinateVo(352.1, 167.2),
                     "서울시 강남구",
                 ),
                 promiseType = PromiseType.BEFORE,
@@ -96,8 +96,8 @@ class PromiseReadUseCaseTest {
                 endTime = promiseTime2,
                 mainUserId = 2L,
                 meetPlace = PlaceVo(
-                    CoordinateVo(352.1, 123.2),
-                    "서울시 강남구",
+                    CoordinateVo(123.4, 234.2),
+                    "전라북도 남원시",
                 ),
                 promiseType = PromiseType.DELETED,
             ),
@@ -120,17 +120,22 @@ class PromiseReadUseCaseTest {
                 id = 2,
             ),
         )
-        val interactions = listOf(
+        val interactionsPromise1 = listOf(
             Interaction(InteractionType.HEART, 1, 1, 242),
             Interaction(InteractionType.MUSIC, 1, 1, 1234),
-            Interaction(InteractionType.POOP, 1, 1, 12),
-            Interaction(InteractionType.STEP, 1, 1, 2934),
+        )
+
+        val interactionsPromise2 = listOf(
+            Interaction(InteractionType.POOP, 1, 2, 12),
+            Interaction(InteractionType.STEP, 1, 2, 2934),
         )
 
         `when`(promiseUserAdaptor.findByUserId(userId)).thenReturn(promiseUsers)
         `when`(promiseAdaptor.queryPromises(listOf(1, 2))).thenReturn(promises)
         `when`(userAdapter.queryUsers(listOf(1))).thenReturn(users)
-        `when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactions)
+//        `when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactions)
+        `when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactionsPromise1)
+        `when`(interactionAdapter.queryAllInteraction(2, 1)).thenReturn(interactionsPromise2)
 
         // When
         val result = promiseReadUseCase.findPromiseDetailByStatus(PromiseType.BEFORE)
@@ -138,15 +143,17 @@ class PromiseReadUseCaseTest {
         // Then
         Assertions.assertEquals(2, result.size)
 
-        Assertions.assertEquals("Promise 1", result[0].title)
-        Assertions.assertEquals(promiseTime1, result[0].endTime)
-        Assertions.assertEquals(1, result[0].promiseUsers.size)
-
-        Assertions.assertEquals("Promise 2", result[1].title)
-        Assertions.assertEquals(promiseTime2, result[1].endTime)
+        Assertions.assertEquals("Promise 2", result[0].title)
+        Assertions.assertEquals(promiseTime1, result[1].endTime)
         Assertions.assertEquals(1, result[1].promiseUsers.size)
 
+        Assertions.assertEquals("Promise 1", result[1].title)
+        Assertions.assertEquals(promiseTime2, result[0].endTime)
+        Assertions.assertEquals(1, result[0].promiseUsers.size)
+
+        // 약속 1번
+        Assertions.assertEquals(1234, result[1].promiseUsers[0].interactions[0].count)
+        // 약속 2번
         Assertions.assertEquals(2934, result[0].promiseUsers[0].interactions[0].count)
-        Assertions.assertEquals(1234, result[0].promiseUsers[0].interactions[1].count)
     }
 }

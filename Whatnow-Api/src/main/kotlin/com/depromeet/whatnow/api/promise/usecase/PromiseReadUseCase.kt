@@ -110,7 +110,7 @@ class PromiseReadUseCase(
                 val interactions =
                     interactionAdapter.queryAllInteraction(promiseUser.promiseId, promiseUser.userId)
                         .map { InteractionDto.from(it) }
-                        .sortedByDescendingDescending { interactionDto -> interactionDto.count }
+                        .sortedByDescending { interactionDto -> interactionDto.count }
                 user?.let {
                     PromiseUserInfoVo.of(it, promiseUser.promiseUserType!!, interactions)
                 }
