@@ -38,6 +38,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         status: HttpStatus,
         request: WebRequest,
     ): ResponseEntity<Any> {
+        logger.error("Exception", ex)
         val servletWebRequest = request as ServletWebRequest
         val url = UriComponentsBuilder.fromHttpRequest(
             ServletServerHttpRequest(servletWebRequest.request),
@@ -60,6 +61,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         status: HttpStatus,
         request: WebRequest,
     ): ResponseEntity<Any> {
+        logger.error("MethodArgumentNotValidException Exception", ex)
         val url = UriComponentsBuilder.fromHttpRequest(
             ServletServerHttpRequest((request as ServletWebRequest).request),
         )
@@ -84,6 +86,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         e: ConstraintViolationException,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
+        logger.error("ConstraintViolationException Exception", e)
         val bindingErrors: MutableMap<String?, Any> = HashMap()
         e.constraintViolations.forEach {
                 constraintViolation ->
@@ -106,6 +109,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         e: WhatNowDynamicException,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
+        logger.error("WhatnowDynamicException Exception", e)
         val errorResponse = ErrorResponse(
             e.status,
             e.code,
@@ -120,6 +124,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         e: WhatnowCodeException,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse?>? {
+        logger.error("WhatnowCodeException Exception", e)
 //        val code: BaseErrorCode? = e.errorCode
         val errorReason: ErrorReason = e.errorReason
         val errorResponse = ErrorResponse.of(errorReason, request.requestURL.toString())
@@ -132,6 +137,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         e: Exception,
         request: HttpServletRequest?,
     ): ResponseEntity<ErrorResponse?> {
+        logger.error("Exception", e)
 //        val cachingRequest = request as ContentCachingRequestWrapper?
         val cachingRequest = request as ContentCachingRequestWrapper
         val userId: Long = SecurityUtils.currentUserId
