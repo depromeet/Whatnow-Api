@@ -1,8 +1,8 @@
-package com.depromeet.whatnow.domains.interaction.handler
+package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.annotation.Handler
 import com.depromeet.whatnow.domains.interaction.service.InteractionDomainService
-import com.depromeet.whatnow.domains.interactionhistory.event.InteractionHistoryRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.InteractionHistoryRegisterEvent
 import mu.KLogger
 import mu.KotlinLogging
 import org.springframework.scheduling.annotation.Async

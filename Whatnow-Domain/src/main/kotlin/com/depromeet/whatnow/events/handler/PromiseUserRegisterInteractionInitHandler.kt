@@ -1,4 +1,4 @@
-package com.depromeet.whatnow.domains.interaction.handler
+package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.annotation.Handler
 import com.depromeet.whatnow.domains.interaction.service.InteractionDomainService
