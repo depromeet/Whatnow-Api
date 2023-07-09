@@ -21,7 +21,7 @@ class Notification(
     @Enumerated(EnumType.STRING)
     var interactionType: InteractionType?,
 
-    var userId: Long,
+    var userId: Long?,
 
     @ElementCollection
     var targetUserIds: Set<Long>,

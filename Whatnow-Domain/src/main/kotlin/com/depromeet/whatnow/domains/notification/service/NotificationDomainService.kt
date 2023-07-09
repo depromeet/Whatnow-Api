@@ -22,4 +22,17 @@ class NotificationDomainService(
             )
         )
     }
+
+    @Transactional
+    fun saveForStartSharing(targetUserId: Set<Long>, targetId: Long) {
+        notificationAdapter.save(
+            Notification(
+                notificationType = NotificationType.START_SHARING,
+                userId = null,
+                targetUserIds = targetUserId,
+                targetId = targetId,
+                interactionType = null,
+            )
+        )
+    }
 }
