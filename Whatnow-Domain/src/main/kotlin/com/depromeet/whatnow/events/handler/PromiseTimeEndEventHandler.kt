@@ -3,7 +3,6 @@ package com.depromeet.whatnow.events.handler
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.CANCEL
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
-import com.depromeet.whatnow.events.domainEvent.MeetPromiseUserEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseTimeEndEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
@@ -39,13 +38,5 @@ class PromiseTimeEndEventHandler(
                 }
             }
         }
-    }
-
-    @Async
-    @TransactionalEventListener(classes = [MeetPromiseUserEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleMeetPromiseUserEvent(meetPromiseUserEvent: MeetPromiseUserEvent) {
-//        만났을 경우
-//        for(promiseUser in promiseUsers){
-//        }
     }
 }
