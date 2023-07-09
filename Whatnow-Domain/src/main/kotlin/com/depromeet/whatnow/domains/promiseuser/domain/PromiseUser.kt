@@ -59,9 +59,9 @@ class PromiseUser(
     fun updatePromiseUserType(promiseUserType: PromiseUserType?) {
         this.promiseUserType = promiseUserType
     }
-    fun updatePromiseUserLocation(userLocation: CoordinateVo?) {
-        this.userLocation = userLocation
-        Events.raise(PromiseUserUpdateLocationEvent(this.promiseId, this.userLocation!!))
+    fun updatePromiseUserLocation(position: CoordinateVo) {
+        this.userLocation = position
+        Events.raise(PromiseUserUpdateLocationEvent(this.promiseId, position))
     }
     fun userLocationInit() {
         this.userLocation = CoordinateVo(0.0, 0.0)

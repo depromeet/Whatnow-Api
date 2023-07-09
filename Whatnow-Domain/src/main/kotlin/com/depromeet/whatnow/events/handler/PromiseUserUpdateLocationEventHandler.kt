@@ -24,7 +24,7 @@ class PromiseUserUpdateLocationEventHandler(
     @TransactionalEventListener(classes = [PromiseUserUpdateLocationEvent::class], phase = TransactionPhase.AFTER_COMMIT)
     fun handlePromiseUserUpdateLocationEvent(promiseUserUpdateLocationEvent: PromiseUserUpdateLocationEvent) {
         val promiseId = promiseUserUpdateLocationEvent.promiseId
-        val referencePoint = S2LatLng.fromDegrees(promiseUserUpdateLocationEvent.coordinateVo.latitude, promiseUserUpdateLocationEvent.coordinateVo.longitude)
+        val referencePoint = S2LatLng.fromDegrees(promiseUserUpdateLocationEvent.coordinateVo!!.latitude, promiseUserUpdateLocationEvent.coordinateVo!!.longitude)
         // 주변 점들의 목록을 생성
         val findByPromiseId = promiseUserAdaptor.findByPromiseId(promiseId)
         val indexedPoints = mutableMapOf<S2CellId, S2LatLng>()
