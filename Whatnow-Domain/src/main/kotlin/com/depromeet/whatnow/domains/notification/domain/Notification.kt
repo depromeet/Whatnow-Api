@@ -19,12 +19,12 @@ class Notification(
     var notificationType: NotificationType,
 
     @Enumerated(EnumType.STRING)
-    var interactionType: InteractionType,
+    var interactionType: InteractionType?,
 
     var userId: Long,
 
     @ElementCollection
-    var targetUserId: Set<Long>,
+    var targetUserIds: Set<Long>,
 
     var targetId: Long,
 

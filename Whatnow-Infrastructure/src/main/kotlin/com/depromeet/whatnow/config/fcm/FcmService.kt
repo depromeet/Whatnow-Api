@@ -2,6 +2,7 @@ package com.depromeet.whatnow.config.fcm
 
 import com.google.api.core.ApiFuture
 import com.google.firebase.messaging.BatchResponse
+import com.google.firebase.messaging.FcmOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.MulticastMessage
@@ -14,25 +15,43 @@ class FcmService {
         tokenList: List<String>,
         title: String,
         content: String,
-        imageUrl: String,
+        notificationType: String,
+        targetId: Long,
     ): ApiFuture<BatchResponse> {
+
         val multicast = MulticastMessage.builder()
             .addAllTokens(tokenList)
             .setNotification(
                 Notification.builder()
                     .setTitle(title)
                     .setBody(content)
-                    .setImage(imageUrl)
                     .build(),
-            ).build()
+            )
+            .putData("notificationType", notificationType)
+            .putData("targetId", targetId.toString())
+            .build()
         return FirebaseMessaging.getInstance().sendMulticastAsync(multicast)
     }
 
-    fun sendMessageSync(token: String, content: String) {
+    fun sendMessageAsync(
+        token: String,
+        title: String,
+        content: String,
+        notificationType: String,
+        targetId: Long,
+    ): ApiFuture<String> {
         val message = Message.builder()
             .setToken(token)
-            .setNotification(Notification.builder().setBody(content).build())
+            .setNotification(
+                Notification.builder()
+                    .setTitle(title)
+                    .setBody(content)
+                    .build()
+            )
+
+            .putData("notificationType", notificationType)
+            .putData("targetId", targetId.toString())
             .build()
-        FirebaseMessaging.getInstance().send(message)
+        return FirebaseMessaging.getInstance().sendAsync(message)
     }
 }
