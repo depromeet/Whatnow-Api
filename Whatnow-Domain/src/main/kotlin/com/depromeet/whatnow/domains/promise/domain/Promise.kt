@@ -15,7 +15,6 @@ import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.PostPersist
 import javax.persistence.Table
 
 @Entity
@@ -44,7 +43,6 @@ class Promise(
 //    차후 이벤트 domain 설계 되면 생성시에 Domain 계층에서 validate 하겠습니다
 //    var promiseValidator: PromiseValidator,
 ) : BaseTimeEntity() {
-    @PostPersist
     fun createPromiseEvent() {
         Events.raise(PromiseRegisterEvent(this.id!!, this.mainUserId))
     }

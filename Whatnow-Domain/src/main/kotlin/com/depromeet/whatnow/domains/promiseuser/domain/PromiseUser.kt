@@ -41,7 +41,6 @@ class PromiseUser(
         Events.raise(PromiseUserCancelEvent(this.promiseId, this.userId, this.id!!))
     }
 
-    @PostPersist
     fun createPromiseUserEvent() {
         Events.raise(PromiseUserRegisterEvent(this.promiseId, this.userId, this.id!!))
     }

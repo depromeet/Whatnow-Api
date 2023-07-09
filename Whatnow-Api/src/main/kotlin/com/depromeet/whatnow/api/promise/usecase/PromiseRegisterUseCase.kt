@@ -7,6 +7,7 @@ import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.service.PromiseDomainService
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @UseCase
@@ -14,6 +15,7 @@ class PromiseRegisterUseCase(
     val promiseAdaptor: PromiseAdaptor,
     val promiseDomainService: PromiseDomainService,
 ) {
+    @Transactional
     fun createPromise(promiseRequest: PromiseRequest): PromiseDto {
         val promise = promiseDomainService.save(
             Promise(
@@ -23,6 +25,7 @@ class PromiseRegisterUseCase(
                 endTime = promiseRequest.endTime,
             ),
         )
+        promise.createPromiseEvent()
         return PromiseDto.from(promise)
     }
 

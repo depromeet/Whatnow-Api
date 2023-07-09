@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.annotation.Handler
+import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
 import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
@@ -19,6 +20,9 @@ class PromiseRegisterEventHandler(
         val promiseUser = PromiseUser(
             promiseId = promiseRegisterEvent.promiseId,
             userId = promiseRegisterEvent.userId,
+            userLocation = CoordinateVo(
+                latitude = 0.0,
+                longitude = 0.0)
         )
         promiseUserDomainService.createPromiseUser(promiseUser)
     }
