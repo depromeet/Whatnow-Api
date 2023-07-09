@@ -15,7 +15,7 @@ class UserProfileImageUpdatedEventHandler(
 ) {
     @Async
     @TransactionalEventListener(classes = [UserProfileImageUpdatedEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterUserEvent(userProfileImageUpdatedEvent: UserProfileImageUpdatedEvent) {
+    fun handleUpdateUserProfileImageEvent(userProfileImageUpdatedEvent: UserProfileImageUpdatedEvent) {
         val userId = userProfileImageUpdatedEvent.userId
         val imageKey = userProfileImageUpdatedEvent.imageKey
 

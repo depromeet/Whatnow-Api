@@ -18,7 +18,7 @@ class PromiseActivationEventHandler(
 ) {
     @Async
     @TransactionalEventListener(classes = [PromiseRegisterEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterPictureEvent(promiseRegisterEvent: PromiseRegisterEvent) {
+    fun handlePromiseRegisterEvent(promiseRegisterEvent: PromiseRegisterEvent) {
         val promise = promiseDomainService.findByPromiseId(promiseRegisterEvent.promiseId)
 
         val now = LocalDateTime.now()

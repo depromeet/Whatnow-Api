@@ -41,6 +41,6 @@ class PromiseImageRegisterEventHandlerTest {
         imageDomainService.promiseImageUploadSuccess(1, 1, "imageKey", ImageFileExtension.JPEG, PromiseImageCommentType.RUNNING)
 
         // then
-        then(imageRegisterEventHandler).should(Mockito.times(1)).handleRegisterPictureEvent(any())
+        then(imageRegisterEventHandler).should(Mockito.times(1)).handlePromiseImageRegisterEvent(any())
     }
 }

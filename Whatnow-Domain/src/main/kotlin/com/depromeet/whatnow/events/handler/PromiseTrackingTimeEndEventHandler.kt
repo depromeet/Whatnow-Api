@@ -5,6 +5,7 @@ import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.events.domainEvent.PromiseTrackingTimeEndEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
@@ -15,9 +16,9 @@ class PromiseTrackingTimeEndEventHandler(
     val promiseUserAdaptor: PromiseUserAdaptor,
 ) {
     @Async
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(classes = [PromiseTrackingTimeEndEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterUserEvent(promiseTrackingTimeEndEvent: PromiseTrackingTimeEndEvent) {
+    fun handlePromiseTrackingTimeEndEvent(promiseTrackingTimeEndEvent: PromiseTrackingTimeEndEvent) {
         val promiseId = promiseTrackingTimeEndEvent.promiseId
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.endPromise()

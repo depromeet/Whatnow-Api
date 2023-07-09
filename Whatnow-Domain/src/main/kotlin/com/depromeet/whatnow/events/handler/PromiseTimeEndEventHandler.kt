@@ -20,7 +20,7 @@ class PromiseTimeEndEventHandler(
     @Async
     @Transactional(propagation = REQUIRES_NEW)
     @TransactionalEventListener(classes = [PromiseTimeEndEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterUserEvent(endTimePromiseEvent: PromiseTimeEndEvent) {
+    fun handlePromiseTimeEndEvent(endTimePromiseEvent: PromiseTimeEndEvent) {
         val promiseId: Long = endTimePromiseEvent.promiseId
         val promise = promiseAdaptor.queryPromise(promiseId)
         val coordinate = promise.meetPlace?.coordinate

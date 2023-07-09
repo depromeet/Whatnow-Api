@@ -15,7 +15,7 @@ class PromiseTimeStartEventHandler(
     @Async
     @Transactional
     @TransactionalEventListener(classes = [PromiseTimeStartEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterUserEvent(promiseTimeStartEvent: PromiseTimeStartEvent) {
+    fun handlePromiseTimeStartEvent(promiseTimeStartEvent: PromiseTimeStartEvent) {
         val promiseId = promiseTimeStartEvent.promiseId
         val promiseUsers = promiseUserAdaptor.findByPromiseId(promiseId)
 
