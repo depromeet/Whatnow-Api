@@ -11,7 +11,6 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.PostPersist
 import javax.persistence.PostUpdate
 import javax.persistence.Table
 
@@ -23,10 +22,10 @@ class PromiseUser(
     var userId: Long,
 
     @Embedded
-    var userLocation: CoordinateVo? = null,
+    var userLocation: CoordinateVo = CoordinateVo(0.0, 0.0),
 
     @Embedded
-    var promiseUserType: PromiseUserType? = PromiseUserType.READY,
+    var promiseUserType: PromiseUserType = PromiseUserType.READY,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,10 +54,10 @@ class PromiseUser(
     }
 
     fun updatePromiseUserType(promiseUserType: PromiseUserType?) {
-        this.promiseUserType = promiseUserType
+        this.promiseUserType = promiseUserType!!
     }
     fun updatePromiseUserLocation(userLocation: CoordinateVo?) {
-        this.userLocation = userLocation
+        this.userLocation = userLocation!!
     }
     fun userLocationInit() {
         this.userLocation = CoordinateVo(0.0, 0.0)

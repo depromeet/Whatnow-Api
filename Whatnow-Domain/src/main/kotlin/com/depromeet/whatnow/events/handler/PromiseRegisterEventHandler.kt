@@ -22,7 +22,8 @@ class PromiseRegisterEventHandler(
             userId = promiseRegisterEvent.userId,
             userLocation = CoordinateVo(
                 latitude = 0.0,
-                longitude = 0.0)
+                longitude = 0.0,
+            ),
         )
         promiseUserDomainService.createPromiseUser(promiseUser)
     }
