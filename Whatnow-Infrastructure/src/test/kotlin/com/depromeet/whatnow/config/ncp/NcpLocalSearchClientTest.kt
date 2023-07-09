@@ -52,7 +52,7 @@ class NcpLocalSearchClientTest() {
                         .withBody(responseJson),
                 ),
         )
-        val response = client.searchByKeyword(accessKey, secretKey, query, 10)
+        val response = client.searchByKeyword(accessKey, secretKey, 10, query)
         assertEquals(response.items.size, 1)
     }
 }
