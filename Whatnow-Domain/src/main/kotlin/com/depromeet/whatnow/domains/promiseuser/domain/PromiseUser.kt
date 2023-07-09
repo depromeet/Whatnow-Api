@@ -5,6 +5,7 @@ import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.events.domainEvent.PromiseUserCancelEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseUserRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUserUpdateLocationEvent
 import javax.persistence.Column
 import javax.persistence.Embedded
 import javax.persistence.Entity
@@ -23,7 +24,7 @@ class PromiseUser(
     var userId: Long,
 
     @Embedded
-    var userLocation: CoordinateVo? = null,
+    var userLocation: CoordinateVo? = CoordinateVo(0.0, 0.0),
 
     @Embedded
     var promiseUserType: PromiseUserType? = PromiseUserType.READY,
@@ -60,6 +61,7 @@ class PromiseUser(
     }
     fun updatePromiseUserLocation(userLocation: CoordinateVo?) {
         this.userLocation = userLocation
+        Events.raise(PromiseUserUpdateLocationEvent(this.promiseId, this.userLocation!!))
     }
     fun userLocationInit() {
         this.userLocation = CoordinateVo(0.0, 0.0)

@@ -2,6 +2,7 @@ package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.annotation.Handler
 import com.depromeet.whatnow.common.aop.event.Events
+import com.depromeet.whatnow.consts.MEET_RADIUS
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.events.domainEvent.PromiseUserMeetEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseUserUpdateLocationEvent
@@ -36,7 +37,6 @@ class PromiseUserUpdateLocationEventHandler(
         }
         // 증가하는 거리에 따라 S2 셀 레벨을 탐색하면서 인접한 점들을 참조할 수 있는 상자를 확장합니다.
         var currentLevel = 24 // S2 셀 레벨을 초기화
-        val maxSize = 8 // 셀 범위를 제한하는 최대 값
 
         // 24Level average area : 0.3 m^2
         // 19Level average area : 309.27 m^2
@@ -66,7 +66,7 @@ class PromiseUserUpdateLocationEventHandler(
                 }
                 currentLevel -= 1
                 // 10m 이내인 사람이 있으면 (계산식 상 무조건 1명만 만난다) 이벤트 발행
-                if (minDistanceMeters < 10) {
+                if (minDistanceMeters < MEET_RADIUS) {
                     Events.raise(PromiseUserMeetEvent(promiseId, promiseUserUpdateLocationEvent.coordinateVo))
                 }
             }
