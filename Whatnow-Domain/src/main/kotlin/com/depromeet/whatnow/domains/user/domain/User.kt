@@ -18,6 +18,7 @@ import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.PostPersist
 import javax.persistence.Table
 
 @Entity
@@ -49,8 +50,7 @@ class User(
     val id: Long? = null,
 ) : BaseTimeEntity() {
 
-    //    @PostPersist
-    // 원래 되어야하는데.. postpersist가 콜백이라서 그런지 아예 다른 스레드에서 돌아버리네요..
+    @PostPersist
     fun registerEvent() {
         Events.raise(UserSignUpEvent(this.id!!))
     }
