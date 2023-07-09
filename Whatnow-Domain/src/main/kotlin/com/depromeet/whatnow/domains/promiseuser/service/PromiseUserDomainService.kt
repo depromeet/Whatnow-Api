@@ -2,12 +2,13 @@ package com.depromeet.whatnow.domains.promiseuser.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.consts.RADIUS_WAIT_CONFIRM
+import com.depromeet.whatnow.domains.promise.exception.PromiseNotParticipateException
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.google.common.geometry.S2LatLng
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PromiseUserDomainService(
@@ -58,5 +59,17 @@ class PromiseUserDomainService(
 
     fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
         return promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
+    }
+
+    @Transactional
+    fun updateLocation(userId: Long, promiseId: Long, userLocation: CoordinateVo): List<PromiseUser> {
+        val promiseUser = (
+            findByUserId(userId)
+                .firstOrNull { it.promiseId == promiseId }
+                ?: throw PromiseNotParticipateException()
+            )
+        promiseUser.updatePromiseUserLocation(userLocation)
+        return findByPromiseId(promiseId)
+            .map { if (it.userId == promiseUser.userId) promiseUser else it }
     }
 }

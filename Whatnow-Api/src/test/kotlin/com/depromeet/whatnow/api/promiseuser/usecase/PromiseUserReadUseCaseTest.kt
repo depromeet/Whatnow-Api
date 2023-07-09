@@ -5,7 +5,6 @@ import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.progresshistory.adapter.ProgressHistoryAdapter
 import com.depromeet.whatnow.domains.progresshistory.domain.ProgressHistory
 import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress
-import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress.DEFAULT
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType

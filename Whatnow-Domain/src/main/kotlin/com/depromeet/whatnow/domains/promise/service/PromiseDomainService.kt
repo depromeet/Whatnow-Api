@@ -4,7 +4,6 @@ import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgressGroup
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
-import com.depromeet.whatnow.domains.promise.domain.PromiseType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -13,23 +12,6 @@ import java.time.LocalDateTime
 class PromiseDomainService(
     val promiseAdaptor: PromiseAdaptor,
 ) {
-    fun registerPromise(
-        endTime: LocalDateTime,
-        title: String,
-        mainUserId: Long,
-        meetPlace: PlaceVo?,
-        promiseType: PromiseType,
-    ): Promise {
-        val promise = Promise(
-            endTime = endTime,
-            title = title,
-            mainUserId = mainUserId,
-            meetPlace = meetPlace,
-            promiseType = promiseType,
-        )
-        return promiseAdaptor.save(promise)
-    }
-
     @Transactional
     fun updatePromiseTitle(promiseId: Long, title: String): Promise {
         val promise = promiseAdaptor.queryPromise(promiseId)
