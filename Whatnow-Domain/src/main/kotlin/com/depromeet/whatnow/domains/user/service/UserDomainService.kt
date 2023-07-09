@@ -39,9 +39,15 @@ class UserDomainService(
         oauthId: String,
     ): User {
         return resultQueryByOauthInfo(oauthInfo).getOrElse {
-            val newUser = userAdapter.save(User(oauthInfo, username, profileImage, defaultImage, FcmNotificationVo("", false)))
-            newUser.registerEvent()
-            return newUser
+            return userAdapter.save(
+                User(
+                    oauthInfo,
+                    username,
+                    profileImage,
+                    defaultImage,
+                    FcmNotificationVo("", false),
+                ),
+            )
         }
     }
 
@@ -49,6 +55,7 @@ class UserDomainService(
         return resultQueryByOauthInfo(oauthInfo).isFailure // 유저가 없으면 회원가입 가능
     }
 
+    @Transactional
     fun registerUser(username: String, profileImage: String, defaultImage: Boolean, oauthInfo: OauthInfo, oauthId: String, fcmToken: String, appAlarm: Boolean): User {
         return resultQueryByOauthInfo(oauthInfo).onSuccess { // 계정이 있는 경우엔 exception 발생
             throw AlreadySignUpUserException.EXCEPTION
