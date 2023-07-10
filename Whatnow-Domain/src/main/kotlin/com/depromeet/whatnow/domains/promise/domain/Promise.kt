@@ -11,11 +11,11 @@ import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
 import javax.persistence.Entity
+import javax.persistence.EnumType
 import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.PostPersist
 import javax.persistence.Table
 
 @Entity
@@ -33,7 +33,7 @@ class Promise(
     @Embedded
     var meetPlace: PlaceVo? = null,
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     var promiseType: PromiseType = PromiseType.BEFORE,
 
     @Id
@@ -44,7 +44,6 @@ class Promise(
 //    차후 이벤트 domain 설계 되면 생성시에 Domain 계층에서 validate 하겠습니다
 //    var promiseValidator: PromiseValidator,
 ) : BaseTimeEntity() {
-    @PostPersist
     fun createPromiseEvent() {
         Events.raise(PromiseRegisterEvent(this.id!!, this.mainUserId))
     }

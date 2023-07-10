@@ -13,6 +13,6 @@ class SlackServiceNotificationProvider(
     var slackWebHook: SlackSecret = slackProperties.webhook
 
     fun sendNotification(layoutBlocks: MutableList<LayoutBlock>) {
-        slackHelper.sendNotification(slackWebHook.channelId, layoutBlocks)
+        slackHelper.sendNotification(slackWebHook.channelId, slackWebHook.token, slackWebHook.channelId, layoutBlocks)
     }
 }
