@@ -1,7 +1,11 @@
 package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.annotation.Handler
+import com.depromeet.whatnow.config.fcm.FcmService
 import com.depromeet.whatnow.domains.interaction.service.InteractionDomainService
+import com.depromeet.whatnow.domains.notification.domain.NotificationType
+import com.depromeet.whatnow.domains.notification.service.NotificationDomainService
+import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import com.depromeet.whatnow.events.domainEvent.InteractionHistoryRegisterEvent
 import mu.KLogger
 import mu.KotlinLogging
@@ -12,6 +16,9 @@ import org.springframework.transaction.event.TransactionalEventListener
 @Handler
 class InteractionHistoryRegisterHandler(
     val interactionDomainService: InteractionDomainService,
+    val userAdapter: UserAdapter,
+    val fcmService: FcmService,
+    val notificationDomainService: NotificationDomainService,
 ) {
     val logger: KLogger = KotlinLogging.logger {}
 
@@ -20,5 +27,24 @@ class InteractionHistoryRegisterHandler(
     fun handleInteractionHistoryRegisterEvent(event: InteractionHistoryRegisterEvent) {
         logger.info { "handleInteractionHistoryRegisterEvent 이벤트 약속아이디 {${event.promiseId} , 유저아이디: ${event.userId} , 상대방 유저아이디: ${event.targetUserId} , 인터렉션타입: ${event.interactionType}" }
         interactionDomainService.increment(event.promiseId, event.userId, event.interactionType)
+
+        val targetUser = userAdapter.queryUser(event.targetUserId)
+        if (!targetUser.fcmNotification.appAlarm) {
+            return
+        }
+
+        val user = userAdapter.queryUser(event.userId)
+
+        val data: MutableMap<String, Any> = mutableMapOf()
+        data["notificationType"] = NotificationType.INTERACTION.name
+
+        fcmService.sendMessageAsync(
+            targetUser.fcmNotification.fcmToken,
+            "이모지 투척!",
+            "from. $user.nickname",
+            data,
+        )
+
+        notificationDomainService.saveForInteraction(user.id!!, targetUser.id!!, event.interactionType)
     }
 }

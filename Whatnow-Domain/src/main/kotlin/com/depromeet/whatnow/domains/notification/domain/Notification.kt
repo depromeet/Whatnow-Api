@@ -30,7 +30,7 @@ class Notification(
     @ElementCollection
     var targetUserIds: Set<Long>,
 
-    var targetId: Long,
+    var targetId: Long?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +67,17 @@ class Notification(
                 targetUserIds = targetUserIds,
                 targetId = promiseId,
                 interactionType = null,
+                promiseUserType = null,
+            )
+        }
+
+        fun createForInteraction(userId: Long, targetUserId: Long, interactionType: InteractionType): Notification {
+            return Notification(
+                notificationType = NotificationType.INTERACTION,
+                userId = userId,
+                targetUserIds = mutableSetOf(targetUserId),
+                targetId = null,
+                interactionType = interactionType,
                 promiseUserType = null,
             )
         }

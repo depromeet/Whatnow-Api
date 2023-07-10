@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.domains.notification.service
 
+import com.depromeet.whatnow.domains.interaction.domain.InteractionType
 import com.depromeet.whatnow.domains.notification.adapter.NotificationAdapter
 import com.depromeet.whatnow.domains.notification.domain.Notification
 import org.springframework.stereotype.Service
@@ -21,5 +22,9 @@ class NotificationDomainService(
 
     fun saveForTimeOver(targetUserIds: Set<Long>, promiseId: Long) {
         notificationAdapter.save(Notification.createForTimeOver(targetUserIds, promiseId))
+    }
+
+    fun saveForInteraction(userId: Long, targetUserId: Long, interactionType: InteractionType) {
+        notificationAdapter.save(Notification.createForInteraction(userId, targetUserId, interactionType))
     }
 }

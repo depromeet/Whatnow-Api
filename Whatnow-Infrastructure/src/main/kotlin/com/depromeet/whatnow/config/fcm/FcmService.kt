@@ -35,8 +35,7 @@ class FcmService {
         token: String,
         title: String,
         content: String,
-        notificationType: String,
-        targetId: Long,
+        data: MutableMap<String, Any>,
     ): ApiFuture<String> {
         val message = Message.builder()
             .setToken(token)
@@ -46,8 +45,6 @@ class FcmService {
                     .setBody(content)
                     .build(),
             )
-            .putData("notificationType", notificationType)
-            .putData("targetId", targetId.toString())
             .build()
         return FirebaseMessaging.getInstance().sendAsync(message)
     }
