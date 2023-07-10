@@ -25,12 +25,12 @@ class ImageUploadSuccessUseCase(
             fileExtension,
             promiseImageCommentType,
         )
-        return ImageDto(imageUrl)
+        return ImageDto.from(imageUrl)
     }
 
     fun userUploadImageSuccess(imageKey: String, fileExtension: ImageFileExtension): ImageDto {
         val currentUserId: Long = SecurityUtils.currentUserId
         val imageUrl = imageDomainService.userImageUploadSuccess(currentUserId, imageKey, fileExtension)
-        return ImageDto(imageUrl)
+        return ImageDto.from(imageUrl)
     }
 }
