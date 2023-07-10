@@ -11,5 +11,4 @@ class NotificationAdapter(
     fun save(notification: Notification): Notification {
         return notificationRepository.save(notification)
     }
-
 }

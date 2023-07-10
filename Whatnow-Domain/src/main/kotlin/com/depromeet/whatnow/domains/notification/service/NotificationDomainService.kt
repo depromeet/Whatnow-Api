@@ -2,7 +2,6 @@ package com.depromeet.whatnow.domains.notification.service
 
 import com.depromeet.whatnow.domains.notification.adapter.NotificationAdapter
 import com.depromeet.whatnow.domains.notification.domain.Notification
-import com.depromeet.whatnow.domains.notification.domain.NotificationType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,28 +10,16 @@ class NotificationDomainService(
     val notificationAdapter: NotificationAdapter,
 ) {
     @Transactional
-    fun saveForImage(userId: Long, targetUserId: Set<Long>, targetId: Long) {
-        notificationAdapter.save(
-            Notification(
-            notificationType = NotificationType.IMAGE,
-            userId = userId,
-            targetUserIds = targetUserId,
-            targetId = targetId,
-            interactionType = null,
-            )
-        )
+    fun saveForImage(userId: Long, targetUserId: Set<Long>, promiseImageId: Long) {
+        notificationAdapter.save(Notification.createForImage(userId, targetUserId, promiseImageId))
     }
 
     @Transactional
-    fun saveForStartSharing(targetUserId: Set<Long>, targetId: Long) {
-        notificationAdapter.save(
-            Notification(
-                notificationType = NotificationType.START_SHARING,
-                userId = null,
-                targetUserIds = targetUserId,
-                targetId = targetId,
-                interactionType = null,
-            )
-        )
+    fun saveForStartSharing(targetUserIds: Set<Long>, promiseId: Long) {
+        notificationAdapter.save(Notification.createForStartSharing(targetUserIds, promiseId))
+    }
+
+    fun saveForTimeOver(targetUserIds: Set<Long>, promiseId: Long) {
+        notificationAdapter.save(Notification.createForTimeOver(targetUserIds, promiseId))
     }
 }

@@ -5,7 +5,6 @@ import com.depromeet.whatnow.config.fcm.FcmService
 import com.depromeet.whatnow.domains.notification.domain.NotificationType
 import com.depromeet.whatnow.domains.notification.service.NotificationDomainService
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
-import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.LATE
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.WAIT
 import com.depromeet.whatnow.domains.user.adapter.UserAdapter
@@ -32,7 +31,7 @@ class ImageRegisterEventHandler(
 
         // 약속에 참여한 유저들 조회 (사진 보낸 유저 제외)
         val usersExcludingSelf = promiseUserAdapter.findByPromiseId(promiseId)
-            .filter { promiseUser ->  promiseUser.userId != userId }
+            .filter { promiseUser -> promiseUser.userId != userId }
             .map { promiseUser -> userAdapter.queryUser(promiseUser.userId) }
 
         // 앱 알람 허용한 유저
@@ -41,14 +40,14 @@ class ImageRegisterEventHandler(
         }
 
         // 앱 알람 허용한 유저에게 알람 보내기
-        when(promiseUser.promiseUserType) {
+        when (promiseUser.promiseUserType) {
             LATE -> {
                 fcmService.sendGroupMessageAsync(
                     appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
                     "지각한 친구의 사진 도착",
                     "지각한 친구가 보낸 사진을 확인해봐!",
                     NotificationType.IMAGE.name,
-                    promiseId
+                    promiseId,
                 )
             }
             WAIT -> {
@@ -57,7 +56,7 @@ class ImageRegisterEventHandler(
                     "도착한 친구들의 사진 도착",
                     "도착한 친구들이 보낸 사진을 확인해봐!",
                     NotificationType.IMAGE.name,
-                    promiseId
+                    promiseId,
                 )
             }
         }

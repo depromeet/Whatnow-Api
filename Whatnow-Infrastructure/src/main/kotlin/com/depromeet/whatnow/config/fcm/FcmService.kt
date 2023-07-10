@@ -2,7 +2,6 @@ package com.depromeet.whatnow.config.fcm
 
 import com.google.api.core.ApiFuture
 import com.google.firebase.messaging.BatchResponse
-import com.google.firebase.messaging.FcmOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.MulticastMessage
@@ -18,7 +17,6 @@ class FcmService {
         notificationType: String,
         targetId: Long,
     ): ApiFuture<BatchResponse> {
-
         val multicast = MulticastMessage.builder()
             .addAllTokens(tokenList)
             .setNotification(
@@ -46,9 +44,8 @@ class FcmService {
                 Notification.builder()
                     .setTitle(title)
                     .setBody(content)
-                    .build()
+                    .build(),
             )
-
             .putData("notificationType", notificationType)
             .putData("targetId", targetId.toString())
             .build()

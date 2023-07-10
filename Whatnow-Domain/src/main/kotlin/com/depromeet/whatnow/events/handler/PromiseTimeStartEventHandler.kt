@@ -45,7 +45,7 @@ class PromiseTimeStartEventHandler(
             "위치 공유 시작!",
             "공유 시작! 지도를 확인해봐!",
             NotificationType.START_SHARING.name,
-            promiseId
+            promiseId,
         )
 
         // notification 저장
