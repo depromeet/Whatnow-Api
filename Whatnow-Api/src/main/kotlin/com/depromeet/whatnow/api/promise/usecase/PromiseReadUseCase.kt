@@ -69,8 +69,8 @@ class PromiseReadUseCase(
             }
 
             val action: (Entry<PromiseType, MutableList<PromiseFindDto>>) -> Unit = { (promiseType, promiseFindDtos) ->
-                //promiseType == BEFORE 인 것만 정렬
-                when(promiseType){
+                // promiseType == BEFORE 인 것만 정렬
+                when (promiseType) {
                     // 예정된 약속은 오름차순 정렬
                     PromiseType.BEFORE -> promiseFindDtos.sortBy { it.endTime }
                     // 종료된 약속은 내림차순 정렬
