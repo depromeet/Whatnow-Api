@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.image.controller
 
 import com.depromeet.whatnow.api.image.dto.ImageCommentElement
+import com.depromeet.whatnow.api.image.dto.ImageDto
 import com.depromeet.whatnow.api.image.dto.ImageUrlResponse
 import com.depromeet.whatnow.api.image.dto.PromiseImageDetailResponse
 import com.depromeet.whatnow.api.image.dto.PromiseImageResponse
@@ -50,8 +51,8 @@ class ImageController(
         @PathVariable imageKey: String,
         @RequestParam fileExtension: ImageFileExtension,
         @RequestParam promiseImageCommentType: PromiseImageCommentType,
-    ) {
-        successUseCase.promiseUploadImageSuccess(promiseId, imageKey, fileExtension, promiseImageCommentType)
+    ): ImageDto {
+        return successUseCase.promiseUploadImageSuccess(promiseId, imageKey, fileExtension, promiseImageCommentType)
     }
 
     @Tag(name = "6-1 [약속 이미지]")
@@ -94,7 +95,7 @@ class ImageController(
     @Tag(name = "6-2 [유저 이미지]")
     @Operation(summary = "유저 프로필 이미지 업로드 성공 요청")
     @PostMapping("/{imageKey}/users/me")
-    fun userUploadImageSuccess(@PathVariable imageKey: String, @RequestParam fileExtension: ImageFileExtension) {
-        successUseCase.userUploadImageSuccess(imageKey, fileExtension)
+    fun userUploadImageSuccess(@PathVariable imageKey: String, @RequestParam fileExtension: ImageFileExtension): ImageDto {
+        return successUseCase.userUploadImageSuccess(imageKey, fileExtension)
     }
 }
