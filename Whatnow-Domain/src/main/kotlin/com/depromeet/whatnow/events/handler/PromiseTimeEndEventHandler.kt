@@ -57,6 +57,10 @@ class PromiseTimeEndEventHandler(
         val appAlarmPermitUsers = users
             .filter { user -> user.fcmNotification.fcmToken != null && user.fcmNotification.appAlarm }
 
+        val lateData: MutableMap<String, String> = mutableMapOf()
+        lateData["notificationType"] = NotificationType.TIMEOVER.name
+        lateData["promiseId"] = promiseId.toString()
+
         // LATE 유저들에게 알림 발송
         val appAlarmPermitLateUserTokens = appAlarmPermitUsers
             .filter { user ->
@@ -70,9 +74,12 @@ class PromiseTimeEndEventHandler(
             appAlarmPermitLateUserTokens,
             "TIMEOVER!",
             "친구들에게 용서를 비는 사진을 보내봐!",
-            NotificationType.TIMEOVER.name,
-            promiseId,
+            lateData,
         )
+
+        val waitData: MutableMap<String, String> = mutableMapOf()
+        waitData["notificationType"] = NotificationType.TIMEOVER.name
+        waitData["promiseId"] = promiseId.toString()
 
         val appAlarmPermitWaitUserTokens = appAlarmPermitUsers
             .filter { user ->
@@ -86,8 +93,7 @@ class PromiseTimeEndEventHandler(
             appAlarmPermitWaitUserTokens,
             "TIMEOVER!",
             "친구들에게 재촉하는 사진을 보내봐!",
-            NotificationType.TIMEOVER.name,
-            promiseId,
+            waitData,
         )
 
         // notification 저장

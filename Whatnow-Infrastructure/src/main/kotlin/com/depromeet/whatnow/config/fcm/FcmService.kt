@@ -14,8 +14,7 @@ class FcmService {
         tokenList: List<String>,
         title: String,
         content: String,
-        notificationType: String,
-        targetId: Long,
+        data: MutableMap<String, String>,
     ): ApiFuture<BatchResponse> {
         val multicast = MulticastMessage.builder()
             .addAllTokens(tokenList)
@@ -25,8 +24,7 @@ class FcmService {
                     .setBody(content)
                     .build(),
             )
-            .putData("notificationType", notificationType)
-            .putData("targetId", targetId.toString())
+            .putAllData(data)
             .build()
         return FirebaseMessaging.getInstance().sendMulticastAsync(multicast)
     }
@@ -35,7 +33,7 @@ class FcmService {
         token: String,
         title: String,
         content: String,
-        data: MutableMap<String, Any>,
+        data: MutableMap<String, String>,
     ): ApiFuture<String> {
         val message = Message.builder()
             .setToken(token)
@@ -45,6 +43,7 @@ class FcmService {
                     .setBody(content)
                     .build(),
             )
+            .putAllData(data)
             .build()
         return FirebaseMessaging.getInstance().sendAsync(message)
     }

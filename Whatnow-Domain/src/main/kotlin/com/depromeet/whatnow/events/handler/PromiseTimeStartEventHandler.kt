@@ -39,13 +39,16 @@ class PromiseTimeStartEventHandler(
         val appAlarmPermitUsers = users
             .filter { user -> user.fcmNotification.fcmToken != null && user.fcmNotification.appAlarm }
 
+        val data: MutableMap<String, String> = mutableMapOf()
+        data["notificationType"] = NotificationType.START_SHARING.name
+        data["promiseId"] = promiseId.toString()
+
         // 앱 알람 허용한 유저에게 알람 보내기
         fcmService.sendGroupMessageAsync(
             appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
             "위치 공유 시작!",
             "공유 시작! 지도를 확인해봐!",
-            NotificationType.START_SHARING.name,
-            promiseId,
+            data,
         )
 
         // notification 저장

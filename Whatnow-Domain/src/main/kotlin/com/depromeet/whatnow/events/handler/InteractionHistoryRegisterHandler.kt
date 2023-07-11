@@ -35,7 +35,7 @@ class InteractionHistoryRegisterHandler(
 
         val user = userAdapter.queryUser(event.userId)
 
-        val data: MutableMap<String, Any> = mutableMapOf()
+        val data: MutableMap<String, String> = mutableMapOf()
         data["notificationType"] = NotificationType.INTERACTION.name
 
         fcmService.sendMessageAsync(

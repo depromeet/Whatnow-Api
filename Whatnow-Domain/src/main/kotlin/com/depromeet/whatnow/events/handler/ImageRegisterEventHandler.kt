@@ -39,6 +39,10 @@ class ImageRegisterEventHandler(
             user.fcmNotification.fcmToken != null && user.fcmNotification.appAlarm
         }
 
+        val data: MutableMap<String, String> = mutableMapOf()
+        data["notificationType"] = NotificationType.IMAGE.name
+        data["promiseId"] = promiseId.toString()
+
         // 앱 알람 허용한 유저에게 알람 보내기
         when (promiseUser.promiseUserType) {
             LATE -> {
@@ -46,8 +50,7 @@ class ImageRegisterEventHandler(
                     appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
                     "지각한 친구의 사진 도착",
                     "지각한 친구가 보낸 사진을 확인해봐!",
-                    NotificationType.IMAGE.name,
-                    promiseId,
+                    data,
                 )
             }
             WAIT -> {
@@ -55,8 +58,7 @@ class ImageRegisterEventHandler(
                     appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
                     "도착한 친구들의 사진 도착",
                     "도착한 친구들이 보낸 사진을 확인해봐!",
-                    NotificationType.IMAGE.name,
-                    promiseId,
+                    data,
                 )
             }
         }
