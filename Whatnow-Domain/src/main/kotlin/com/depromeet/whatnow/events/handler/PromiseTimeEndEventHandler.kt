@@ -23,9 +23,9 @@ class PromiseTimeEndEventHandler(
     fun handleRegisterUserEvent(endTimePromiseEvent: PromiseTimeEndEvent) {
         val promiseId: Long = endTimePromiseEvent.promiseId
         val promise = promiseAdaptor.queryPromise(promiseId)
+        promise.endPromise()
         val coordinate = promise.meetPlace?.coordinate
         val promiseUsers = promiseUserDomainService.findByPromiseId(promiseId)
-
         promiseUsers.forEach { promiseUser ->
             when (promiseUser.promiseUserType) {
                 CANCEL -> return@forEach // CANCEL 일 경우 넘어간다.
