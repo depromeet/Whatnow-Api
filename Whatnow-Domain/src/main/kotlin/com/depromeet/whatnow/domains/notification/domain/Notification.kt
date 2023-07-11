@@ -92,5 +92,20 @@ class Notification(
                 promiseUserType = null,
             )
         }
+
+        fun createForInteractionAttainment(
+            userId: Long,
+            senderUserIds: Set<Long>,
+            interactionType: InteractionType,
+        ): Notification {
+            return Notification(
+                notificationType = NotificationType.INTERACTION_ATTAINMENT,
+                userId = userId,
+                targetUserIds = senderUserIds,
+                targetId = null,
+                interactionType = interactionType,
+                promiseUserType = null,
+            )
+        }
     }
 }

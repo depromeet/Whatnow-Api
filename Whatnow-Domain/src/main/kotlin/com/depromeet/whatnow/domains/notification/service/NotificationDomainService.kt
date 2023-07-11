@@ -34,4 +34,9 @@ class NotificationDomainService(
     fun saveForInteraction(userId: Long, targetUserId: Long, interactionType: InteractionType) {
         notificationAdapter.save(Notification.createForInteraction(userId, targetUserId, interactionType))
     }
+
+    @Transactional
+    fun saveForInteractionAttainment(userId: Long, senderUserIds: Set<Long>, interactionType: InteractionType) {
+        notificationAdapter.save(Notification.createForInteractionAttainment(userId, senderUserIds, interactionType))
+    }
 }
