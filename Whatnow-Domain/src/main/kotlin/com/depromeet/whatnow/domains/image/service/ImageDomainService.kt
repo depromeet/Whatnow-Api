@@ -32,7 +32,7 @@ class ImageDomainService(
         imageKey: String,
         fileExtension: ImageFileExtension,
         promiseImageCommentType: PromiseImageCommentType,
-    ) {
+    ): String {
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
         validatePromiseUserType(promiseUser.promiseUserType!!, promiseImageCommentType)
 
@@ -40,12 +40,14 @@ class ImageDomainService(
         promiseImageAdapter.save(
             PromiseImage.of(promiseId, userId, imageUrl, imageKey, fileExtension, promiseImageCommentType),
         )
+        return imageUrl
     }
 
     @Transactional
-    fun userImageUploadSuccess(userId: Long, imageKey: String, fileExtension: ImageFileExtension) {
+    fun userImageUploadSuccess(userId: Long, imageKey: String, fileExtension: ImageFileExtension): String {
         val imageUrl = IMAGE_DOMAIN + "/" + springEnvironmentHelper.activeProfile + "/" + "user/$userId/$imageKey"
         userImageAdapter.save(UserImage.of(userId, imageUrl, imageKey, fileExtension))
+        return imageUrl
     }
 
     private fun validatePromiseUserType(promiseUserType: PromiseUserType, promiseImageCommentType: PromiseImageCommentType) {

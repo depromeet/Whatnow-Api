@@ -27,7 +27,9 @@ const val LOCAL = "local"
 const val WITHDRAW_PREFIX = "withdraw"
 const val RADIUS_WAIT_CONFIRM = 200
 const val INTERACTION_FIXED_COUNT = 200L
+const val SLACK_MAX_LENGTH = 1000
 
+const val NCP_LOCAL_SEARCH_DISPLAY_COUNT = 10
 const val IMAGE_DOMAIN = "https://image.whatnow.kr"
 const val ASSERT_IMAGE_DOMAIN = "https://image.whatnow.kr/assert"
 const val USER_DEFAULT_PROFILE_IMAGE = "https://image.whatnow.kr/assert/users/default.svg"

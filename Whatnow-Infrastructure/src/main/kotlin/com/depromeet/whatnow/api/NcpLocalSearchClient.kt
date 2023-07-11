@@ -12,6 +12,7 @@ interface NcpLocalSearchClient {
     fun searchByKeyword(
         @RequestHeader("X-Naver-Client-Id") accessKey: String,
         @RequestHeader("X-Naver-Client-Secret") secretKey: String,
+        @RequestParam display: Int = 10,
         @RequestParam query: String,
     ): NcpMapInfoResponse
 }

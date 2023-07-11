@@ -21,7 +21,7 @@ class SlackAsyncErrorSender(
     fun execute(cachingRequest: ContentCachingRequestWrapper, userId: Long) {
         val url = cachingRequest.requestURL.toString()
         val method = cachingRequest.method
-        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.contentToString())
+        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.decodeToString())
         val errorUserIP = cachingRequest.remoteAddr
         val layoutBlocks: MutableList<LayoutBlock> = ArrayList()
         layoutBlocks.add(
@@ -65,8 +65,8 @@ class SlackAsyncErrorSender(
 
         val url = cachingRequest.requestURL.toString()
         val method = cachingRequest.method
-        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.contentToString())
-
+        val body = objectMapper.readTree(cachingRequest.contentAsByteArray.decodeToString())
+        println(body)
         val errorMessage = e.message
         val errorStack = slackProvider.getErrorStack(e)
         val errorUserIP = cachingRequest.remoteAddr
