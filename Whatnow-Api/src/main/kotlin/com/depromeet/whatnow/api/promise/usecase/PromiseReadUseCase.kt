@@ -69,7 +69,13 @@ class PromiseReadUseCase(
             }
 
             val action: (Entry<PromiseType, MutableList<PromiseFindDto>>) -> Unit = { (promiseType, promiseFindDtos) ->
-                promiseFindDtos.sortBy { it.endTime }
+                // promiseType == BEFORE 인 것만 정렬
+                when (promiseType) {
+                    // 예정된 약속은 오름차순 정렬
+                    PromiseType.BEFORE -> promiseFindDtos.sortBy { it.endTime }
+                    // 종료된 약속은 내림차순 정렬
+                    else -> promiseFindDtos.sortByDescending { it.endTime }
+                }
             }
             promiseSplitByPromiseTypeDto.forEach(action)
         }
@@ -119,7 +125,7 @@ class PromiseReadUseCase(
             }
 
             val promiseImagesUrls = promiseImageAdapter.findAllByPromiseId(promise.id!!)
-                .sortedByDescending { it.createdAt }
+                .sortedBy { it.createdAt }
                 .map { it.uri }
 
             val timeOverLocations = promiseUsers.mapNotNull { promiseUser ->
