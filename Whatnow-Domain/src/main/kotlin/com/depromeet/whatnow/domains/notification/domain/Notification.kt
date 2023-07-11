@@ -60,6 +60,17 @@ class Notification(
             )
         }
 
+        fun createForEndSharing(targetUserIds: Set<Long>, promiseId: Long): Notification {
+            return Notification(
+                notificationType = NotificationType.END_SHARING,
+                userId = null,
+                targetUserIds = targetUserIds,
+                targetId = promiseId,
+                interactionType = null,
+                promiseUserType = null,
+            )
+        }
+
         fun createForTimeOver(targetUserIds: Set<Long>, promiseId: Long): Notification {
             return Notification(
                 notificationType = NotificationType.TIMEOVER,

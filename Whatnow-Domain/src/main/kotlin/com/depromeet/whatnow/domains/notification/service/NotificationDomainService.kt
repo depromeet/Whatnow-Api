@@ -20,10 +20,17 @@ class NotificationDomainService(
         notificationAdapter.save(Notification.createForStartSharing(targetUserIds, promiseId))
     }
 
+    @Transactional
+    fun saveForEndSharing(targetUserIds: Set<Long>, promiseId: Long) {
+        notificationAdapter.save(Notification.createForEndSharing(targetUserIds, promiseId))
+    }
+
+    @Transactional
     fun saveForTimeOver(targetUserIds: Set<Long>, promiseId: Long) {
         notificationAdapter.save(Notification.createForTimeOver(targetUserIds, promiseId))
     }
 
+    @Transactional
     fun saveForInteraction(userId: Long, targetUserId: Long, interactionType: InteractionType) {
         notificationAdapter.save(Notification.createForInteraction(userId, targetUserId, interactionType))
     }
