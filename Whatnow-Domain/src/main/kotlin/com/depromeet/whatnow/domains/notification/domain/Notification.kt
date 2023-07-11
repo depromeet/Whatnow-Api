@@ -2,6 +2,7 @@ package com.depromeet.whatnow.domains.notification.domain
 
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
+import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import javax.persistence.Column
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
@@ -19,17 +20,92 @@ class Notification(
     var notificationType: NotificationType,
 
     @Enumerated(EnumType.STRING)
-    var interactionType: InteractionType,
+    var interactionType: InteractionType?,
 
-    var userId: Long,
+    @Enumerated(EnumType.STRING)
+    var promiseUserType: PromiseUserType?,
+
+    var userId: Long?,
 
     @ElementCollection
-    var targetUserId: Set<Long>,
+    var targetUserIds: Set<Long>,
 
-    var targetId: Long,
+    var targetId: Long?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
     val id: Long? = null,
-) : BaseTimeEntity()
+) : BaseTimeEntity() {
+    companion object {
+        fun createForImage(userId: Long, targetUserId: Set<Long>, promiseImageId: Long): Notification {
+            return Notification(
+                notificationType = NotificationType.IMAGE,
+                userId = userId,
+                targetUserIds = targetUserId,
+                targetId = promiseImageId,
+                interactionType = null,
+                promiseUserType = null,
+            )
+        }
+
+        fun createForStartSharing(targetUserIds: Set<Long>, promiseId: Long): Notification {
+            return Notification(
+                notificationType = NotificationType.START_SHARING,
+                userId = null,
+                targetUserIds = targetUserIds,
+                targetId = promiseId,
+                interactionType = null,
+                promiseUserType = null,
+            )
+        }
+
+        fun createForEndSharing(targetUserIds: Set<Long>, promiseId: Long): Notification {
+            return Notification(
+                notificationType = NotificationType.END_SHARING,
+                userId = null,
+                targetUserIds = targetUserIds,
+                targetId = promiseId,
+                interactionType = null,
+                promiseUserType = null,
+            )
+        }
+
+        fun createForTimeOver(targetUserIds: Set<Long>, promiseId: Long): Notification {
+            return Notification(
+                notificationType = NotificationType.TIMEOVER,
+                userId = null,
+                targetUserIds = targetUserIds,
+                targetId = promiseId,
+                interactionType = null,
+                promiseUserType = null,
+            )
+        }
+
+        fun createForInteraction(userId: Long, targetUserId: Long, interactionType: InteractionType): Notification {
+            return Notification(
+                notificationType = NotificationType.INTERACTION,
+                userId = userId,
+                targetUserIds = mutableSetOf(targetUserId),
+                targetId = null,
+                interactionType = interactionType,
+                promiseUserType = null,
+            )
+        }
+
+        fun createForInteractionAttainment(
+            userId: Long,
+            senderUserIds: Set<Long>,
+            interactionType: InteractionType,
+        ): Notification {
+            return Notification(
+                notificationType = NotificationType.INTERACTION_ATTAINMENT,
+                userId = userId,
+                targetUserIds = senderUserIds,
+                targetId = null,
+                interactionType = interactionType,
+                promiseUserType = null,
+            )
+        }
+    }
+}

@@ -27,8 +27,9 @@ class Interaction(
     @Column(name = "interaction_id")
     val id: Long? = null,
 ) : BaseTimeEntity() {
-    fun increment() {
+    fun increment(): Long {
         count += 1
+        return count
     }
 
     companion object {

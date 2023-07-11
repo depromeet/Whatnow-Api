@@ -24,9 +24,9 @@ class InteractionDomainService(
         identifier = "userId",
     )
     @CheckUserParticipation
-    fun increment(promiseId: Long, userId: Long, interactionType: InteractionType) {
+    fun increment(promiseId: Long, userId: Long, interactionType: InteractionType): Long {
         val interaction = interactionAdapter.queryInteraction(promiseId, userId, interactionType)
-        interaction.increment()
+        return interaction.increment()
     }
 
     @CheckUserParticipation

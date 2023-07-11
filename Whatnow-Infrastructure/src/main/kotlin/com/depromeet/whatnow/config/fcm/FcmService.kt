@@ -14,7 +14,7 @@ class FcmService {
         tokenList: List<String>,
         title: String,
         content: String,
-        imageUrl: String,
+        data: MutableMap<String, String>,
     ): ApiFuture<BatchResponse> {
         val multicast = MulticastMessage.builder()
             .addAllTokens(tokenList)
@@ -22,17 +22,29 @@ class FcmService {
                 Notification.builder()
                     .setTitle(title)
                     .setBody(content)
-                    .setImage(imageUrl)
                     .build(),
-            ).build()
+            )
+            .putAllData(data)
+            .build()
         return FirebaseMessaging.getInstance().sendMulticastAsync(multicast)
     }
 
-    fun sendMessageSync(token: String, content: String) {
+    fun sendMessageAsync(
+        token: String,
+        title: String,
+        content: String,
+        data: MutableMap<String, String>,
+    ): ApiFuture<String> {
         val message = Message.builder()
             .setToken(token)
-            .setNotification(Notification.builder().setBody(content).build())
+            .setNotification(
+                Notification.builder()
+                    .setTitle(title)
+                    .setBody(content)
+                    .build(),
+            )
+            .putAllData(data)
             .build()
-        FirebaseMessaging.getInstance().send(message)
+        return FirebaseMessaging.getInstance().sendAsync(message)
     }
 }
