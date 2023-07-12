@@ -8,7 +8,7 @@ import com.depromeet.whatnow.consts.USER_DEFAULT_PROFILE_IMAGE
 import com.depromeet.whatnow.domains.user.exception.AlreadyDeletedUserException
 import com.depromeet.whatnow.domains.user.exception.ForbiddenUserException
 import com.depromeet.whatnow.events.domainEvent.UserProfileImageUpdatedEvent
-import com.depromeet.whatnow.events.domainEvent.UserSignUpEvent
+import com.depromeet.whatnow.events.domainEvent.UserRegisterEvent
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -52,7 +52,7 @@ class User(
 
     @PostPersist
     fun registerEvent() {
-        Events.raise(UserSignUpEvent(this.id!!))
+        Events.raise(UserRegisterEvent(this.id!!))
     }
 
     fun login(fcmToken: String) {

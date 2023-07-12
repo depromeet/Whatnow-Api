@@ -15,7 +15,7 @@ class PromiseRegisterEventHandler(
 ) {
     @Async
     @TransactionalEventListener(classes = [PromiseRegisterEvent::class], phase = TransactionPhase.AFTER_COMMIT)
-    fun handleRegisterPictureEvent(promiseRegisterEvent: PromiseRegisterEvent) {
+    fun handlePromiseRegisterEvent(promiseRegisterEvent: PromiseRegisterEvent) {
         // 약속 등록 시 방장의 PromiseUser 생성하기
         val promiseUser = PromiseUser(
             promiseId = promiseRegisterEvent.promiseId,

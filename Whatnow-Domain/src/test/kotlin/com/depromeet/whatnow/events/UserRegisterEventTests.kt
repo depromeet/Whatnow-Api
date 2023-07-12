@@ -4,7 +4,7 @@ import com.depromeet.whatnow.config.DomainIntegrateSpringBootTest
 import com.depromeet.whatnow.domains.user.domain.OauthInfo
 import com.depromeet.whatnow.domains.user.domain.OauthProvider
 import com.depromeet.whatnow.domains.user.service.UserDomainService
-import com.depromeet.whatnow.events.handler.UserSignUpEventHandler
+import com.depromeet.whatnow.events.handler.UserRegisterEventHandler
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.any
@@ -13,17 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 
 @DomainIntegrateSpringBootTest
-class UserSignUpEventTests {
+class UserRegisterEventTests {
 
     @Autowired lateinit var userDomainService: UserDomainService
 
-    @MockBean lateinit var userSignUpEventHandler: UserSignUpEventHandler
+    @MockBean lateinit var userRegisterEventHandler: UserRegisterEventHandler
 
     @Test
     fun `유저회원가입시 유저등록 이벤트가 발행되어야한다`() {
         // when
         userDomainService.upsertUser("", "", true, OauthInfo("", OauthProvider.KAKAO), "")
         // then
-        then(userSignUpEventHandler).should(Mockito.times(1)).handleRegisterUserEvent(any())
+        then(userRegisterEventHandler).should(Mockito.times(1)).handleUserRegisterEvent(any())
     }
 }

@@ -3,7 +3,7 @@ package com.depromeet.whatnow.domains.interactionhistory.domain
 import com.depromeet.whatnow.common.BaseTimeEntity
 import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
-import com.depromeet.whatnow.domains.interactionhistory.event.InteractionHistoryRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.InteractionHistoryRegisterEvent
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

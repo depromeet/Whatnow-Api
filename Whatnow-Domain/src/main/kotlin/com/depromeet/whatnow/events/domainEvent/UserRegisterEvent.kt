@@ -2,6 +2,6 @@ package com.depromeet.whatnow.events.domainEvent
 
 import com.depromeet.whatnow.common.aop.event.DomainEvent
 
-data class UserSignUpEvent(
+data class UserRegisterEvent(
     val userId: Long,
 ) : DomainEvent()
