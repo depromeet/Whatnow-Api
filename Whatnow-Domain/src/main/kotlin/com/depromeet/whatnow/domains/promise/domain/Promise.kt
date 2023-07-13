@@ -86,7 +86,16 @@ class Promise(
         Events.raise(PromiseUpdateMeetPlaceEvent(this.id!!, this.meetPlace!!))
     }
 
-    fun isActive(currentTime: LocalDateTime): Boolean {
+    fun isActive(): Boolean {
+        val currentTime = LocalDateTime.now()
         return this.endTime.minusHours(1) < currentTime && currentTime < this.endTime.plusMinutes(30)
+    }
+
+    fun isBeforePromiseEndTime(): Boolean {
+        return this.endTime > LocalDateTime.now()
+    }
+
+    fun isAfterPromiseEndTime(): Boolean {
+        return this.endTime < LocalDateTime.now()
     }
 }

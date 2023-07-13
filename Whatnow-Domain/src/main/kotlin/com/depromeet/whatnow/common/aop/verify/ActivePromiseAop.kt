@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
 import org.springframework.stereotype.Component
 import java.lang.NumberFormatException
-import java.time.LocalDateTime
 
 @Aspect
 @Component
@@ -21,11 +20,10 @@ class ActivePromiseAop(
     fun validateActivePromise(joinPoint: ProceedingJoinPoint, activePromise: ActivePromise): Any? {
         val args = joinPoint.args
         val signature = joinPoint.signature as MethodSignature
-        val now = LocalDateTime.now()
         val promiseId = findPromiseIdArg(signature.parameterNames, args)
 
         val promise = promiseAdaptor.queryPromise(promiseId)
-        if (promise.isActive(now)) {
+        if (promise.isActive()) {
             return joinPoint.proceed()
         } else {
             throw PromiseNotActivateException()

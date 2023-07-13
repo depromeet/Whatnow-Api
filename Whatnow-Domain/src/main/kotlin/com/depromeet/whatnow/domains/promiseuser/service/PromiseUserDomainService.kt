@@ -1,7 +1,8 @@
 package com.depromeet.whatnow.domains.promiseuser.service
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
-import com.depromeet.whatnow.consts.RADIUS_WAIT_CONFIRM
+import com.depromeet.whatnow.consts.RADIUS_ARRIVED_DESTINATION
+import com.depromeet.whatnow.consts.RADIUS_EARTH
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
@@ -48,12 +49,11 @@ class PromiseUserDomainService(
     fun findByUserId(userId: Long): List<PromiseUser> {
         return promiseUserAdaptor.findByUserId(userId)
     }
-    fun isArrived(promiseUser: PromiseUser, coordinate: CoordinateVo): Boolean {
+    fun isArrived(promiseUser: PromiseUser, destination: CoordinateVo): Boolean {
         val start = S2LatLng.fromDegrees(promiseUser.userLocation!!.latitude, promiseUser.userLocation!!.longitude)
-        val destination = S2LatLng.fromDegrees(coordinate.latitude, coordinate.longitude)
-        val distanceInMeters = start.getDistance(destination).radians() * 6371000.0
-
-        return distanceInMeters < RADIUS_WAIT_CONFIRM
+        val destination = S2LatLng.fromDegrees(destination.latitude, destination.longitude)
+        val distanceInMeters = start.getDistance(destination).radians() * RADIUS_EARTH
+        return distanceInMeters < RADIUS_ARRIVED_DESTINATION
     }
 
     fun findByPromiseIdAndUserId(promiseId: Long, userId: Long): PromiseUser {
