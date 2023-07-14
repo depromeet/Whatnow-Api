@@ -83,7 +83,7 @@ class PromiseController(
 
     @Operation(summary = "약속(promise) 제목 수정", description = "약속 제목을 변경합니다.")
     @RequiresMainUser
-    @PutMapping("/promises/{promise-id}/title/{title}")
+    @PutMapping("/promises/{promise-id}/titles")
     fun updatePromiseTitle(
         @PathVariable(value = "promise-id") promiseId: Long,
         @RequestParam title: String,
