@@ -40,7 +40,9 @@ class PromiseUserDomainService(
      * */
     @Transactional
     fun createPromiseUser(promiseUser: PromiseUser): PromiseUser {
-        return promiseUserAdaptor.save(promiseUser)
+        val promiseUser = promiseUserAdaptor.save(promiseUser)
+        promiseUser.createPromiseUserEvent()
+        return promiseUser
     }
 
     fun findByPromiseId(promiseId: Long): List<PromiseUser> {
