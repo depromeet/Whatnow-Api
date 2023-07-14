@@ -33,7 +33,6 @@ class PromiseController(
     val promiseRegisterUseCase: PromiseRegisterUseCase,
     val promiseReadUseCase: PromiseReadUseCase,
 ) {
-    //    나의 약속 전부 조회
     @Deprecated("나의 약속 전부 조회", replaceWith = ReplaceWith("findPromiseByStatus"))
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
     // view 방식에 따라 구분하게 기능 추가 예정
@@ -75,12 +74,21 @@ class PromiseController(
         return promiseRegisterUseCase.createPromise(promiseRequest)
     }
 
-//    1. 약속 장소 변경
     @Operation(summary = "약속(promise) 장소 수정", description = "약속 장소를 변경합니다.")
     @RequiresMainUser
     @PutMapping("/promises/{promise-id}/location")
     fun updatePromiseLocation(@PathVariable(value = "promise-id") promiseId: Long, @RequestBody meetPlace: PlaceVo): PromiseDto {
         return promiseRegisterUseCase.updatePromiseMeetPlace(promiseId, meetPlace)
+    }
+
+    @Operation(summary = "약속(promise) 제목 수정", description = "약속 제목을 변경합니다.")
+    @RequiresMainUser
+    @PutMapping("/promises/{promise-id}/title/{title}")
+    fun updatePromiseTitle(
+        @PathVariable(value = "promise-id") promiseId: Long,
+        @RequestParam title: String,
+    ): PromiseDto {
+        return promiseRegisterUseCase.updatePromiseTitle(promiseId, title)
     }
 
     @Operation(summary = "약속(promise)시간 수정", description = "약속을 수정합니다. (약속 제목, 약속 장소, 약속 시간)")

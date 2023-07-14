@@ -120,7 +120,7 @@ class PromiseReadUseCase(
                         .map { InteractionDto.from(it) }
                         .sortedByDescending { interactionDto -> interactionDto.count }
                 user?.let {
-                    PromiseUserInfoVo.of(it, promiseUser.promiseUserType!!, interactions)
+                    PromiseUserInfoVo.of(it, promiseUser.promiseUserType, interactions)
                 }
             }
 

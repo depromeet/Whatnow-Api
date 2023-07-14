@@ -14,7 +14,7 @@ data class PromiseUserDto(
 ) {
     companion object {
         fun of(p: PromiseUser, progress: PromiseProgress): PromiseUserDto {
-            return PromiseUserDto(p.promiseId, p.userId, p.userLocation, p.promiseUserType!!, progress)
+            return PromiseUserDto(p.promiseId, p.userId, p.userLocation, p.promiseUserType, progress)
         }
     }
 }

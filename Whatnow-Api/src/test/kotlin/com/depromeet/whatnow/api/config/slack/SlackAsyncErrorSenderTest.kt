@@ -26,7 +26,7 @@ class SlackAsyncErrorSenderTest {
 
     @BeforeEach
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         slackAsyncErrorSender = SlackAsyncErrorSender(slackProvider, objectMapper)
     }
 

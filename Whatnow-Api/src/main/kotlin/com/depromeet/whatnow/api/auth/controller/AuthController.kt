@@ -1,6 +1,5 @@
 package com.depromeet.whatnow.api.auth.controller
 
-import com.depromeet.whatnow.annotation.DisableSwaggerSecurity
 import com.depromeet.whatnow.api.auth.dto.request.LoginRequest
 import com.depromeet.whatnow.api.auth.dto.request.RegisterRequest
 import com.depromeet.whatnow.api.auth.dto.response.AbleRegisterResponse

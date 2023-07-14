@@ -4,7 +4,6 @@ import com.depromeet.whatnow.config.jwt.AccessTokenInfo
 import com.depromeet.whatnow.config.jwt.JwtTokenHelper
 import com.depromeet.whatnow.consts.AUTH_HEADER
 import com.depromeet.whatnow.consts.BEARER
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder

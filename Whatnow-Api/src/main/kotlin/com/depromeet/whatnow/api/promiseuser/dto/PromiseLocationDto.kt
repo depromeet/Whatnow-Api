@@ -13,8 +13,8 @@ data class PromiseLocationDto(
         fun from(promiseUser: PromiseUser): PromiseLocationDto {
             return PromiseLocationDto(
                 userId = promiseUser.userId,
-                userLocation = promiseUser.userLocation!!,
-                promiseUserType = promiseUser.promiseUserType!!,
+                userLocation = promiseUser.userLocation,
+                promiseUserType = promiseUser.promiseUserType,
             )
         }
     }
