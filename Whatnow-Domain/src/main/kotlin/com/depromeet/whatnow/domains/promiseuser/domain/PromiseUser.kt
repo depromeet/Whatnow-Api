@@ -5,6 +5,7 @@ import com.depromeet.whatnow.common.aop.event.Events
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.events.domainEvent.PromiseUserCancelEvent
 import com.depromeet.whatnow.events.domainEvent.PromiseUserRegisterEvent
+import com.depromeet.whatnow.events.domainEvent.PromiseUserUpdateLocationEvent
 import javax.persistence.Column
 import javax.persistence.Embedded
 import javax.persistence.Entity
@@ -13,7 +14,6 @@ import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.PostUpdate
 import javax.persistence.Table
 
 @Entity
@@ -36,7 +36,6 @@ class PromiseUser(
 
 ) : BaseTimeEntity() {
 
-    @PostUpdate
     fun cancelPromiseUser() {
         this.promiseUserType = PromiseUserType.CANCEL
         Events.raise(PromiseUserCancelEvent(this.promiseId, this.userId, this.id!!))
@@ -60,6 +59,7 @@ class PromiseUser(
     }
     fun updatePromiseUserLocation(userLocation: CoordinateVo?) {
         this.userLocation = userLocation!!
+        Events.raise(PromiseUserUpdateLocationEvent(this.promiseId, this.userId, this.id!!))
     }
     fun userLocationInit() {
         this.userLocation = CoordinateVo(0.0, 0.0)
