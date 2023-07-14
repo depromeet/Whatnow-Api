@@ -11,5 +11,4 @@ data class OIDCDecodePayload(
     /** oauth provider account unique id  */
     val sub: String,
 
-    val email: String,
 )

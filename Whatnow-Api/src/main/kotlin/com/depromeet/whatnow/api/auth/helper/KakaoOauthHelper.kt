@@ -41,7 +41,7 @@ class KakaoOauthHelper(
     fun getUserInfo(oauthAccessToken: String): OauthUserInfoDto {
         val response = kakaoInfoClient.kakaoUserInfo(BEARER + oauthAccessToken)
         val kakaoAccount: KakaoInformationResponse.KakaoAccount = response.kakaoAccount
-        return OauthUserInfoDto(response.id, kakaoAccount.profile.profileImageUrl, kakaoAccount.profile.isDefaultImage, kakaoAccount.profile.nickname, kakaoAccount.email, OauthProvider.KAKAO)
+        return OauthUserInfoDto(response.id, kakaoAccount.profile.profileImageUrl, kakaoAccount.profile.isDefaultImage, kakaoAccount.profile.nickname, OauthProvider.KAKAO)
     }
 
     fun getOIDCDecodePayload(token: String): OIDCDecodePayload {
