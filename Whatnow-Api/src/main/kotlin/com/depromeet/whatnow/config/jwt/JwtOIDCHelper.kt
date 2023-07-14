@@ -52,7 +52,6 @@ class JwtOIDCHelper {
             body.issuer,
             body.audience,
             body.subject,
-            body["email", String::class.java],
         )
     }
 

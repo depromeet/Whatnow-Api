@@ -40,7 +40,6 @@ class KakaoInfoClientTest {
                 ),
         )
         var response = kakaoInfoClient.kakaoUserInfo("accessToken")
-        assertEquals(response.kakaoAccount.email, "sample@sample.com")
         assertEquals(response.kakaoAccount.profile.profileImageUrl, "http://yyy.kakao.com/dn/.../img_640x640.jpg")
         assertEquals(response.kakaoAccount.profile.isDefaultImage, false)
     }
