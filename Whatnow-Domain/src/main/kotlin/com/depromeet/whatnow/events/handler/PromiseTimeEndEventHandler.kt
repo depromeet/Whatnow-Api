@@ -97,8 +97,9 @@ class PromiseTimeEndEventHandler(
         )
 
         // notification 저장
-        val targetUserIds = users.map { user -> user.id!! }.toSet()
-        notificationDomainService.saveForTimeOver(targetUserIds, promiseId)
+        promiseUsers.forEach { promiseUser ->
+            notificationDomainService.saveForTimeOver(promiseId, promiseUser.promiseUserType, promiseUser.userId)
+        }
     }
 
     @Async

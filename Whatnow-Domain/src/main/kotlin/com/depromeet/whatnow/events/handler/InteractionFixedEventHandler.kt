@@ -32,12 +32,6 @@ class InteractionFixedEventHandler(
 
         val user = userAdapter.queryUser(userId)
 
-        val senderUserIds =
-            interactionHistoryDomainService.queryAllByInteractionType(userId, promiseId, interactionType)
-                .map { interactionHistory -> interactionHistory.targetUserId }
-                .distinct()
-                .toSet()
-
         val data: MutableMap<String, String> = mutableMapOf()
         data["notificationType"] = NotificationType.INTERACTION_ATTAINMENT.name
         data["promiseId"] = event.promiseId.toString()
@@ -51,6 +45,11 @@ class InteractionFixedEventHandler(
             )
         }
 
-        notificationDomainService.saveForInteractionAttainment(userId, senderUserIds, interactionType)
+        interactionHistoryDomainService.queryAllByInteractionType(userId, promiseId, interactionType)
+            .map { interactionHistory -> interactionHistory.targetUserId }
+            .distinct()
+            .forEach { targetUserId ->
+                notificationDomainService.saveForInteractionAttainment(promiseId, userId, interactionType, targetUserId)
+            }
     }
 }
