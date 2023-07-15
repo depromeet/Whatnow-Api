@@ -43,7 +43,7 @@ class PromiseImageReadUseCase(
             )
         } ?: listOf()
 
-        return PromiseImageResponse(promiseUser.promiseUserType!!, result)
+        return PromiseImageResponse(promiseUser.promiseUserType, result)
     }
 
     fun getImagesByPromiseId(promiseId: Long): List<PromiseImageDto> {

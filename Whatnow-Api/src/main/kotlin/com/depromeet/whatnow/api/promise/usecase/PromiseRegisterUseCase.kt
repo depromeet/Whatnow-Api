@@ -35,6 +35,11 @@ class PromiseRegisterUseCase(
         return PromiseDto.from(updatePromise)
     }
 
+    fun updatePromiseTitle(promiseId: Long, title: String): PromiseDto {
+        val updatePromise = promiseDomainService.updatePromiseTitle(promiseId, title)
+        return PromiseDto.from(updatePromise)
+    }
+
     fun updatePromiseEndTime(promiseId: Long, endTime: LocalDateTime): PromiseDto {
         val promise = promiseAdaptor.queryPromise(promiseId)
         val updatePromise = promiseDomainService.updateEndTime(promise, endTime)
