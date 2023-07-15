@@ -55,6 +55,6 @@ class InteractionHistoryRegisterHandler(
             data,
         )
 
-        notificationDomainService.saveForInteraction(user.id!!, targetUser.id!!, event.interactionType)
+        notificationDomainService.saveForInteraction(event.promiseId, user.id!!, event.interactionType, targetUser.id!!)
     }
 }

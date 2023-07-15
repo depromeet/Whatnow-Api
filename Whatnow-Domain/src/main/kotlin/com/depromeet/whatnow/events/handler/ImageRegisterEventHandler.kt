@@ -25,6 +25,7 @@ class ImageRegisterEventHandler(
     fun handlePromiseImageRegisterEvent(promiseImageRegisterEvent: PromiseImageRegisterEvent) {
         val userId: Long = promiseImageRegisterEvent.userId
         val promiseId: Long = promiseImageRegisterEvent.promiseId
+        val imageKey: String = promiseImageRegisterEvent.imageKey
 
         // 사진을 보낸 유저가 Late인지 Wait인지 확인하기 위한 PromiseUser 조회
         val promiseUser = promiseUserAdapter.findByPromiseIdAndUserId(promiseId, userId)
@@ -42,6 +43,7 @@ class ImageRegisterEventHandler(
         val data: MutableMap<String, String> = mutableMapOf()
         data["notificationType"] = NotificationType.IMAGE.name
         data["promiseId"] = promiseId.toString()
+        data["imageKey"] = imageKey
 
         // 앱 알람 허용한 유저에게 알람 보내기
         when (promiseUser.promiseUserType) {
@@ -64,7 +66,15 @@ class ImageRegisterEventHandler(
         }
 
         // notification 저장
-        val targetUserIds = usersExcludingSelf.map { user -> user.id!! }.toSet()
-        notificationDomainService.saveForImage(userId, targetUserIds, promiseId)
+        usersExcludingSelf
+            .forEach { targetUser ->
+                notificationDomainService.saveForImage(
+                    promiseUser.promiseUserType,
+                    userId,
+                    targetUser.id!!,
+                    promiseId,
+                    imageKey,
+                )
+            }
     }
 }

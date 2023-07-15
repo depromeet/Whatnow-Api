@@ -2,7 +2,13 @@ package com.depromeet.whatnow.domains.notification.service
 
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
 import com.depromeet.whatnow.domains.notification.adapter.NotificationAdapter
-import com.depromeet.whatnow.domains.notification.domain.Notification
+import com.depromeet.whatnow.domains.notification.domain.EndSharingNotification
+import com.depromeet.whatnow.domains.notification.domain.ImageNotification
+import com.depromeet.whatnow.domains.notification.domain.InteractionAttainmentNotification
+import com.depromeet.whatnow.domains.notification.domain.InteractionNotification
+import com.depromeet.whatnow.domains.notification.domain.StartSharingNotification
+import com.depromeet.whatnow.domains.notification.domain.TimeOverNotification
+import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,32 +17,32 @@ class NotificationDomainService(
     val notificationAdapter: NotificationAdapter,
 ) {
     @Transactional
-    fun saveForImage(userId: Long, targetUserId: Set<Long>, promiseImageId: Long) {
-        notificationAdapter.save(Notification.createForImage(userId, targetUserId, promiseImageId))
+    fun saveForImage(senderPromiseUserType: PromiseUserType, userId: Long, targetUserId: Long, promiseId: Long, imageKey: String) {
+        notificationAdapter.save(ImageNotification(senderPromiseUserType, userId, promiseId, imageKey, targetUserId))
     }
 
     @Transactional
-    fun saveForStartSharing(targetUserIds: Set<Long>, promiseId: Long) {
-        notificationAdapter.save(Notification.createForStartSharing(targetUserIds, promiseId))
+    fun saveForStartSharing(promiseId: Long, targetUserId: Long) {
+        notificationAdapter.save(StartSharingNotification(promiseId, targetUserId))
     }
 
     @Transactional
-    fun saveForEndSharing(targetUserIds: Set<Long>, promiseId: Long) {
-        notificationAdapter.save(Notification.createForEndSharing(targetUserIds, promiseId))
+    fun saveForEndSharing(promiseId: Long, targetUserId: Long) {
+        notificationAdapter.save(EndSharingNotification(promiseId, targetUserId))
     }
 
     @Transactional
-    fun saveForTimeOver(targetUserIds: Set<Long>, promiseId: Long) {
-        notificationAdapter.save(Notification.createForTimeOver(targetUserIds, promiseId))
+    fun saveForTimeOver(promiseId: Long, promiseUserType: PromiseUserType, targetUserId: Long) {
+        notificationAdapter.save(TimeOverNotification(promiseId, promiseUserType, targetUserId))
     }
 
     @Transactional
-    fun saveForInteraction(userId: Long, targetUserId: Long, interactionType: InteractionType) {
-        notificationAdapter.save(Notification.createForInteraction(userId, targetUserId, interactionType))
+    fun saveForInteraction(promiseId: Long, senderUserId: Long, interactionType: InteractionType, targetUserId: Long) {
+        notificationAdapter.save(InteractionNotification(promiseId, senderUserId, interactionType, targetUserId))
     }
 
     @Transactional
-    fun saveForInteractionAttainment(userId: Long, senderUserIds: Set<Long>, interactionType: InteractionType) {
-        notificationAdapter.save(Notification.createForInteractionAttainment(userId, senderUserIds, interactionType))
+    fun saveForInteractionAttainment(promiseId: Long, senderUserId: Long, interactionType: InteractionType, targetUserId: Long) {
+        notificationAdapter.save(InteractionAttainmentNotification(promiseId, senderUserId, interactionType, targetUserId))
     }
 }
