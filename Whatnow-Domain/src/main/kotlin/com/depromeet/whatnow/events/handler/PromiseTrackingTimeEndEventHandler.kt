@@ -53,7 +53,8 @@ class PromiseTrackingTimeEndEventHandler(
         )
 
         // notification 저장
-        val targetUserIds = users.map { user -> user.id!! }.toSet()
-        notificationDomainService.saveForEndSharing(targetUserIds, promiseId)
+        users.forEach { user ->
+            notificationDomainService.saveForEndSharing(promiseId, user.id!!)
+        }
     }
 }

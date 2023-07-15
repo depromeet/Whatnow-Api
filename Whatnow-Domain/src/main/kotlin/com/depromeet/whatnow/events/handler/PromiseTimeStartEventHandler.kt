@@ -52,7 +52,8 @@ class PromiseTimeStartEventHandler(
         )
 
         // notification 저장
-        val targetUserIds = users.map { user -> user.id!! }.toSet()
-        notificationDomainService.saveForStartSharing(targetUserIds, promiseId)
+        users.forEach { user ->
+            notificationDomainService.saveForStartSharing(promiseId, user.id!!)
+        }
     }
 }

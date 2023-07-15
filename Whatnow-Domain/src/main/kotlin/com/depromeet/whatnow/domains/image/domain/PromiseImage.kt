@@ -54,7 +54,7 @@ class PromiseImage(
 
     @PostPersist
     fun createImageEvent() {
-        Events.raise(PromiseImageRegisterEvent(userId, promiseId))
+        Events.raise(PromiseImageRegisterEvent(userId, promiseId, imageKey))
     }
 
     fun validateOwnership(userId: Long) {
