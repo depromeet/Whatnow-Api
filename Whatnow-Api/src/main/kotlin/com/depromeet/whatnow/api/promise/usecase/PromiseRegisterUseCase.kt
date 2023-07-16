@@ -29,8 +29,8 @@ class PromiseRegisterUseCase(
             ),
         )
         promise.createPromiseEvent()
-        val createInviteCode = inviteCodeDomainService.createInviteCode(promise.id!!)
-        return PromiseCreateDto.of(promise, createInviteCode)
+        val inviteCode = inviteCodeDomainService.upsertInviteCode(promise.id!!)
+        return PromiseCreateDto.of(promise, inviteCode)
     }
 
     fun updatePromiseMeetPlace(promiseId: Long, meetPlace: PlaceVo): PromiseDto {

@@ -5,6 +5,7 @@ import com.depromeet.whatnow.consts.INVITE_CODE_EXPIRED_TIME
 import com.depromeet.whatnow.consts.INVITE_CODE_LENGTH
 import com.depromeet.whatnow.domains.invitecode.adapter.InviteCodeAdapter
 import com.depromeet.whatnow.domains.invitecode.domain.InviteCodeRedisEntity
+import org.springframework.transaction.annotation.Transactional
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import kotlin.math.min
@@ -13,17 +14,31 @@ import kotlin.math.min
 class InviteCodeDomainService(
     val inviteCodeAdapter: InviteCodeAdapter,
 ) {
-    fun createInviteCode(promiseId: Long): String {
-        val promiseIdString = promiseId.toString()
-        val hashedPromiseId = hashStringWithSHA256(promiseIdString)
-        val inviteCode = generateInviteCodeFromHash(hashedPromiseId)
-
-        // redis에 초대 코드 저장 및 만료 시간 지정 / 24 hour
-        saveInviteCodeToRedis(promiseId, inviteCode, INVITE_CODE_EXPIRED_TIME)
-
-        return inviteCode
+    fun resultQueryByPromiseId(promiseId: Long): Result<InviteCodeRedisEntity> {
+        return runCatching {
+            inviteCodeAdapter.findByPromiseId(promiseId)
+        }
     }
 
+    @Transactional
+    fun upsertInviteCode(promiseId: Long): String {
+        // invite
+        return resultQueryByPromiseId(promiseId).fold(
+            onSuccess = { inviteCodeRedisEntity ->
+                inviteCodeRedisEntity.inviteCode
+            },
+            onFailure = { exception ->
+                val promiseIdString = promiseId.toString()
+                val hashedPromiseId = hashStringWithSHA256(promiseIdString)
+                val inviteCode = generateInviteCodeFromHash(hashedPromiseId)
+
+                // Save redis, expiration / 24 hour
+                saveInviteCodeToRedis(promiseId, inviteCode, INVITE_CODE_EXPIRED_TIME)
+
+                inviteCode
+            },
+        )
+    }
     private fun hashStringWithSHA256(input: String): ByteArray {
         val md = MessageDigest.getInstance("SHA-256")
         return md.digest(input.toByteArray(StandardCharsets.UTF_8))

@@ -63,8 +63,4 @@ class PromiseUserRecordUseCase(
 
         return promiseUsers.map(PromiseLocationDto::from)
     }
-
-    fun createInviteCode(promiseId: Long): String {
-        return inviteCodeDomainService.createInviteCode(promiseId)
-    }
 }
