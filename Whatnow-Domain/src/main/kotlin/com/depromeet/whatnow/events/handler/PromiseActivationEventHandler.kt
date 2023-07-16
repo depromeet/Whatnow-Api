@@ -1,9 +1,9 @@
 package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.annotation.Handler
+import com.depromeet.whatnow.domains.invitecode.domain.PromiseActiveRedisEntity
 import com.depromeet.whatnow.domains.promise.service.PromiseDomainService
 import com.depromeet.whatnow.domains.promiseactive.adapter.PromiseActiveAdapter
-import com.depromeet.whatnow.domains.promiseactive.domain.PromiseActiveRedisEntity
 import com.depromeet.whatnow.events.domainEvent.PromiseRegisterEvent
 import org.springframework.scheduling.annotation.Async
 import org.springframework.transaction.event.TransactionPhase
