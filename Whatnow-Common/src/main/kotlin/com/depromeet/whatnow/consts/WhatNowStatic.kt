@@ -35,8 +35,9 @@ const val NCP_LOCAL_SEARCH_DISPLAY_COUNT = 10
 const val IMAGE_DOMAIN = "https://image.whatnow.kr"
 const val ASSERT_IMAGE_DOMAIN = "https://image.whatnow.kr/assert"
 const val USER_DEFAULT_PROFILE_IMAGE = "https://image.whatnow.kr/assert/users/default.svg"
-
+const val INVITE_CODE_EXPIRED_TIME = 86400L
 const val REDIS_EXPIRE_EVENT_PATTERN = "__keyevent@*__:expired"
+const val INVITE_CODE_LENGTH = 13
 
 val SWAGGER_PATTERNS = arrayOf(
     "/swagger-resources/**",

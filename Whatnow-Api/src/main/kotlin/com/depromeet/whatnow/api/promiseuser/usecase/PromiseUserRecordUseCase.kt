@@ -6,6 +6,7 @@ import com.depromeet.whatnow.api.promiseuser.dto.PromiseUserDto
 import com.depromeet.whatnow.common.aop.verify.ActivePromise
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.security.SecurityUtils
+import com.depromeet.whatnow.domains.invitecode.service.InviteCodeDomainService
 import com.depromeet.whatnow.domains.progresshistory.domain.PromiseProgress.DEFAULT
 import com.depromeet.whatnow.domains.promise.exception.PromiseNotParticipateException
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 @UseCase
 class PromiseUserRecordUseCase(
     val promiseUserDomainService: PromiseUserDomainService,
+    val inviteCodeDomainService: InviteCodeDomainService,
 ) {
     @Transactional
     fun createPromiseUser(promiseId: Long, userId: Long, userLocation: CoordinateVo): PromiseUserDto {
@@ -60,5 +62,9 @@ class PromiseUserRecordUseCase(
             .map { if (it.userId == promiseUser.userId) promiseUser else it }
 
         return promiseUsers.map(PromiseLocationDto::from)
+    }
+
+    fun createInviteCode(promiseId: Long): String {
+        return inviteCodeDomainService.createInviteCode(promiseId)
     }
 }
