@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.promise.controller
 
 import com.depromeet.whatnow.api.image.controller.ImageController
+import com.depromeet.whatnow.api.promise.usecase.InviteCodeReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseRegisterUseCase
 import org.junit.jupiter.api.Test
@@ -22,6 +23,9 @@ class PromiseControllerTest {
 
     @MockBean
     lateinit var promiseRegisterUseCase: PromiseRegisterUseCase
+
+    @MockBean
+    lateinit var inviteCodeReadUseCase: InviteCodeReadUseCase
 
     @Autowired
     lateinit var mockMvc: MockMvc

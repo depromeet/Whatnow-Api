@@ -6,6 +6,7 @@ import com.depromeet.whatnow.api.promise.dto.PromiseDetailDto
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
+import com.depromeet.whatnow.api.promise.usecase.InviteCodeReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseReadUseCase
 import com.depromeet.whatnow.api.promise.usecase.PromiseRegisterUseCase
 import com.depromeet.whatnow.common.vo.PlaceVo
@@ -33,6 +34,7 @@ import java.time.YearMonth
 class PromiseController(
     val promiseRegisterUseCase: PromiseRegisterUseCase,
     val promiseReadUseCase: PromiseReadUseCase,
+    val inviteCodeReadUseCase: InviteCodeReadUseCase,
 ) {
     @Deprecated("나의 약속 전부 조회", replaceWith = ReplaceWith("findPromiseByStatus"))
     @Operation(summary = "나의 약속 전부 조회", description = "유저의 약속 전부 조회 (단, 예정된 약속과 지난 약속을 구분해서 조회")
@@ -67,6 +69,12 @@ class PromiseController(
     @GetMapping("/promises/{promise-id}")
     fun findByPromiseId(@PathVariable(value = "promise-id") promiseId: Long): PromiseFindDto {
         return promiseReadUseCase.findByPromiseId(promiseId)
+    }
+
+    @Operation(summary = "promiseId 로 약속 초대 코드 조회", description = "promiseId 로 약속 초대 코드 조회하기")
+    @GetMapping("/promises/{promise-id}/invite-codes")
+    fun findInviteCodeByPromiseId(@PathVariable(value = "promise-id") promiseId: Long): String {
+        return inviteCodeReadUseCase.findInviteCodeByPromiseId(promiseId)
     }
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")

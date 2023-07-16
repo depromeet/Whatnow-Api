@@ -19,7 +19,7 @@ class InviteCodeDomainService(
         val inviteCode = generateInviteCodeFromHash(hashedPromiseId)
 
         // redis에 초대 코드 저장 및 만료 시간 지정 / 24 hour
-        saveInviteCodeToRedis(inviteCode, INVITE_CODE_EXPIRED_TIME)
+        saveInviteCodeToRedis(promiseId, inviteCode, INVITE_CODE_EXPIRED_TIME)
 
         return inviteCode
     }
@@ -38,8 +38,8 @@ class InviteCodeDomainService(
         return sb.substring(0, min(INVITE_CODE_LENGTH, sb.length))
     }
 
-    private fun saveInviteCodeToRedis(inviteCode: String, expirationHours: Long) {
-        val redisEntity = InviteCodeRedisEntity(inviteCode, expirationHours)
+    private fun saveInviteCodeToRedis(promiseId: Long, inviteCode: String, expirationHours: Long) {
+        val redisEntity = InviteCodeRedisEntity(promiseId, inviteCode, expirationHours)
         inviteCodeAdapter.save(redisEntity)
     }
 }
