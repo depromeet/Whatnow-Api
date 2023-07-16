@@ -18,7 +18,7 @@ class InviteCodeDomainService(
         val hashedPromiseId = hashStringWithSHA256(promiseIdString)
         val inviteCode = generateInviteCodeFromHash(hashedPromiseId)
 
-        // Save the code to Redis with an expiration time
+        // redis에 초대 코드 저장 및 만료 시간 지정 / 24 hour
         saveInviteCodeToRedis(inviteCode, INVITE_CODE_EXPIRED_TIME)
 
         return inviteCode
@@ -32,7 +32,7 @@ class InviteCodeDomainService(
     private fun generateInviteCodeFromHash(hashBytes: ByteArray): String {
         val sb = StringBuilder()
         for (b in hashBytes) {
-            // Convert hash bytes to hexadecimal string
+            // Convert hash bytes -> hexadecimal string
             sb.append(String.format("%02x", b))
         }
         return sb.substring(0, min(INVITE_CODE_LENGTH, sb.length))

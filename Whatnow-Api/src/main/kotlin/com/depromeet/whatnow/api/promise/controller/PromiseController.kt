@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.promise.controller
 
 import com.depromeet.whatnow.api.promise.annotation.RequiresMainUser
+import com.depromeet.whatnow.api.promise.dto.PromiseCreateDto
 import com.depromeet.whatnow.api.promise.dto.PromiseDetailDto
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
 import com.depromeet.whatnow.api.promise.dto.PromiseFindDto
@@ -70,7 +71,7 @@ class PromiseController(
 
     @Operation(summary = "약속(promise) 생성", description = "약속을 생성합니다.")
     @PostMapping("/promises")
-    fun createPromise(@RequestBody promiseRequest: PromiseRequest): PromiseDto {
+    fun createPromise(@RequestBody promiseRequest: PromiseRequest): PromiseCreateDto {
         return promiseRegisterUseCase.createPromise(promiseRequest)
     }
 
