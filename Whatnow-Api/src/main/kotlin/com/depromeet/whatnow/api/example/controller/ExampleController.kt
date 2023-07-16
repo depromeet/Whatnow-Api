@@ -3,6 +3,7 @@ package com.depromeet.whatnow.api.example.controller
 import com.depromeet.whatnow.annotation.ApiErrorCodeExample
 import com.depromeet.whatnow.api.config.kakao.KakaoKauthErrorCode
 import com.depromeet.whatnow.domains.image.exception.ImageErrorCode
+import com.depromeet.whatnow.domains.invitecode.exception.InviteCodeErrorCode
 import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErrorCode
 import com.depromeet.whatnow.domains.promise.exception.PromiseErrorCode
 import com.depromeet.whatnow.domains.promiseuser.exception.PromiseUserErrorCode
@@ -57,4 +58,9 @@ class ExampleController() {
     @Operation(summary = "약속 참여 관련 에러코드 나열")
     @ApiErrorCodeExample(PromiseUserErrorCode::class)
     fun promiseUserErrorCode() {}
+
+    @GetMapping("/invite-codes")
+    @Operation(summary = "약속 초대 코드 에러코드 나열")
+    @ApiErrorCodeExample(InviteCodeErrorCode::class)
+    fun inviteCodeErrorCode() {}
 }
