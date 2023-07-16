@@ -31,6 +31,7 @@ logging:
     com.zaxxer.hikari: TRACE
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
+    org.springframework.aop: DEBUG
 ---
 spring:
   config:

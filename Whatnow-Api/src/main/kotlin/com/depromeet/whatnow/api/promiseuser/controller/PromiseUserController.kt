@@ -4,6 +4,7 @@ import com.depromeet.whatnow.api.promiseuser.dto.PromiseLocationDto
 import com.depromeet.whatnow.api.promiseuser.dto.PromiseUserDto
 import com.depromeet.whatnow.api.promiseuser.usecase.PromiseUserReadUseCase
 import com.depromeet.whatnow.api.promiseuser.usecase.PromiseUserRecordUseCase
+import com.depromeet.whatnow.common.aop.verify.InviteCodeLength
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import io.swagger.v3.oas.annotations.Operation
@@ -33,7 +34,11 @@ class PromiseUserController(
 
     @Operation(summary = "약속 코드로 약속 유저 생성", description = "약속 코드로 약속에 유저가 참여합니다.")
     @PostMapping("/promises/users/join")
-    fun joinPromise(@RequestParam("invite-codes") inviteCode: String): PromiseUserDto {
+    fun joinPromise(
+        @InviteCodeLength
+        @RequestParam("invite-codes")
+        inviteCode: String,
+    ): PromiseUserDto {
         return promiseUserRecordUseCase.createPromiseUserByInviteCode(inviteCode)
     }
 

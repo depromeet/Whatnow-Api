@@ -59,7 +59,6 @@ class ExampleController() {
     @ApiErrorCodeExample(PromiseUserErrorCode::class)
     fun promiseUserErrorCode() {}
 
-
     @GetMapping("/invite-codes")
     @Operation(summary = "약속 초대 코드 에러코드 나열")
     @ApiErrorCodeExample(InviteCodeErrorCode::class)
