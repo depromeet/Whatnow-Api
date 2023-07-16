@@ -31,6 +31,12 @@ class PromiseUserController(
         return promiseUserRecordUseCase.createPromiseUser(promiseId, userId, userLocation)
     }
 
+    @Operation(summary = "약속 코드로 약속 유저 생성", description = "약속 코드로 약속에 유저가 참여합니다.")
+    @PostMapping("/promises/users/join")
+    fun joinPromise(@RequestParam("invite-codes") inviteCode: String): PromiseUserDto {
+        return promiseUserRecordUseCase.createPromiseUserByInviteCode(inviteCode)
+    }
+
     @Operation(summary = "약속 id로 약속 유저(promiseUser) 조회", description = "약속ID 로 약속 유저를 조회합니다.")
     @GetMapping("/promises/{promiseId}/users")
     fun getPromiseUser(@PathVariable("promise-id") promiseId: Long): List<PromiseUserDto> {

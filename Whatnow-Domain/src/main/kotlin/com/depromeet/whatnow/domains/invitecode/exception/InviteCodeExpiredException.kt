@@ -4,7 +4,7 @@ import com.depromeet.whatnow.domains.progresshistory.exception.PromiseHistoryErr
 import com.depromeet.whatnow.exception.WhatnowCodeException
 
 class InviteCodeExpiredException : WhatnowCodeException(
-    PromiseHistoryErrorCode.PROMISE_PROGRESS_IS_SAME,
+    InviteCodeErrorCode.INVITE_CODE_EXPIRED,
 ) {
     companion object {
         val EXCEPTION: WhatnowCodeException = InviteCodeExpiredException()
