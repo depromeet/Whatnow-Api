@@ -1,9 +1,11 @@
 package com.depromeet.whatnow.api.promise.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
+import com.depromeet.whatnow.api.promise.dto.PromiseCreateDto
 import com.depromeet.whatnow.api.promise.dto.PromiseDto
 import com.depromeet.whatnow.api.promise.dto.PromiseRequest
 import com.depromeet.whatnow.common.vo.PlaceVo
+import com.depromeet.whatnow.domains.invitecode.service.InviteCodeDomainService
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import com.depromeet.whatnow.domains.promise.service.PromiseDomainService
@@ -14,9 +16,10 @@ import java.time.LocalDateTime
 class PromiseRegisterUseCase(
     val promiseAdaptor: PromiseAdaptor,
     val promiseDomainService: PromiseDomainService,
+    val inviteCodeDomainService: InviteCodeDomainService,
 ) {
     @Transactional
-    fun createPromise(promiseRequest: PromiseRequest): PromiseDto {
+    fun createPromise(promiseRequest: PromiseRequest): PromiseCreateDto {
         val promise = promiseDomainService.save(
             Promise(
                 title = promiseRequest.title,
@@ -26,7 +29,8 @@ class PromiseRegisterUseCase(
             ),
         )
         promise.createPromiseEvent()
-        return PromiseDto.from(promise)
+        val inviteCode = inviteCodeDomainService.upsertInviteCode(promise.id!!)
+        return PromiseCreateDto.of(promise, inviteCode)
     }
 
     fun updatePromiseMeetPlace(promiseId: Long, meetPlace: PlaceVo): PromiseDto {
