@@ -36,8 +36,10 @@ class RedisExpireEventRedisMessageListener(
     }
 
     private fun handlePromiseTimeStart(key: Long) {
+        val promise = promiseAdapter.queryPromise(key)
         val promiseUsers = promiseUserAdaptor.findByPromiseId(key)
         if (promiseUsers.size < 2) {
+            promise.endPromise()
             promiseActiveRepository.findById("EXPIRE_EVENT_PROMISE_TIME_END_$key").ifPresent {
                 promiseActiveRepository.delete(it)
             }
