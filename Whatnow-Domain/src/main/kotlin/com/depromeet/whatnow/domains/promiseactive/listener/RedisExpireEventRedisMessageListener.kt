@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class RedisExpireEventRedisMessageListener : MessageListener {
     @Transactional
     override fun onMessage(message: Message, pattern: ByteArray?) {
-        val event = message.toString()
+        val event = message.toString().replace("promiseActive:", "")
         val eventParts = event.split("_")
 
         if (!event.startsWith("EXPIRE_EVENT_") || eventParts.size < 6) {
