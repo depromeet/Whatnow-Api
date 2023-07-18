@@ -46,22 +46,24 @@ class ImageRegisterEventHandler(
         data["imageKey"] = imageKey
 
         // 앱 알람 허용한 유저에게 알람 보내기
-        when (promiseUser.promiseUserType) {
-            LATE -> {
-                fcmService.sendGroupMessageAsync(
-                    appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
-                    "지각한 친구의 사진 도착",
-                    "지각한 친구가 보낸 사진을 확인해봐!",
-                    data,
-                )
-            }
-            WAIT -> {
-                fcmService.sendGroupMessageAsync(
-                    appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
-                    "도착한 친구들의 사진 도착",
-                    "도착한 친구들이 보낸 사진을 확인해봐!",
-                    data,
-                )
+        if (appAlarmPermitUsers.isNotEmpty()) {
+            when (promiseUser.promiseUserType) {
+                LATE -> {
+                    fcmService.sendGroupMessageAsync(
+                        appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
+                        "지각한 친구의 사진 도착",
+                        "지각한 친구가 보낸 사진을 확인해봐!",
+                        data,
+                    )
+                }
+                WAIT -> {
+                    fcmService.sendGroupMessageAsync(
+                        appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
+                        "도착한 친구들의 사진 도착",
+                        "도착한 친구들이 보낸 사진을 확인해봐!",
+                        data,
+                    )
+                }
             }
         }
 

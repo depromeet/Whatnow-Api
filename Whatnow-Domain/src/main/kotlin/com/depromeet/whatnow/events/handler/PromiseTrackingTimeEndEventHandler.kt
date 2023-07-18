@@ -27,6 +27,7 @@ class PromiseTrackingTimeEndEventHandler(
     @TransactionalEventListener(classes = [PromiseTrackingTimeEndEvent::class], phase = TransactionPhase.AFTER_COMMIT)
     fun handlePromiseTrackingTimeEndEvent(promiseTrackingTimeEndEvent: PromiseTrackingTimeEndEvent) {
         val promiseId = promiseTrackingTimeEndEvent.promiseId
+
         val promise = promiseAdaptor.queryPromise(promiseId)
         promise.endPromise()
 
@@ -45,12 +46,14 @@ class PromiseTrackingTimeEndEventHandler(
         data["promiseId"] = promiseId.toString()
 
         // 앱 알람 허용한 유저에게 알람 보내기
-        fcmService.sendGroupMessageAsync(
-            appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
-            "위치 공유 종료!",
-            "어떤 일이 있었는지 돌아보자!",
-            data,
-        )
+        if (appAlarmPermitUsers.isNotEmpty()) {
+            fcmService.sendGroupMessageAsync(
+                appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
+                "위치 공유 종료!",
+                "어떤 일이 있었는지 돌아보자!",
+                data,
+            )
+        }
 
         // notification 저장
         users.forEach { user ->
