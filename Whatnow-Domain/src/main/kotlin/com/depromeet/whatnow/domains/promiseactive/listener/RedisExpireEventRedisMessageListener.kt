@@ -24,7 +24,7 @@ class RedisExpireEventRedisMessageListener : MessageListener {
         when (event) {
             "EXPIRE_EVENT_PROMISE_TIME_START_$promiseId" -> handlePromiseTimeStart(promiseId)
             "EXPIRE_EVENT_PROMISE_TIME_END_$promiseId" -> handlePromiseTimeEnd(promiseId)
-            "EXPIRE_EVENT_TRACKING_TIME_START_$promiseId" -> handleTrackingTimeEnd(promiseId)
+            "EXPIRE_EVENT_TRACKING_TIME_END_$promiseId" -> handleTrackingTimeEnd(promiseId)
         }
     }
 

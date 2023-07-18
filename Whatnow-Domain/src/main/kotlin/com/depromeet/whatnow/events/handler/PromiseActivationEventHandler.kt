@@ -36,6 +36,6 @@ class PromiseActivationEventHandler(
 
         promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_PROMISE_TIME_START_${promise.id}", promiseStartAndTrackingStartTime))
         promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_PROMISE_TIME_END_${promise.id}", promiseEndTime))
-        promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_TRACKING_TIME_START_${promise.id}", trackingEndTime))
+        promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_TRACKING_TIME_END_${promise.id}", trackingEndTime))
     }
 }
