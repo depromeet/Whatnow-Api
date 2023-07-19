@@ -46,10 +46,10 @@ class PromiseTimeStartEventHandler(
         // 앱 알람 허용한 유저에게 알람 보내기
         if (appAlarmPermitUsers.isNotEmpty()) {
             fcmService.sendGroupMessageAsync(
-                appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
-                "위치 공유 시작!",
-                "공유 시작! 지도를 확인해봐!",
-                data,
+                tokenList = appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
+                title = "위치 공유 시작!",
+                content = "공유 시작! 지도를 확인해봐!",
+                data = data,
             )
         }
 

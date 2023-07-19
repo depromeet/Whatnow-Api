@@ -48,10 +48,10 @@ class PromiseTrackingTimeEndEventHandler(
         // 앱 알람 허용한 유저에게 알람 보내기
         if (appAlarmPermitUsers.isNotEmpty()) {
             fcmService.sendGroupMessageAsync(
-                appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
-                "위치 공유 종료!",
-                "어떤 일이 있었는지 돌아보자!",
-                data,
+                tokenList = appAlarmPermitUsers.map { user -> user.fcmNotification.fcmToken!! },
+                title = "위치 공유 종료!",
+                content = "어떤 일이 있었는지 돌아보자!",
+                data = data,
             )
         }
 

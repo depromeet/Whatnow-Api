@@ -72,10 +72,10 @@ class PromiseTimeEndEventHandler(
             .map { user -> user.fcmNotification.fcmToken }
         if (appAlarmPermitLateUserTokens.isNotEmpty()) {
             fcmService.sendGroupMessageAsync(
-                appAlarmPermitLateUserTokens,
-                "TIMEOVER!",
-                "친구들에게 용서를 비는 사진을 보내봐!",
-                lateData,
+                tokenList = appAlarmPermitLateUserTokens,
+                title = "TIMEOVER!",
+                content = "친구들에게 용서를 비는 사진을 보내봐!",
+                data = lateData,
             )
         }
 
@@ -93,10 +93,10 @@ class PromiseTimeEndEventHandler(
             .map { user -> user.fcmNotification.fcmToken }
         if (appAlarmPermitWaitUserTokens.isNotEmpty()) {
             fcmService.sendGroupMessageAsync(
-                appAlarmPermitWaitUserTokens,
-                "TIMEOVER!",
-                "친구들에게 재촉하는 사진을 보내봐!",
-                waitData,
+                tokenList = appAlarmPermitWaitUserTokens,
+                title = "TIMEOVER!",
+                content = "친구들에게 재촉하는 사진을 보내봐!",
+                data = waitData,
             )
         }
 

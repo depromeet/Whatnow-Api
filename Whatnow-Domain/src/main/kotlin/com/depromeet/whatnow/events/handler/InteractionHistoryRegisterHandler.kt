@@ -46,10 +46,10 @@ class InteractionHistoryRegisterHandler(
 
         if (targetUser.fcmNotification.appAlarm) {
             fcmService.sendMessageAsync(
-                targetUser.fcmNotification.fcmToken,
-                "이모지 투척!",
-                "from. $user.nickname",
-                data,
+                token = targetUser.fcmNotification.fcmToken,
+                title = "이모지 투척!",
+                content = "from. $user.nickname",
+                data = data,
             )
         }
 
