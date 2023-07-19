@@ -6,9 +6,12 @@ import com.depromeet.whatnow.domains.notification.domain.EndSharingNotification
 import com.depromeet.whatnow.domains.notification.domain.ImageNotification
 import com.depromeet.whatnow.domains.notification.domain.InteractionAttainmentNotification
 import com.depromeet.whatnow.domains.notification.domain.InteractionNotification
+import com.depromeet.whatnow.domains.notification.domain.Notification
 import com.depromeet.whatnow.domains.notification.domain.StartSharingNotification
 import com.depromeet.whatnow.domains.notification.domain.TimeOverNotification
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Slice
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -44,5 +47,10 @@ class NotificationDomainService(
     @Transactional
     fun saveForInteractionAttainment(promiseId: Long, senderUserId: Long, interactionType: InteractionType, targetUserId: Long) {
         notificationAdapter.save(InteractionAttainmentNotification(promiseId, senderUserId, interactionType, targetUserId))
+    }
+
+    @Transactional(readOnly = true)
+    fun getMyNotifications(userId: Long, pageable: Pageable): Slice<Notification> {
+        return notificationAdapter.getMyNotifications(userId, pageable)
     }
 }
