@@ -70,12 +70,14 @@ class PromiseTimeEndEventHandler(
                 ).promiseUserType == LATE
             }
             .map { user -> user.fcmNotification.fcmToken }
-        fcmService.sendGroupMessageAsync(
-            appAlarmPermitLateUserTokens,
-            "TIMEOVER!",
-            "친구들에게 용서를 비는 사진을 보내봐!",
-            lateData,
-        )
+        if (appAlarmPermitLateUserTokens.isNotEmpty()) {
+            fcmService.sendGroupMessageAsync(
+                tokenList = appAlarmPermitLateUserTokens,
+                title = "TIMEOVER!",
+                content = "친구들에게 용서를 비는 사진을 보내봐!",
+                data = lateData,
+            )
+        }
 
         val waitData: MutableMap<String, String> = mutableMapOf()
         waitData["notificationType"] = NotificationType.TIMEOVER.name
@@ -89,12 +91,14 @@ class PromiseTimeEndEventHandler(
                 ).promiseUserType == WAIT
             }
             .map { user -> user.fcmNotification.fcmToken }
-        fcmService.sendGroupMessageAsync(
-            appAlarmPermitWaitUserTokens,
-            "TIMEOVER!",
-            "친구들에게 재촉하는 사진을 보내봐!",
-            waitData,
-        )
+        if (appAlarmPermitWaitUserTokens.isNotEmpty()) {
+            fcmService.sendGroupMessageAsync(
+                tokenList = appAlarmPermitWaitUserTokens,
+                title = "TIMEOVER!",
+                content = "친구들에게 재촉하는 사진을 보내봐!",
+                data = waitData,
+            )
+        }
 
         // notification 저장
         promiseUsers.forEach { promiseUser ->

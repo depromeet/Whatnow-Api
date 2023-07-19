@@ -20,7 +20,7 @@ class RedisExpireEventRedisMessageListener(
 ) : MessageListener {
     @Transactional
     override fun onMessage(message: Message, pattern: ByteArray?) {
-        val event = message.toString()
+        val event = message.toString().replace("promiseActive:", "")
         val eventParts = event.split("_")
 
         if (!event.startsWith("EXPIRE_EVENT_") || eventParts.size < 6) {
@@ -31,7 +31,7 @@ class RedisExpireEventRedisMessageListener(
         when (event) {
             "EXPIRE_EVENT_PROMISE_TIME_START_$promiseId" -> handlePromiseTimeStart(promiseId)
             "EXPIRE_EVENT_PROMISE_TIME_END_$promiseId" -> handlePromiseTimeEnd(promiseId)
-            "EXPIRE_EVENT_TRACKING_TIME_START_$promiseId" -> handleTrackingTimeEnd(promiseId)
+            "EXPIRE_EVENT_TRACKING_TIME_END_$promiseId" -> handleTrackingTimeEnd(promiseId)
         }
     }
 

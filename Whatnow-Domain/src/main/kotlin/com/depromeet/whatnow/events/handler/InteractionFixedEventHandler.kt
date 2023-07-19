@@ -41,10 +41,10 @@ class InteractionFixedEventHandler(
 
         if (user.fcmNotification.appAlarm) {
             fcmService.sendMessageAsync(
-                user.fcmNotification.fcmToken,
-                "이모지 100개 달성!",
-                "",
-                data,
+                token = user.fcmNotification.fcmToken,
+                title = "이모지 100개 달성!",
+                content = "",
+                data = data,
             )
         }
 

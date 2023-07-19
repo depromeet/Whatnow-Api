@@ -24,7 +24,7 @@ class PromiseActivationEventHandler(
         val now = LocalDateTime.now()
 
         // 약속 시작 시간까지 남은 시간(초)
-        val promiseStartAndTrackingStartTime = Duration.between(now, promise.endTime.minusHours(1)).seconds
+        val promiseStartAndTrackingStartTime = Duration.between(now, promise.endTime.minusMinutes(30)).seconds
 
         // 약속 종료 시간까지 남은 시간(초)
         val promiseEndTime = Duration.between(now, promise.endTime).seconds
@@ -34,6 +34,6 @@ class PromiseActivationEventHandler(
 
         promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_PROMISE_TIME_START_${promise.id}", promiseStartAndTrackingStartTime))
         promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_PROMISE_TIME_END_${promise.id}", promiseEndTime))
-        promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_TRACKING_TIME_START_${promise.id}", trackingEndTime))
+        promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_TRACKING_TIME_END_${promise.id}", trackingEndTime))
     }
 }
