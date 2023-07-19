@@ -10,6 +10,8 @@ import com.depromeet.whatnow.events.domainEvent.InteractionFixedEvent
 import mu.KLogger
 import mu.KotlinLogging
 import org.springframework.scheduling.annotation.Async
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
 
@@ -23,6 +25,7 @@ class InteractionFixedEventHandler(
     val logger: KLogger = KotlinLogging.logger {}
 
     @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(classes = [InteractionFixedEvent::class], phase = TransactionPhase.AFTER_COMMIT)
     fun handleInteractionFixedEvent(event: InteractionFixedEvent) {
         val promiseId = event.promiseId
