@@ -39,21 +39,19 @@ class InteractionHistoryRegisterHandler(
         }
 
         val targetUser = userAdapter.queryUser(event.targetUserId)
-        if (!targetUser.fcmNotification.appAlarm) {
-            return
-        }
-
         val user = userAdapter.queryUser(event.userId)
 
         val data: MutableMap<String, String> = mutableMapOf()
         data["notificationType"] = NotificationType.INTERACTION.name
 
-        fcmService.sendMessageAsync(
-            targetUser.fcmNotification.fcmToken,
-            "이모지 투척!",
-            "from. $user.nickname",
-            data,
-        )
+        if (targetUser.fcmNotification.appAlarm) {
+            fcmService.sendMessageAsync(
+                targetUser.fcmNotification.fcmToken,
+                "이모지 투척!",
+                "from. $user.nickname",
+                data,
+            )
+        }
 
         notificationDomainService.saveForInteraction(event.promiseId, user.id!!, event.interactionType, targetUser.id!!)
     }
