@@ -40,12 +40,16 @@ class RedisExpireEventRedisMessageListener(
         val promiseUsers = promiseUserAdaptor.findByPromiseId(key)
         if (promiseUsers.size < 2) {
             promise.endPromise()
-            promiseActiveRepository.findById("EXPIRE_EVENT_PROMISE_TIME_END_$key").ifPresent {
-                promiseActiveRepository.delete(it)
-            }
-            promiseActiveRepository.findById("EXPIRE_EVENT_TRACKING_TIME_START_$key").ifPresent {
-                promiseActiveRepository.delete(it)
-            }
+
+            val eventIdList = listOf(
+                "EXPIRE_EVENT_PROMISE_TIME_END_$key",
+                "EXPIRE_EVENT_TRACKING_TIME_END_$key",
+            )
+
+            eventIdList.stream()
+                .map { eventId -> promiseActiveRepository.findById(eventId) }
+                .filter { eventOptional -> eventOptional.isPresent }
+                .forEach { eventOptional -> promiseActiveRepository.delete(eventOptional.get()) }
             return
         }
         Events.raise(PromiseTimeStartEvent(key))
