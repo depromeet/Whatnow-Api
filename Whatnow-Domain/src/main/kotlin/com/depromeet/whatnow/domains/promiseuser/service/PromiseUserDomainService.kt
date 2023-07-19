@@ -6,6 +6,7 @@ import com.depromeet.whatnow.consts.RADIUS_EARTH
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
+import com.depromeet.whatnow.domains.promiseuser.exception.PromiseUserDuplicateException
 import com.google.common.geometry.S2LatLng
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -35,14 +36,25 @@ class PromiseUserDomainService(
         return promiseUser
     }
 
-    /**
-     * 초기 약속 생성
-     * */
+    fun resultPromiseUser(promiseId: Long, userId: Long): Result<PromiseUser> {
+        return runCatching {
+            promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
+        }
+    }
+
     @Transactional
     fun createPromiseUser(promiseUser: PromiseUser): PromiseUser {
-        val promiseUser = promiseUserAdaptor.save(promiseUser)
-        promiseUser.createPromiseUserEvent()
-        return promiseUser
+        // promiseID && userID duplicate check
+        return resultPromiseUser(promiseUser.promiseId, promiseUser.userId).fold(
+            onSuccess = {
+                throw PromiseUserDuplicateException.EXCEPTION
+            },
+            onFailure = { exception ->
+                val promiseUser = promiseUserAdaptor.save(promiseUser)
+                promiseUser.createPromiseUserEvent()
+                promiseUser
+            },
+        )
     }
 
     fun findByPromiseId(promiseId: Long): List<PromiseUser> {

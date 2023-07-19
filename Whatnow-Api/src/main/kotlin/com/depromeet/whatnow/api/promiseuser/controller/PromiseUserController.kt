@@ -43,7 +43,7 @@ class PromiseUserController(
     }
 
     @Operation(summary = "약속 id로 약속 유저(promiseUser) 조회", description = "약속ID 로 약속 유저를 조회합니다.")
-    @GetMapping("/promises/{promiseId}/users")
+    @GetMapping("/promises/{promise-id}/users")
     fun getPromiseUser(@PathVariable("promise-id") promiseId: Long): List<PromiseUserDto> {
         return promiseUserReadUseCase.findByPromiseId(promiseId)
     }
