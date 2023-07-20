@@ -97,7 +97,7 @@ class PromiseReadUseCase(
                     promise = promise,
                     users = participants,
                 )
-            }.sortedByDescending { it.endTime }
+            }.sortedBy { it.endTime }
     }
 
     fun findPromiseDetailByStatus(promiseType: PromiseType): List<PromiseDetailDto> {
@@ -144,7 +144,7 @@ class PromiseReadUseCase(
             )
         }
 
-        return result.sortedByDescending { it.endTime }
+        return result.sortedBy { it.endTime }
     }
 
     fun findPromiseActive(promiseId: Long): Boolean {
@@ -162,7 +162,7 @@ class PromiseReadUseCase(
 
     private fun findPromisesByUserId(userId: Long): List<Promise> {
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-        return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }.sortedByDescending { it.endTime }
+        return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }
     }
 
     fun findByPromiseId(promiseId: Long): PromiseFindDto {
