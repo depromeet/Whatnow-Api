@@ -50,10 +50,9 @@ class PromiseReadUseCase(
 
             when (promise?.promiseType) {
                 PromiseType.BEFORE, PromiseType.END -> {
-                    val promiseType = promise.promiseType
                     val promiseFindDto = PromiseFindDto.of(promise, participant)
 
-                    promiseSplitByPromiseTypeDto.getOrPut(promiseType) { mutableListOf() }
+                    promiseSplitByPromiseTypeDto.getOrPut(promise.promiseType) { mutableListOf() }
                         .add(promiseFindDto)
                 }
 
@@ -104,7 +103,7 @@ class PromiseReadUseCase(
         val userId: Long = SecurityUtils.currentUserId
         val promiseUsersByPromiseId = promiseUserAdaptor.findByUserId(userId)
         val promiseIds = promiseUsersByPromiseId.map { it.promiseId }
-        val promises = promiseAdaptor.queryPromises(promiseIds)
+        val promises = promiseAdaptor.queryPromises(promiseIds).filter { it.promiseType == promiseType }
         val uniqueUsers = promiseUsersByPromiseId.distinctBy { it.userId }
         val users = userAdapter.queryUsers(uniqueUsers.map { it.userId })
         val result = mutableListOf<PromiseDetailDto>()
