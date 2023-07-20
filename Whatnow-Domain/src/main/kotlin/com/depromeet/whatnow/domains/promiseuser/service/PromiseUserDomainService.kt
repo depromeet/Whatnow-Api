@@ -6,6 +6,7 @@ import com.depromeet.whatnow.consts.RADIUS_EARTH
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
+import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.CANCEL
 import com.depromeet.whatnow.domains.promiseuser.exception.PromiseUserDuplicateException
 import com.google.common.geometry.S2LatLng
 import org.springframework.stereotype.Service
@@ -36,6 +37,26 @@ class PromiseUserDomainService(
         return promiseUser
     }
 
+    @Transactional
+    fun determinePromiseUserTypeByLocation(
+        promiseUsers: List<PromiseUser>,
+        coordinate: CoordinateVo?,
+    ) {
+        promiseUsers.forEach { promiseUser ->
+            when (promiseUser.promiseUserType) {
+                CANCEL -> return@forEach // CANCEL 일 경우 넘어간다.
+                else -> {
+                    val isArrived = isArrived(promiseUser, coordinate!!)
+                    if (isArrived) {
+                        promiseUser.updatePromiseUserTypeToWait()
+                    } else {
+                        promiseUser.updatePromiseUserTypeToLate()
+                    }
+                }
+            }
+        }
+    }
+
     fun resultPromiseUser(promiseId: Long, userId: Long): Result<PromiseUser> {
         return runCatching {
             promiseUserAdaptor.findByPromiseIdAndUserId(promiseId, userId)
@@ -64,7 +85,7 @@ class PromiseUserDomainService(
         return promiseUserAdaptor.findByUserId(userId)
     }
     fun isArrived(promiseUser: PromiseUser, destination: CoordinateVo): Boolean {
-        val start = S2LatLng.fromDegrees(promiseUser.userLocation!!.latitude, promiseUser.userLocation!!.longitude)
+        val start = S2LatLng.fromDegrees(promiseUser.userLocation.latitude, promiseUser.userLocation.longitude)
         val destination = S2LatLng.fromDegrees(destination.latitude, destination.longitude)
         val distanceInMeters = start.getDistance(destination).radians() * RADIUS_EARTH
         return distanceInMeters < RADIUS_ARRIVED_DESTINATION
