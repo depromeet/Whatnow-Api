@@ -1,6 +1,7 @@
 package com.depromeet.whatnow.api.notification.usecase
 
 import com.depromeet.whatnow.annotation.UseCase
+import com.depromeet.whatnow.api.notification.dto.ArrivalNotificationResponse
 import com.depromeet.whatnow.api.notification.dto.EndSharingNotificationResponse
 import com.depromeet.whatnow.api.notification.dto.ImageNotificationResponse
 import com.depromeet.whatnow.api.notification.dto.InteractionAttainmentNotificationResponse
@@ -9,6 +10,7 @@ import com.depromeet.whatnow.api.notification.dto.NotificationResponse
 import com.depromeet.whatnow.api.notification.dto.StartSharingNotificationResponse
 import com.depromeet.whatnow.api.notification.dto.TimeOverNotificationResponse
 import com.depromeet.whatnow.config.security.SecurityUtils
+import com.depromeet.whatnow.domains.notification.domain.ArrivalNotification
 import com.depromeet.whatnow.domains.notification.domain.EndSharingNotification
 import com.depromeet.whatnow.domains.notification.domain.ImageNotification
 import com.depromeet.whatnow.domains.notification.domain.InteractionAttainmentNotification
@@ -45,6 +47,9 @@ class NotificationReadUseCase(
                     }
                     is TimeOverNotification -> {
                         TimeOverNotificationResponse.from(notification)
+                    }
+                    is ArrivalNotification -> {
+                        ArrivalNotificationResponse.from(notification)
                     }
                     else -> throw UnknownNotificationTypeException.EXCEPTION
                 }

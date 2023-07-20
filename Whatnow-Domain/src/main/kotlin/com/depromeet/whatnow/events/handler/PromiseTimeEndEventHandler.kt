@@ -55,7 +55,7 @@ class PromiseTimeEndEventHandler(
 
         // 앱 알람 허용한 유저
         val appAlarmPermitUsers = users
-            .filter { user -> user.fcmNotification.fcmToken != null && user.fcmNotification.appAlarm }
+            .filter { user -> user.fcmNotification.fcmToken != "" && user.fcmNotification.appAlarm }
 
         val lateData: MutableMap<String, String> = mutableMapOf()
         lateData["notificationType"] = NotificationType.TIMEOVER.name

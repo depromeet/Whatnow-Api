@@ -2,11 +2,15 @@ package com.depromeet.whatnow.events.handler
 
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.config.DomainIntegrateSpringBootTest
+import com.depromeet.whatnow.config.fcm.FcmService
+import com.depromeet.whatnow.domains.district.repository.DistrictRepository
+import com.depromeet.whatnow.domains.notification.service.NotificationDomainService
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
 import com.depromeet.whatnow.domains.promiseuser.adaptor.PromiseUserAdaptor
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUser
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
+import com.depromeet.whatnow.domains.user.adapter.UserAdapter
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -24,12 +28,32 @@ class PromiseUserUpdateLocationEventHandlerTest {
     @Mock
     lateinit var promiseUserDomainService: PromiseUserDomainService
 
+    @Mock
+    lateinit var userAdapter: UserAdapter
+
+    @Mock
+    lateinit var fcmService: FcmService
+
+    @Mock
+    lateinit var notificationDomainService: NotificationDomainService
+
+    @Mock
+    lateinit var districtRepository: DistrictRepository
+
     @Autowired
     lateinit var promiseUserUpdateLocationEventHandler: PromiseUserUpdateLocationEventHandler
 
     @BeforeEach
     fun setUp() {
-        promiseUserUpdateLocationEventHandler = PromiseUserUpdateLocationEventHandler(promiseAdaptor, promiseUserAdaptor, promiseUserDomainService)
+        promiseUserUpdateLocationEventHandler = PromiseUserUpdateLocationEventHandler(
+            promiseAdaptor,
+            promiseUserAdaptor,
+            promiseUserDomainService,
+            userAdapter,
+            fcmService,
+            notificationDomainService,
+            districtRepository,
+        )
     }
 
     @Test

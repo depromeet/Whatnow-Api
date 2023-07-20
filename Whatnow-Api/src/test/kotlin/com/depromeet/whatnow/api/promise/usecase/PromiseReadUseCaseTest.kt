@@ -97,6 +97,17 @@ class PromiseReadUseCaseTest {
             ),
             Promise(
                 id = 2,
+                title = "Promise A",
+                endTime = promiseTime1,
+                mainUserId = 1L,
+                meetPlace = PlaceVo(
+                    CoordinateVo(352.1, 167.2),
+                    "서울시 강남구",
+                ),
+                promiseType = PromiseType.BEFORE,
+            ),
+            Promise(
+                id = 3,
                 title = "Promise 2",
                 endTime = promiseTime2,
                 mainUserId = 2L,
@@ -104,7 +115,7 @@ class PromiseReadUseCaseTest {
                     CoordinateVo(123.4, 234.2),
                     "전라북도 남원시",
                 ),
-                promiseType = PromiseType.DELETED,
+                promiseType = PromiseType.END,
             ),
         )
         val users = listOf(
@@ -148,17 +159,13 @@ class PromiseReadUseCaseTest {
         // Then
         Assertions.assertEquals(2, result.size)
 
-        Assertions.assertEquals("Promise 2", result[0].title)
-        Assertions.assertEquals(promiseTime1, result[1].endTime)
+        Assertions.assertEquals("Promise 1", result[0].title)
+        Assertions.assertEquals(promiseTime1, result[0].endTime)
         Assertions.assertEquals(1, result[1].promiseUsers.size)
 
-        Assertions.assertEquals("Promise 1", result[1].title)
-        Assertions.assertEquals(promiseTime2, result[0].endTime)
-        Assertions.assertEquals(1, result[0].promiseUsers.size)
-
         // 약속 1번
-        Assertions.assertEquals(1234, result[1].promiseUsers[0].interactions[0].count)
+        Assertions.assertEquals(1234, result[0].promiseUsers[0].interactions[0].count)
         // 약속 2번
-        Assertions.assertEquals(2934, result[0].promiseUsers[0].interactions[0].count)
+        Assertions.assertEquals(2934, result[1].promiseUsers[0].interactions[0].count)
     }
 }

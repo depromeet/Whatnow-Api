@@ -50,10 +50,9 @@ class PromiseReadUseCase(
 
             when (promise?.promiseType) {
                 PromiseType.BEFORE, PromiseType.END -> {
-                    val promiseType = promise.promiseType
                     val promiseFindDto = PromiseFindDto.of(promise, participant)
 
-                    promiseSplitByPromiseTypeDto.getOrPut(promiseType) { mutableListOf() }
+                    promiseSplitByPromiseTypeDto.getOrPut(promise.promiseType) { mutableListOf() }
                         .add(promiseFindDto)
                 }
 
@@ -97,14 +96,14 @@ class PromiseReadUseCase(
                     promise = promise,
                     users = participants,
                 )
-            }.sortedByDescending { it.endTime }
+            }.sortedBy { it.endTime }
     }
 
     fun findPromiseDetailByStatus(promiseType: PromiseType): List<PromiseDetailDto> {
         val userId: Long = SecurityUtils.currentUserId
         val promiseUsersByPromiseId = promiseUserAdaptor.findByUserId(userId)
         val promiseIds = promiseUsersByPromiseId.map { it.promiseId }
-        val promises = promiseAdaptor.queryPromises(promiseIds)
+        val promises = promiseAdaptor.queryPromises(promiseIds).filter { it.promiseType == promiseType }
         val uniqueUsers = promiseUsersByPromiseId.distinctBy { it.userId }
         val users = userAdapter.queryUsers(uniqueUsers.map { it.userId })
         val result = mutableListOf<PromiseDetailDto>()
@@ -125,7 +124,7 @@ class PromiseReadUseCase(
             }
 
             val promiseImagesUrls = promiseImageAdapter.findAllByPromiseId(promise.id!!)
-                .sortedBy { it.createdAt }
+                .sortedByDescending { it.createdAt }
                 .map { it.uri }
 
             val timeOverLocations = promiseUsers.mapNotNull { promiseUser ->
@@ -144,7 +143,7 @@ class PromiseReadUseCase(
             )
         }
 
-        return result.sortedByDescending { it.endTime }
+        return result.sortedBy { it.endTime }
     }
 
     fun findPromiseActive(promiseId: Long): Boolean {
@@ -162,7 +161,7 @@ class PromiseReadUseCase(
 
     private fun findPromisesByUserId(userId: Long): List<Promise> {
         val promiseUsers = promiseUserAdaptor.findByUserId(userId)
-        return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }.sortedByDescending { it.endTime }
+        return promiseUsers.map { promiseAdaptor.queryPromise(it.promiseId) }
     }
 
     fun findByPromiseId(promiseId: Long): PromiseFindDto {
