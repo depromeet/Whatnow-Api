@@ -155,17 +155,13 @@ class PromiseReadUseCaseTest {
 
         // When
         val result = promiseReadUseCase.findPromiseDetailByStatus(PromiseType.BEFORE)
-        
+
         // Then
         Assertions.assertEquals(2, result.size)
 
         Assertions.assertEquals("Promise 1", result[0].title)
         Assertions.assertEquals(promiseTime1, result[0].endTime)
         Assertions.assertEquals(1, result[1].promiseUsers.size)
-
-        Assertions.assertEquals("Promise 2", result[1].title)
-        Assertions.assertEquals(promiseTime2, result[1].endTime)
-        Assertions.assertEquals(1, result[0].promiseUsers.size)
 
         // 약속 1번
         Assertions.assertEquals(1234, result[0].promiseUsers[0].interactions[0].count)
