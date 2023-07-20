@@ -4,7 +4,6 @@ import com.depromeet.whatnow.config.fcm.FcmService
 import com.depromeet.whatnow.domains.notification.domain.NotificationType
 import com.depromeet.whatnow.domains.notification.service.NotificationDomainService
 import com.depromeet.whatnow.domains.promise.adaptor.PromiseAdaptor
-import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.CANCEL
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.LATE
 import com.depromeet.whatnow.domains.promiseuser.domain.PromiseUserType.WAIT
 import com.depromeet.whatnow.domains.promiseuser.service.PromiseUserDomainService
@@ -35,19 +34,7 @@ class PromiseTimeEndEventHandler(
         val coordinate = promise.meetPlace?.coordinate
         val promiseUsers = promiseUserDomainService.findByPromiseId(promiseId)
 
-        promiseUsers.forEach { promiseUser ->
-            when (promiseUser.promiseUserType) {
-                CANCEL -> return@forEach // CANCEL 일 경우 넘어간다.
-                else -> {
-                    val isArrived = promiseUserDomainService.isArrived(promiseUser, coordinate!!)
-                    if (isArrived) {
-                        promiseUser.updatePromiseUserTypeToWait()
-                    } else {
-                        promiseUser.updatePromiseUserTypeToLate()
-                    }
-                }
-            }
-        }
+        promiseUserDomainService.determinePromiseUserTypeByLocation(promiseUsers, coordinate)
 
         // 약속에 참여한 유저들 조회
         val users = promiseUsers

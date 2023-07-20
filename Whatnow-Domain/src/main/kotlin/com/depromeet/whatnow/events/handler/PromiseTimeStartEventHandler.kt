@@ -26,11 +26,6 @@ class PromiseTimeStartEventHandler(
         val promiseId = promiseTimeStartEvent.promiseId
         val promiseUsers = promiseUserAdaptor.findByPromiseId(promiseId)
 
-        promiseUsers.forEach { promiseUser ->
-            promiseUser.updatePromiseUserTypeToWait()
-            promiseUser.userLocationInit()
-        }
-
         // 약속에 참여한 유저들 조회
         val users = promiseUsers
             .map { promiseUser -> userAdapter.queryUser(promiseUser.userId) }
