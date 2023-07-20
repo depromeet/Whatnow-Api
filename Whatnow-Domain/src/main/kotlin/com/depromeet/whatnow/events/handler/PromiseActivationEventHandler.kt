@@ -23,13 +23,13 @@ class PromiseActivationEventHandler(
 
         val now = LocalDateTime.now()
 
-        // 약속 시작 시간까지 남은 시간(초)
-        val promiseStartAndTrackingStartTime = Duration.between(now, promise.endTime.minusMinutes(30)).seconds
+        // 현재 시간부터 약속 트래킹 시작까지 남은 시간 (= 현재시간 - 약속시간 - 1시간)
+        val promiseStartAndTrackingStartTime = Duration.between(now, promise.endTime.minusHours(1)).seconds
 
-        // 약속 종료 시간까지 남은 시간(초)
+        // 현재 시간부터 약속 종료까지 남은시간 (= 현재시간 - 약속시간)
         val promiseEndTime = Duration.between(now, promise.endTime).seconds
 
-        // 트래킹 종료 시간까지 남은 시간(초)
+        // 현재 시간부터 트래킹 종료까지 남은시간 (= 현재시간 - 약속시간 + 30분)
         val trackingEndTime = Duration.between(now, promise.endTime.plusMinutes(30)).seconds
 
         promiseActiveAdapter.save(PromiseActiveRedisEntity("EXPIRE_EVENT_PROMISE_TIME_START_${promise.id}", promiseStartAndTrackingStartTime))

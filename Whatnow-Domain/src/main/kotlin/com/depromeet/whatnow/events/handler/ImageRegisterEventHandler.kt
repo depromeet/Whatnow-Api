@@ -37,7 +37,7 @@ class ImageRegisterEventHandler(
 
         // 앱 알람 허용한 유저
         val appAlarmPermitUsers = usersExcludingSelf.filter { user ->
-            user.fcmNotification.fcmToken != null && user.fcmNotification.appAlarm
+            user.fcmNotification.fcmToken != "" && user.fcmNotification.appAlarm
         }
 
         val data: MutableMap<String, String> = mutableMapOf()
