@@ -125,7 +125,7 @@ class PromiseReadUseCase(
             }
 
             val promiseImagesUrls = promiseImageAdapter.findAllByPromiseId(promise.id!!)
-                .sortedBy { it.createdAt }
+                .sortedByDescending { it.createdAt }
                 .map { it.uri }
 
             val timeOverLocations = promiseUsers.mapNotNull { promiseUser ->
