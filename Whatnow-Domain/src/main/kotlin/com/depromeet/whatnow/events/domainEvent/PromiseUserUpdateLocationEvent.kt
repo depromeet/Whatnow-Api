@@ -5,5 +5,5 @@ import com.depromeet.whatnow.common.aop.event.DomainEvent
 class PromiseUserUpdateLocationEvent(
     val promiseId: Long,
     val userId: Long,
-    val id: Long,
+    val promiseUserId: Long,
 ) : DomainEvent()

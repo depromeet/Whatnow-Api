@@ -2,6 +2,7 @@ package com.depromeet.whatnow.domains.notification.service
 
 import com.depromeet.whatnow.domains.interaction.domain.InteractionType
 import com.depromeet.whatnow.domains.notification.adapter.NotificationAdapter
+import com.depromeet.whatnow.domains.notification.domain.ArrivalNotification
 import com.depromeet.whatnow.domains.notification.domain.EndSharingNotification
 import com.depromeet.whatnow.domains.notification.domain.ImageNotification
 import com.depromeet.whatnow.domains.notification.domain.InteractionAttainmentNotification
@@ -47,6 +48,10 @@ class NotificationDomainService(
     @Transactional
     fun saveForInteractionAttainment(promiseId: Long, senderUserId: Long, interactionType: InteractionType, targetUserId: Long) {
         notificationAdapter.save(InteractionAttainmentNotification(promiseId, senderUserId, interactionType, targetUserId))
+    }
+
+    fun saveForArrival(promiseId: Long, senderUserId: Long, targetUserId: Long) {
+        notificationAdapter.save(ArrivalNotification(promiseId, senderUserId, targetUserId))
     }
 
     @Transactional(readOnly = true)
