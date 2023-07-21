@@ -1,5 +1,8 @@
 package com.depromeet.whatnow.api.promise.usecase
 
+import com.depromeet.whatnow.api.notification.dto.ArrivalNotificationResponse
+import com.depromeet.whatnow.api.notification.dto.HighlightsResponse
+import com.depromeet.whatnow.api.notification.usecase.NotificationHighlightsReadUseCase
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.common.vo.PlaceVo
 import com.depromeet.whatnow.domains.image.adapter.PromiseImageAdapter
@@ -25,7 +28,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -53,20 +55,14 @@ class PromiseReadUseCaseTest {
     @Mock
     private lateinit var promiseImageAdapter: PromiseImageAdapter
 
+    @Mock
+    private lateinit var notificationHighlightsReadUseCase: NotificationHighlightsReadUseCase
+
     @InjectMocks
     private lateinit var promiseReadUseCase: PromiseReadUseCase
 
     @BeforeEach
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
-        promiseReadUseCase = PromiseReadUseCase(
-            userRepository = userRepository,
-            promiseUserAdaptor = promiseUserAdaptor,
-            promiseAdaptor = promiseAdaptor,
-            userAdapter = userAdapter,
-            interactionAdapter = interactionAdapter,
-            promiseImageAdapter = promiseImageAdapter,
-        )
         val securityContext = SecurityContextHolder.createEmptyContext()
         val authentication = UsernamePasswordAuthenticationToken("1", null, setOf(SimpleGrantedAuthority("ROLE_USER")))
         securityContext.authentication = authentication
@@ -145,6 +141,11 @@ class PromiseReadUseCaseTest {
             Interaction(InteractionType.POOP, 1, 2, 12),
             Interaction(InteractionType.STEP, 1, 2, 2934),
         )
+        val highlightsResponse = HighlightsResponse(
+            listOf(
+                ArrivalNotificationResponse(1, 2, LocalDateTime.now()),
+            ),
+        )
 
         `when`(promiseUserAdaptor.findByUserId(userId)).thenReturn(promiseUsers)
         `when`(promiseAdaptor.queryPromises(listOf(1, 2))).thenReturn(promises)
@@ -152,6 +153,8 @@ class PromiseReadUseCaseTest {
 //        `when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactions)
         `when`(interactionAdapter.queryAllInteraction(1, 1)).thenReturn(interactionsPromise1)
         `when`(interactionAdapter.queryAllInteraction(2, 1)).thenReturn(interactionsPromise2)
+        `when`(notificationHighlightsReadUseCase.executeTop3(1)).thenReturn(highlightsResponse)
+        `when`(notificationHighlightsReadUseCase.executeTop3(2)).thenReturn(highlightsResponse)
 
         // When
         val result = promiseReadUseCase.findPromiseDetailByStatus(PromiseType.BEFORE)

@@ -8,7 +8,7 @@ class ArrivalNotificationResponse(
     val promiseId: Long,
     val senderUserId: Long,
     override val createdAt: LocalDateTime,
-) : NotificationAbstract(NotificationType.START_SHARING, createdAt) {
+) : NotificationAbstract(NotificationType.ARRIVAL, createdAt) {
     companion object {
         fun from(notification: ArrivalNotification): ArrivalNotificationResponse {
             return ArrivalNotificationResponse(
