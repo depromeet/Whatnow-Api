@@ -58,4 +58,16 @@ class NotificationDomainService(
     fun getMyNotifications(userId: Long, pageable: Pageable): Slice<Notification> {
         return notificationAdapter.getMyNotifications(userId, pageable)
     }
+
+    fun getNotificationHighlights(
+        promiseId: Long,
+        userId: Long,
+        pageable: Pageable,
+    ): Slice<Notification> {
+        return notificationAdapter.getNotificationHighlights(promiseId, userId, pageable)
+    }
+
+    fun getNotificationHighlightsTop3(promiseId: Long): List<Notification> {
+        return notificationAdapter.getNotificationHighlightsTop3(promiseId)
+    }
 }

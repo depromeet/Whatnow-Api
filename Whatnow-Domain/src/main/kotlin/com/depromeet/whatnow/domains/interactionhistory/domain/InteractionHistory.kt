@@ -6,6 +6,8 @@ import com.depromeet.whatnow.domains.interaction.domain.InteractionType
 import com.depromeet.whatnow.events.domainEvent.InteractionHistoryRegisterEvent
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -17,6 +19,7 @@ import javax.persistence.Table
 class InteractionHistory(
     var promiseId: Long,
 
+    @Enumerated(EnumType.STRING)
     var interactionType: InteractionType,
 
     var userId: Long,

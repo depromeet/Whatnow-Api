@@ -1,5 +1,6 @@
 package com.depromeet.whatnow.api.promise.dto
 
+import com.depromeet.whatnow.api.notification.dto.HighlightsResponse
 import com.depromeet.whatnow.common.vo.CoordinateVo
 import com.depromeet.whatnow.domains.promise.domain.Promise
 import java.time.LocalDateTime
@@ -12,11 +13,9 @@ data class PromiseDetailDto(
     val endTime: LocalDateTime,
     // 유저의 마지막 위치 리스트
     val promiseUsers: List<PromiseUserInfoVo>,
-    // TODO : 약속 기록 사진 기능 추가시 함께 추가할게요.
     val promiseImageUrls: List<String>?,
     val timeOverLocations: List<LocationCapture>,
-    // TODO : highlight 기능 추가시 함께 추가할게요. ( 최대 3개 제한 )
-// x   val highlights: List<NotificationDto>,
+    val highlights: HighlightsResponse,
 ) {
     companion object {
         fun of(
@@ -24,6 +23,7 @@ data class PromiseDetailDto(
             promiseUsers: List<PromiseUserInfoVo>,
             promiseImageUrls: List<String>,
             timeOverLocations: List<LocationCapture>,
+            highlights: HighlightsResponse,
         ): PromiseDetailDto {
             return PromiseDetailDto(
                 promiseId = promise.id!!,
@@ -34,6 +34,7 @@ data class PromiseDetailDto(
                 promiseUsers = promiseUsers,
                 promiseImageUrls = promiseImageUrls,
                 timeOverLocations = timeOverLocations,
+                highlights = highlights,
             )
         }
     }

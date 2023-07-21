@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 class EndSharingNotificationResponse(
     val promiseId: Long,
     override val createdAt: LocalDateTime,
-) : NotificationAbstract(NotificationType.START_SHARING, createdAt) {
+) : NotificationAbstract(NotificationType.END_SHARING, createdAt) {
     companion object {
         fun from(notification: EndSharingNotification): EndSharingNotificationResponse {
             return EndSharingNotificationResponse(

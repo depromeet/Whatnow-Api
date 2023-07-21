@@ -17,4 +17,12 @@ class NotificationAdapter(
     fun getMyNotifications(userId: Long, pageable: Pageable): Slice<Notification> {
         return notificationRepository.findAllByTargetUserIdOrderByCreatedAtDesc(userId, pageable)
     }
+
+    fun getNotificationHighlights(promiseId: Long, userId: Long, pageable: Pageable): Slice<Notification> {
+        return notificationRepository.findAllHighlights(promiseId, userId, pageable)
+    }
+
+    fun getNotificationHighlightsTop3(promiseId: Long): List<Notification> {
+        return notificationRepository.findAllHighlightsTop3(promiseId)
+    }
 }
