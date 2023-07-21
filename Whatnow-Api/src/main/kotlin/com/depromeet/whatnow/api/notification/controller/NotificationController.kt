@@ -33,9 +33,9 @@ class NotificationController(
     }
 
     @Operation(summary = "하이라이트 조회", description = "약속 ID로 하이라이트를 조회합니다")
-    @GetMapping("/highlights/promises/{promiseId}")
+    @GetMapping("/highlights/promises/{promise-id}")
     fun getHighlights(
-        @PathVariable promiseId: Long,
+        @PathVariable("promise-id") promiseId: Long,
         @ParameterObject @PageableDefault
         pageable: Pageable,
     ): HighlightsResponse {
