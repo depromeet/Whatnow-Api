@@ -26,7 +26,8 @@ class NotificationController(
     @Operation(summary = "자신의 알림 조회")
     @GetMapping
     fun getMyNotifications(
-        @ParameterObject @PageableDefault(size = 10)
+        @ParameterObject
+        @PageableDefault(size = 10)
         pageable: Pageable,
     ): NotificationResponse {
         return notificationReadUseCase.execute(pageable)
@@ -36,7 +37,8 @@ class NotificationController(
     @GetMapping("/highlights/promises/{promise-id}")
     fun getHighlights(
         @PathVariable("promise-id") promiseId: Long,
-        @ParameterObject @PageableDefault(size = 10)
+        @ParameterObject
+        @PageableDefault(size = 10)
         pageable: Pageable,
     ): HighlightsResponse {
         return notificationHighlightsReadUseCase.execute(promiseId, pageable)
