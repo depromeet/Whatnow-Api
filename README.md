@@ -1,5 +1,5 @@
-# 13th-6team-server
-66666년만에 환생한 흑마법사
+# Whatnow
+약속 장소로 가는 중 친구들과 즐기는 Share-Play 안드로이드 애플리케이션
 
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=depromeet_Whatnow-Api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=depromeet_Whatnow-Api)
@@ -8,8 +8,6 @@
 
 
 ## 서비스
-- Whatnow-Api
-- Whatnow-Location
 
 
 # Whatnow<img src="https://play-lh.googleusercontent.com/NfEaR4D-qhL5eXJ8bRF5nY75Z6bCcbsa4XQ7334kuhI3GblNU_Q0hmI9YM6pid7cv2k=w480-h960-rw" align=left width=100>
@@ -18,12 +16,10 @@
 
 <br/>
 
-<br/>
-
-<br/>
-
-## ✨ 서비스 관련
+## ✨ 관련 Link
+- [Deploy Github](https://github.com/depromeet/Whatnow-Deploy)
 - [구글 스토어](https://play.google.com/store/apps/details?id=com.depromeet.whatnow)
+- [Behance-Description Design](https://www.behance.net/gallery/175647815/WHATNOW-Share-Play/modules/992259681?log_shim_removal=1#access_token=eyJhbGciOiJSUzI1NiIsIng1dSI6Imltc19uYTEta2V5LWF0LTEuY2VyIiwia2lkIjoiaW1zX25hMS1rZXktYXQtMSIsIml0dCI6ImF0In0.eyJpZCI6IjE3MDMyMjI0MzM0NDlfNmQ2ZDJkZGUtMGEwNy00Y2EwLTk2NzUtMWQzMGJkMDM5NTBiX3V3MiIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJjbGllbnRfaWQiOiJCZWhhbmNlV2ViU3VzaTEiLCJ1c2VyX2lkIjoiQ0E4MjFGMzU2NEI3RkRBNTBBNDk1RkEwQEFkb2JlSUQiLCJzdGF0ZSI6IiIsImFzIjoiaW1zLW5hMSIsImFhX2lkIjoiQ0E4MjFGMzU2NEI3RkRBNTBBNDk1RkEwQEFkb2JlSUQiLCJjdHAiOjAsImZnIjoiWUJTNEJYV0JYUFA3TUhVS0ZNUVZZSEFBNVEiLCJzaWQiOiIxNjk5Nzg1MDM0ODAyX2Q1Zjg0YmNhLWZiODYtNDRjNS04ODBjLTk0MzJiNGY1ZDE0YV91dzIiLCJtb2kiOiI0MGYzYjRhNyIsInBiYSI6Ik1lZFNlY05vRVYsTG93U2VjIiwiZXhwaXJlc19pbiI6Ijg2NDAwMDAwIiwic2NvcGUiOiJBZG9iZUlELG9wZW5pZCxnbmF2LHNhby5jY2VfcHJpdmF0ZSxjcmVhdGl2ZV9jbG91ZCxjcmVhdGl2ZV9zZGssYmUucHJvMi5leHRlcm5hbF9jbGllbnQsYWRkaXRpb25hbF9pbmZvLnJvbGVzIiwiY3JlYXRlZF9hdCI6IjE3MDMyMjI0MzM0NDkifQ.HokZC2ackAIge3aTBUhCgjl5vFB8zkqu6FLnqTP7e0QxakaCsNaP3Jp0S0Fu-5nkwo16mnNKEXmO1dy3AJF326Kxx9E4vBfAk6CLrsBbIXC7PTAp-1QBhIK7KvrkWtipAR5KLY1wAUEFlHidulUpx6rZHJE1P1F_zsZzVNFufsplHfJLG5_EMdQG8xQLYIulhZg6p5KFNK2yfAupcLY08oxD8CiAWBGCeadX27cJaA9lTjXZ45zGbMnjUdXdl23hSUSTRiEMv3wY4YF6HFgfERgVnSI1KhXdZGnj4qK9AmWHcjmrRhV42vcc_JxMCBVGQ6EpSIea-23ioFnnwG3zFQ&token_type=bearer&expires_in=86399996)
 
 
 <br>
@@ -34,7 +30,6 @@
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white">
 <img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=Gradle&logoColor=white">
 </div>
-
 <div>
 <img src="https://img.shields.io/badge/MySQL-4479A1.svg?style=flat-square&logo=MySQL&logoColor=white">
 <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=Redis&logoColor=white">
@@ -53,6 +48,16 @@
 </div>
 
 </div>
+
+## Architecture
+![Frame 1000011987](https://github.com/depromeet/Whatnow-Api/assets/54030889/8527aeeb-050a-4d4f-b2f4-2e282d386943)
+
+## ERD
+![image](https://github.com/depromeet/Whatnow-Api/assets/54030889/703382fa-7d21-44d4-8f08-66c3d4c362ab)
+
+
+# Service Description
+
 
 <br/>
 
